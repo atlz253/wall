@@ -1,10 +1,10 @@
-#include <iostream>
-#include <SDL2/SDL.h>
-#include "graphic.cpp"
+#include "graphic.hpp"
+#include "logger/logger.hpp"
 
 int main(void)
 {
-    SdlWindow *window = new SdlWindow();
+    Logger *logger = new Logger("trace");
+    SdlWindow *window = new SdlWindow(logger);
     window->createWindow();
 
     return 0;
