@@ -1,6 +1,3 @@
-#ifndef CCOLORS
-#define CCOLORS
-
 #include <string>
 
 namespace ccolors
@@ -12,5 +9,3 @@ namespace ccolors
         YELLOW = "\033[0;33m",
         GREY = "\033[0;38m";
 }
-
-#endif

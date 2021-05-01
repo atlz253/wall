@@ -1,8 +1,8 @@
 #ifndef SDLWINDOW
 #define SDLWINDOW
 
-#include <SDL2/SDL.h>
-#include "logger/logger.hpp"
+#include "SDL.h"
+#include "logger.hpp"
 
 class SdlWindow
 {

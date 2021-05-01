@@ -1,5 +1,5 @@
 #include "graphic.hpp"
-#include "logger/logger.hpp"
+#include "logger.hpp"
 
 int main(void)
 {

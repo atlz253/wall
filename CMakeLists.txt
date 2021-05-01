@@ -1,14 +1,17 @@
 cmake_minimum_required(VERSION 3.16.3)
 
-project(wall VERSION 010521)
+project(wall VERSION 020521)
 
 # set(CMAKE_BUILD_TYPE Debug)
 
-# include_directories("${PROJECT_SOURCE_DIR}/src")
-# include_directories("${PROJECT_SOURCE_DIR}/src/logger")
-
 find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS})
+
+include_directories(
+    ${SDL2_INCLUDE_DIRS}
+    "${PROJECT_SOURCE_DIR}/src"
+    "${PROJECT_SOURCE_DIR}/src/logger"                    
+)
+
 
 add_library(LOGGER STATIC src/logger/logger.cpp)
 
