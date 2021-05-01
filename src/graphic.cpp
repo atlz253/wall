@@ -36,12 +36,31 @@ void SdlWindow::createWindow(void)
                 0xFF));
 
         SDL_UpdateWindowSurface(_window);
-
-        SDL_Delay(10000);
     }
     else
     {
         _logger->error(SDL_GetError());
         exit(EXIT_FAILURE);
     }
+}
+
+bool SdlWindow::checkEvent()
+{
+    if(SDL_PollEvent(&_event))
+    {
+        if(_event.type == SDL_QUIT)
+        {
+            _logger->trace("SDL_Quit event");
+            return false;
+        }
+    }
+
+    return true;
+}
+
+SdlWindow::~SdlWindow()
+{
+    SDL_FreeSurface(_screenSurface);
+    SDL_DestroyWindow(_window);
+    SDL_Quit();
 }
