@@ -1,5 +1,4 @@
 #include "graphic.hpp"
-#include "logger.hpp"
 
 int main(void)
 {
@@ -8,7 +7,9 @@ int main(void)
 
     window->init();
     while (window->checkEvent())
-        ;
+    {
+        window->updateRenderer();
+    }
 
     return 0;
 }

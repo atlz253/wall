@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16.3)
 
 # настройки проекта
-project(wall VERSION 020521)
+project(wall VERSION 030521)
 # set(CMAKE_BUILD_TYPE Debug)
 
 # путь до модулей cmake
@@ -22,7 +22,8 @@ include_directories("${PROJECT_SOURCE_DIR}/src")
 add_library(LOGGER STATIC src/logger/logger.cpp)
 include_directories("${PROJECT_SOURCE_DIR}/src/logger")
 
-add_library(SDLWINDOW STATIC src/graphic.cpp)
+# библиотеа графики
+add_library(SDLWINDOW STATIC src/graphic.cpp src/resources.cpp)
 target_link_libraries(SDLWINDOW SDL2::Core SDL2::Image LOGGER)
 
 add_executable(MAIN src/main.cpp)

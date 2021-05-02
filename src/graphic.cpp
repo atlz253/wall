@@ -8,8 +8,8 @@ SDL_Window *SdlWindow::_createWindow(void)
         "wall",
         SDL_WINDOWPOS_CENTERED_MASK,
         SDL_WINDOWPOS_CENTERED_MASK,
-        _SCREEN_WIDTH,
-        _SCREEN_HEIGHT,
+        SCREEN_WIDTH,
+        SCREEN_HEIGHT,
         SDL_WINDOW_OPENGL);
 
     if (window)
@@ -18,48 +18,52 @@ SDL_Window *SdlWindow::_createWindow(void)
     }
     else
     {
-        _logger->error("Не удалось создать окно:", SDL_GetError());
+        _logger->error("SdlWindow: не удалось создать окно:", SDL_GetError());
         exit(EXIT_FAILURE);
     }
 }
 
 SDL_Renderer *SdlWindow::_createRenderer(void)
 {
+    _logger->trace("SdlWindow: создание рендера");
     SDL_Renderer *render = SDL_CreateRenderer(
         _window,
         -1,
         SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
     if (!render)
-        _logger->error("Не удалось создать рендер:", SDL_GetError());
-    
+        _logger->error("SdlWindow: не удалось создать рендер:", SDL_GetError());
+
     return render;
 }
 
-SDL_Surface *SdlWindow::_loadPNG(std::string path)
+void SdlWindow::_backgroundInit(void)
 {
-    SDL_Surface
-        *loadedSurface = IMG_Load(path.c_str()),
-        *optimizedSurface = nullptr;
+    background->back = _loadTexture(BACKPATH);
 
-    if (loadedSurface)
-    {
-        optimizedSurface = SDL_ConvertSurface(
-            loadedSurface,
-            _screenSurface->format,
-            0);
+    SDL_Rect *rect = new SDL_Rect;
+    rect->x = 0;
+    rect->y = 0;
+    rect->w = SCREEN_WIDTH;
+    rect->h = SCREEN_HEIGHT;
 
-        if (!optimizedSurface)
-            _logger->error("Не удалось оптимизировать PNG:", IMG_GetError(), path);
+    background->backRect = rect;
+}
 
-        SDL_FreeSurface(loadedSurface);
-    }
-    else
-    {
-        _logger->error("Не удалось загрузить PNG:", IMG_GetError());
-    }
+void SdlWindow::_backgroundRenderer(void)
+{
+    if (SDL_RenderCopy(_renderer, background->back, nullptr, background->backRect))
+        _logger->error("SdlWindow: ошибка рендера заднего фона.", SDL_GetError());
+}
 
-    return optimizedSurface;
+SDL_Texture *SdlWindow::_loadTexture(std::string path)
+{
+    SDL_Texture *texture = IMG_LoadTexture(_renderer, path.c_str());
+
+    if (!texture)
+        _logger->error("SdlWindow: не удалось загрузить текстуру.", IMG_GetError());
+    
+    return texture;
 }
 
 SdlWindow::SdlWindow(Logger *logger)
@@ -85,23 +89,8 @@ void SdlWindow::init(void)
 {
     _logger->trace("SdlWindow: начало инициализации");
     _window = _createWindow();
-    _screenSurface = SDL_GetWindowSurface(_window);
-    // _renderer = _createRenderer();
-
-    _background = _loadPNG("res/sprites/background/bg.png"); // TODO: удаление поверхностей фона
-
-    SDL_Rect stretchRect;
-    stretchRect.x = 0;
-    stretchRect.y = 0;
-    stretchRect.w = _SCREEN_WIDTH;
-    stretchRect.h = _SCREEN_HEIGHT;
-    SDL_BlitScaled(
-        _background,
-        nullptr,
-        _screenSurface,
-        &stretchRect);
-    
-    SDL_UpdateWindowSurface(_window);
+    _renderer = _createRenderer();
+    _backgroundInit();
 }
 
 bool SdlWindow::checkEvent()
@@ -118,9 +107,15 @@ bool SdlWindow::checkEvent()
     return true;
 }
 
+void SdlWindow::updateRenderer(void)
+{
+    SDL_RenderClear(_renderer);
+    _backgroundRenderer();
+    SDL_RenderPresent(_renderer);
+}
+
 SdlWindow::~SdlWindow()
 {
-    SDL_FreeSurface(_screenSurface);
     SDL_DestroyWindow(_window);
     IMG_Quit();
     SDL_Quit();
