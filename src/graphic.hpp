@@ -7,25 +7,33 @@
 class SdlWindow
 {
 private:
-    const int _SCREEN_WIDTH = 1280;
-    const int _SCREEN_HEIGHT = 720;
+    const int _SCREEN_WIDTH = 1280; // Ширина окна
+    const int _SCREEN_HEIGHT = 720; // Высота окна
 
-    SDL_Window *_window = nullptr;
-    SDL_Surface *_screenSurface = nullptr;
+    SDL_Window *_window = nullptr;         // Основное окно игры
+    SDL_Renderer *_renderer = nullptr;     // Рендер окна
+    SDL_Surface *_screenSurface = nullptr; // Основная "поверхность экрана"
 
-    /*
-        Обработчик событий
-    */
-    SDL_Event _event;
+    SDL_Event _event; // Обработчик событий
 
-    /*
-        "Поверхность экрана", которая хранит задний фон игры
-    */
-    SDL_Surface *_background_1 = nullptr,
-                *_background_2 = nullptr,
-                *_background_3 = nullptr;
+    SDL_Surface *_background = nullptr; // задний фон
 
     Logger *_logger = nullptr;
+
+    /*
+        Создание окна
+    */
+    SDL_Window *_createWindow(void);
+
+    /*
+        Инициализация рендера
+    */
+    SDL_Renderer *_createRenderer(void);
+
+    /*
+        Загрузка PNG изображений
+    */
+    SDL_Surface *_loadPNG(std::string path);
 
 public:
     /*
@@ -35,9 +43,9 @@ public:
     SdlWindow(Logger *logger);
 
     /*
-        Создание окна игры
+        Инициализация
     */
-    void createWindow(void);
+    void init(void);
 
     /*
         Проверка событий SDL

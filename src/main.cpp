@@ -6,7 +6,7 @@ int main(void)
     Logger *logger = new Logger("trace");
     SdlWindow *window = new SdlWindow(logger);
 
-    window->createWindow();
+    window->init();
     while (window->checkEvent())
         ;
 
