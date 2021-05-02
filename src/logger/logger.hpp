@@ -28,21 +28,29 @@ public:
         печать предупреждений
     */
     void warning(const std::string message);
+    void warning(const std::string message1, const std::string message2);
+    void warning(const std::string message1, const std::string message2, const std::string message3);
 
     /*
         печать низкоприоритетной информации
     */
     void trace(const std::string message);
+    void trace(const std::string message1, const std::string message2);
+    void trace(const std::string message1, const std::string message2, const std::string message3);
 
     /*
         печать ошибок
     */
     void error(const std::string message);
+    void error(const std::string message1, const std::string message2);
+    void error(const std::string message1, const std::string message2, const std::string message3);
 
     /*
         печать отладочной информации
     */
     void debug(const std::string message);
+    void debug(const std::string message1, const std::string message2);
+    void debug(const std::string message1, const std::string message2, const std::string message3);
 };
 
 #endif
