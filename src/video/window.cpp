@@ -1,4 +1,4 @@
-#include "graphic.hpp"
+#include "window.hpp"
 #include "SDL_image.h"
 
 SDL_Window *SdlWindow::_createWindow(void)
@@ -39,7 +39,7 @@ SDL_Renderer *SdlWindow::_createRenderer(void)
 
 void SdlWindow::_backgroundInit(void)
 {
-    background->back = _loadTexture(BACKPATH);
+    background->texture = _loadTexture(BACKPATH);
 
     SDL_Rect *rect = new SDL_Rect;
     rect->x = 0;
@@ -47,12 +47,12 @@ void SdlWindow::_backgroundInit(void)
     rect->w = SCREEN_WIDTH;
     rect->h = SCREEN_HEIGHT;
 
-    background->backRect = rect;
+    background->rect = rect;
 }
 
 void SdlWindow::_backgroundRenderer(void)
 {
-    if (SDL_RenderCopy(_renderer, background->back, nullptr, background->backRect))
+    if (SDL_RenderCopy(_renderer, background->texture, nullptr, background->rect))
         _logger->error("SdlWindow: ошибка рендера заднего фона.", SDL_GetError());
 }
 
@@ -68,6 +68,7 @@ SDL_Texture *SdlWindow::_loadTexture(std::string path)
 
 SdlWindow::SdlWindow(Logger *logger)
 {
+    logger->trace("SdlWindow: начало инициализации");
     _logger = logger;
 
     _logger->trace("SdlWindow: инициализация SDL2");
@@ -83,11 +84,7 @@ SdlWindow::SdlWindow(Logger *logger)
         _logger->error(IMG_GetError());
         exit(EXIT_FAILURE);
     }
-}
 
-void SdlWindow::init(void)
-{
-    _logger->trace("SdlWindow: начало инициализации");
     _window = _createWindow();
     _renderer = _createRenderer();
     _backgroundInit();
@@ -95,7 +92,9 @@ void SdlWindow::init(void)
 
 bool SdlWindow::checkEvent()
 {
-    if (SDL_PollEvent(&_event))
+    _logger->trace("SdlWindow: проверка события");
+
+    while (SDL_PollEvent(&_event)) //TODO: использовать SDL_WaitEvent
     {
         if (_event.type == SDL_QUIT)
         {

@@ -13,18 +13,24 @@ include_directories(${SDL2_INCLUDE_DIRS})
 
 # подключение SDL2_image
 find_package(SDL2_image REQUIRED)
-include_directories(${SDL2_IMAGE_DIRS})
-
-# директории для поиска заголовочных файлов
-include_directories("${PROJECT_SOURCE_DIR}/src")    
+include_directories(${SDL2_IMAGE_DIRS})  
 
 # библиотека логгирования
 add_library(LOGGER STATIC src/logger/logger.cpp)
-include_directories("${PROJECT_SOURCE_DIR}/src/logger")
+target_include_directories(LOGGER PUBLIC "${PROJECT_SOURCE_DIR}/src/logger")
 
 # библиотеа графики
-add_library(SDLWINDOW STATIC src/graphic.cpp src/resources.cpp)
+set(VIDEO_DIR src/video)
+add_library(SDLWINDOW STATIC ${VIDEO_DIR}/window.cpp ${VIDEO_DIR}/resources.cpp)
 target_link_libraries(SDLWINDOW SDL2::Core SDL2::Image LOGGER)
+target_include_directories(SDLWINDOW PUBLIC "${PROJECT_SOURCE_DIR}/${VIDEO_DIR}")
 
+# библиотека основных компонентов
+set(WALL_DIR src/wall)
+add_library(WALL STATIC ${WALL_DIR}/main.cpp)
+target_link_libraries(WALL SDLWINDOW LOGGER)
+target_include_directories(SDLWINDOW PUBLIC "${PROJECT_SOURCE_DIR}/${WALL_DIR}")
+
+# сборка исполняемого файла
 add_executable(MAIN src/main.cpp)
-target_link_libraries(MAIN SDLWINDOW LOGGER)
+target_link_libraries(MAIN WALL)

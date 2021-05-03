@@ -4,7 +4,7 @@
 #include "logger.hpp"
 #include "resources.hpp"
 
-class SdlWindow
+class SdlWindow final
 {
 private:
     SDL_Window *_window = nullptr;     // Основное окно игры
@@ -38,18 +38,12 @@ private:
         Рендер заднего фона
     */
     void _backgroundRenderer(void);
-
 public:
     /*
-        Инициализация графики:
+        Инициализация окна:
         Logger *logger - объект-логгер, для вывода отладочных сообщений в консоль
     */
     SdlWindow(Logger *logger);
-
-    /*
-        Инициализация
-    */
-    void init(void);
 
     /*
         Проверка событий SDL
