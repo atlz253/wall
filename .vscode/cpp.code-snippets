@@ -15,21 +15,6 @@
 	// 	],
 	// 	"description": "Log output to console"
 	// }
-	"Стандартный шаблон": 
-	{
-		"prefix": "include",
-		"body":
-		[
-			"#include <iostream>\n",
-			"using namespace std;\n",
-			"int main()",
-			"{",
-			"\t",
-			"\treturn 0;",
-			"}",
-			""
-		]
-	},
 	"Базовый шаблон класса": 
 	{
 		"prefix": "class",
@@ -41,10 +26,5 @@
 			"public:\n\t$3",
 			"};"
 		]
-	},
-	"Шаблон вывода":
-	{
-		"prefix": "cout",
-		"body": "cout << \"${1}\" << endl;${0}"
 	}
 }
