@@ -43,20 +43,6 @@ SdlWindow::SdlWindow()
 {
     printTrace("SdlWindow: начало инициализации");
 
-    printTrace("SdlWindow: инициализация SDL2");
-    if (SDL_Init(SDL_INIT_VIDEO))
-    {
-        printError(SDL_GetError());
-        exit(EXIT_FAILURE);
-    }
-
-    printTrace("SdlWindow: инициализация SDL2_Image");
-    if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
-    {
-        printError(IMG_GetError());
-        exit(EXIT_FAILURE);
-    }
-
     _window = _createWindow();
     _renderer = _createRenderer();
 
@@ -103,6 +89,4 @@ void SdlWindow::updateRenderer(void)
 SdlWindow::~SdlWindow()
 {
     SDL_DestroyWindow(_window);
-    IMG_Quit();
-    SDL_Quit();
 }

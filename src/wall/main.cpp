@@ -1,6 +1,37 @@
 #include "main.hpp"
 #include "print.hpp"
 #include "entity.hpp"
+#include "SDL_image.h"
+
+class SdlSubSystem final
+{
+public:
+    SdlSubSystem()
+    {
+        printTrace("SdlSubSystem: инициализация SDL2");
+        if (SDL_Init(SDL_INIT_VIDEO))
+        {
+            printError("Ошибка инициализации SDL2:", SDL_GetError());
+            exit(EXIT_FAILURE);
+        }
+
+        printTrace("SdlSubSystem: инициализация SDL2_Image");
+        if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
+        {
+            printError("Ошибка инициализации SDL2_Image:", IMG_GetError());
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    ~SdlSubSystem()
+    {
+        printTrace("SdlSubSystem: завершение работы SDL2");
+        SDL_Quit();
+
+        printTrace("SdlSubSystem: завершение работы SDL2_Image");
+        IMG_Quit();
+    }
+};
 
 void Main::_gameLoop(void)
 {
@@ -12,12 +43,16 @@ void Main::_gameLoop(void)
 
 Main::Main()
 {
-    _window = new SdlWindow();
 }
 
 int Main::run(void)
 {
+    SdlSubSystem *sdlSubSystem = new SdlSubSystem();
+    _window = new SdlWindow();
     _gameLoop();
+
+    printTrace("Main: завершение работы подсистемы SDL2");
+    delete sdlSubSystem;
 
     return 0;
 }
