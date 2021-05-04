@@ -1,4 +1,6 @@
 #include "main.hpp"
+#include "print.hpp"
+#include "entity.hpp"
 
 void Main::_gameLoop(void)
 {
@@ -10,8 +12,7 @@ void Main::_gameLoop(void)
 
 Main::Main()
 {
-    _logger = new Logger("trace");
-    _window = new SdlWindow(_logger);
+    _window = new SdlWindow();
 }
 
 int Main::run(void)
@@ -23,9 +24,6 @@ int Main::run(void)
 
 Main::~Main()
 {
-    _logger->trace("Main: удаление окна");
+    printTrace("Main: удаление окна");
     delete _window;
-
-    _logger->trace("Main: удаление логгера");
-    delete _logger;
 }

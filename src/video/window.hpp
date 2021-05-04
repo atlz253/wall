@@ -1,18 +1,23 @@
 #ifndef SDLWINDOW
 #define SDLWINDOW
 
-#include "logger.hpp"
-#include "resources.hpp"
+#include "entity.hpp"
 
+/*
+    Объект класса содержит окно, созданное средствами SDL2
+*/
 class SdlWindow final
 {
 private:
+    const int _SCREEN_WIDTH = 1280;
+    const int _SCREEN_HEIGHT = 720;
+
     SDL_Window *_window = nullptr;     // Основное окно игры
-    SDL_Renderer *_renderer = nullptr; // Рендер окна
+    SDL_Renderer *_renderer = nullptr; // Текущий кадр окна
 
     SDL_Event _event; // Обработчик событий
 
-    Logger *_logger = nullptr;
+    Entity *_background = nullptr; // УБРАТЬ! Сущность заднего фона
 
     /*
         Создание окна
@@ -24,26 +29,11 @@ private:
     */
     SDL_Renderer *_createRenderer(void);
 
-    /*
-        Загрузка текстур
-    */
-    SDL_Texture *_loadTexture(std::string path);
-
-    /*
-        Инициализация заднего фона
-    */
-    void _backgroundInit(void);
-
-    /*
-        Рендер заднего фона
-    */
-    void _backgroundRenderer(void);
 public:
     /*
-        Инициализация окна:
-        Logger *logger - объект-логгер, для вывода отладочных сообщений в консоль
+        Инициализация окна
     */
-    SdlWindow(Logger *logger);
+    SdlWindow();
 
     /*
         Проверка событий SDL
