@@ -18,6 +18,9 @@ private:
     SDL_Event _event; // Обработчик событий
 
     Entity *_background = nullptr; // УБРАТЬ! Сущность заднего фона
+    Entity *_brick = nullptr; // УБРАТЬ! Сущность пола
+    Entity *_move = nullptr; // УБРАТЬ!
+    int aa = 0;
 
     /*
         Создание окна

@@ -61,6 +61,8 @@ SdlWindow::SdlWindow()
     _renderer = _createRenderer();
 
     _background = new Entity(_renderer, "res/sprites/background/bg.png", _SCREEN_WIDTH, _SCREEN_HEIGHT, 0, 0);
+    _brick = new Entity(_renderer, "res/sprites/brick.png", 64, 64, 0, 700);
+    _move = new Entity(_renderer, "res/sprites/brick.png", 64, 64, aa, 360);
 }
 
 bool SdlWindow::checkEvent()
@@ -83,6 +85,18 @@ void SdlWindow::updateRenderer(void)
 {
     SDL_RenderClear(_renderer);
     _background->renderCopy();
+
+    for (int i = 0; i < _SCREEN_WIDTH / 64 + 1; i++)
+    {
+        _brick->renderCopy();
+        _brick->setPosition(i * 64, 700);
+    }
+    _brick->setPosition(0, 700);
+
+    aa += 2;
+    _move->setPosition(aa, 360);
+    _move->renderCopy();
+
     SDL_RenderPresent(_renderer);
 }
 
