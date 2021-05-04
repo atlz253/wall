@@ -26,5 +26,25 @@
 			"public:\n\t$3",
 			"};"
 		]
-	}
+	},
+	"Печать предупреждений": 
+	{
+		"prefix": "printWarning",
+		"body": "printWarning(\"$1\");"
+	},
+	"Печать низкоприоритетной информации": 
+	{
+		"prefix": "printTrace",
+		"body": "printTrace(\"$1\");"
+	},
+	"Печать ошибок": 
+	{
+		"prefix": "printError",
+		"body": "printError(\"$1\");"
+	},
+	"Печать отладочной информации": 
+	{
+		"prefix": "printDebug",
+		"body": "printDebug(\"$1\");"
+	},
 }
