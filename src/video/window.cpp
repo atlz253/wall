@@ -1,12 +1,12 @@
 #include "print.hpp"
-#include "entity.hpp"
 #include "window.hpp"
 #include "SDL_image.h"
+#include "renderer.hpp"
 
-SDL_Window *SdlWindow::_createWindow(void)
+SdlWindow::SdlWindow()
 {
     printTrace("SdlWindow: создание окна");
-    SDL_Window *window = SDL_CreateWindow(
+    _window = SDL_CreateWindow(
         "wall",
         SDL_WINDOWPOS_CENTERED_MASK,
         SDL_WINDOWPOS_CENTERED_MASK,
@@ -14,41 +14,11 @@ SDL_Window *SdlWindow::_createWindow(void)
         _SCREEN_HEIGHT,
         SDL_WINDOW_OPENGL);
 
-    if (window)
-    {
-        return window;
-    }
-    else
+    if (!_window)
     {
         printError("SdlWindow: не удалось создать окно:", SDL_GetError());
         exit(EXIT_FAILURE);
     }
-}
-
-SDL_Renderer *SdlWindow::_createRenderer(void)
-{
-    printTrace("SdlWindow: создание рендера");
-    SDL_Renderer *render = SDL_CreateRenderer(
-        _window,
-        -1,
-        SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
-    if (!render)
-        printError("SdlWindow: не удалось создать рендер:", SDL_GetError());
-    
-    return render;
-}
-
-SdlWindow::SdlWindow()
-{
-    printTrace("SdlWindow: начало инициализации");
-
-    _window = _createWindow();
-    _renderer = _createRenderer();
-
-    _background = new Entity(_renderer, "res/sprites/background/bg.png", _SCREEN_WIDTH, _SCREEN_HEIGHT, 0, 0);
-    _brick = new Entity(_renderer, "res/sprites/brick.png", 64, 64, 0, 700);
-    _move = new Entity(_renderer, "res/sprites/brick.png", 64, 64, aa, 360);
 }
 
 bool SdlWindow::checkEvent()
@@ -67,23 +37,13 @@ bool SdlWindow::checkEvent()
     return true;
 }
 
-void SdlWindow::updateRenderer(void)
+void SdlWindow::operator>> (Renderer *renderer)
 {
-    SDL_RenderClear(_renderer);
-    _background->renderCopy();
+    printTrace("SdlWindow: создание рендера");
+    renderer->_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-    for (int i = 0; i < _SCREEN_WIDTH / 64 + 1; i++)
-    {
-        _brick->renderCopy();
-        _brick->setPosition(i * 64, 700);
-    }
-    _brick->setPosition(0, 700);
-
-    aa += 2;
-    _move->setPosition(aa, 360);
-    _move->renderCopy();
-
-    SDL_RenderPresent(_renderer);
+    if (!renderer->_renderer)
+        printError("SdlWindow: не удалось создать рендер:", SDL_GetError());
 }
 
 SdlWindow::~SdlWindow()

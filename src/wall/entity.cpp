@@ -1,51 +1,36 @@
 #include "print.hpp"
 #include "entity.hpp"
-#include "SDL_image.h"
 
-Entity::Entity(SDL_Renderer *renderer, std::string path, int w, int h, int x, int y)
+Entity::Entity(Texture *texture, int w, int h, int x, int y)
 {
-    printTrace("Entity: загрузка текстуры", path);
-    _rect = new SDL_Rect();
-    _renderer = renderer;
-    loadTexture(path);
+    printTrace("Entity: создание сущности");
+    _geometry = new SDL_Rect;
+    _texture = texture;
     setSize(w, h);
     setPosition(x, y);
 }
 
-void Entity::loadTexture(std::string path)
+Entity::Entity(Entity *entity)
 {
-    if (_texture)
-        SDL_DestroyTexture(_texture);
-
-    _texture = IMG_LoadTexture(_renderer, path.c_str());
-
-    if (!_texture)
-        printError("Entity: не удалось загрузить текстуру.", IMG_GetError());
+    printTrace("Entity: копирование сущности");
+    _geometry = entity->_geometry;
+    _texture = entity->_texture;
 }
 
 void Entity::setSize(int w, int h)
 {
-    _rect->w = w;
-    _rect->h = h;
+    _geometry->w = w;
+    _geometry->h = h;
 }
 
 void Entity::setPosition(int x, int y)
 {
-    _rect->x = x;
-    _rect->y = y;
-}
-
-void Entity::renderCopy(void)
-{
-    if (SDL_RenderCopy(_renderer, _texture, nullptr, _rect))
-        printError("SdlWindow: ошибка рендера заднего фона.", SDL_GetError());
+    _geometry->x = x;
+    _geometry->y = y;
 }
 
 Entity::~Entity()
 {
-    printTrace("Entity: удаление текстуры");
-    SDL_DestroyTexture(_texture);
-
     printTrace("Entity: геометрии сущности");
-    delete _rect;
+    delete _geometry;
 }

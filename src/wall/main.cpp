@@ -35,9 +35,30 @@ public:
 
 void Main::_gameLoop(void)
 {
+    int aa = 0;
+    Entity *_background = new Entity(new Texture(_renderer, "res/sprites/background/bg.png"), 1280, 720, 0, 0); // TODO: создавать объект Texture внутри Entity
+    Entity *_brick = new Entity(new Texture(_renderer, "res/sprites/brick.png"), 64, 64, 0, 700);
+    Entity *_move = new Entity(new Texture(_renderer, "res/sprites/brick.png"), 64, 64, aa, 360);
+
     while (_window->checkEvent())
     {
-        _window->updateRenderer();
+        /* updateRender(); */
+        _renderer->clear();
+
+        *_renderer << _background;
+
+        for (int i = 0; i < 1280 / 64 + 1; i++)
+        {
+            *_renderer << _brick;
+            _brick->setPosition(i * 64, 700);
+        }
+        _brick->setPosition(0, 700);
+
+        aa += 2;
+        _move->setPosition(aa, 360);
+        *_renderer << _move;
+
+        _renderer->draw();
     }
 }
 
@@ -49,6 +70,9 @@ int Main::run(void)
 {
     SdlSubSystem *sdlSubSystem = new SdlSubSystem();
     _window = new SdlWindow();
+    _renderer = new Renderer();
+    *_window >> _renderer;
+
     _gameLoop();
 
     printTrace("Main: завершение работы подсистемы SDL2");
