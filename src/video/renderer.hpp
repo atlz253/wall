@@ -3,6 +3,8 @@
 
 #include "window.hpp"
 
+typedef struct SDL_Renderer SDL_Renderer;
+
 class Entity;
 
 /*

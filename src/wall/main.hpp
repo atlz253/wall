@@ -1,4 +1,5 @@
-#include "window.hpp"
+class SdlWindow;
+class Renderer;
 
 /*
     Объект данного класса хранит в себе основные компоненты игры.

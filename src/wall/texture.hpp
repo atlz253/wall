@@ -1,14 +1,19 @@
-#include "SDL.h"
+#ifndef TEXTURE
+#define TEXTURE
+
 #include <string>
 #include "renderer.hpp"
+
+typedef struct SDL_Rect SDL_Rect;
+typedef struct SDL_Texture SDL_Texture;
 
 /*
     Игровая текстура
 */
-class Texture final
+class Texture final //TODO: попробовать переместить в entity.cpp? (неотдилимые объекты)
 {
 private:
-    SDL_Texture *_texture = nullptr; // Текстура
+    SDL_Texture *_texture = nullptr; // Текстура //TODO: shared_ptr?
     SDL_Rect *_tile = nullptr;       // Область текстуры
 
 public:
@@ -52,3 +57,5 @@ public:
 
     ~Texture();
 };
+
+#endif

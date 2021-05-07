@@ -1,6 +1,6 @@
-#include "renderer.hpp"
-#include "entity.hpp"
 #include "print.hpp"
+#include "entity.hpp"
+#include "renderer.hpp"
 
 Renderer::Renderer()
 {
