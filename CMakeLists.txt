@@ -17,6 +17,7 @@ find_package(SDL2_image REQUIRED)
 add_library(WALL STATIC 
                         src/object/entity.cpp
                         src/object/texture.cpp
+                        src/object/textureManager.cpp
                         src/video/renderer.cpp
                         src/video/window.cpp
                         src/wall/main.cpp
@@ -25,7 +26,8 @@ target_link_libraries(WALL SDL2::Core SDL2::Image)
 target_include_directories(WALL 
                                 PUBLIC "${PROJECT_SOURCE_DIR}/src/object"
                                 PUBLIC "${PROJECT_SOURCE_DIR}/src/video"
-                                PUBLIC "${PROJECT_SOURCE_DIR}/src/wall")
+                                PUBLIC "${PROJECT_SOURCE_DIR}/src/wall"
+                                PUBLIC "${PROJECT_SOURCE_DIR}/src/world")
 
 # сборка исполняемого файла
 add_executable(MAIN src/main.cpp)

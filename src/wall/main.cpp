@@ -2,6 +2,7 @@
 #include "print.hpp"
 #include "entity.hpp"
 #include "SDL_image.h"
+#include "textureManager.hpp"
 
 class SdlSubSystem final
 {
@@ -35,10 +36,15 @@ public:
 
 void Main::_gameLoop(void)
 {
+    TextureManager textures;
+
+    textures["background"] = new Texture(_renderer, "res/sprites/background/bg.png");
+    textures["brick"] = new Texture(_renderer, "res/sprites/brick.png");
+
     int aa = 0;
-    Entity *_background = new Entity(new Texture(_renderer, "res/sprites/background/bg.png"), 1280, 720, 0, 0); // TODO: создавать объект Texture внутри Entity
-    Entity *_brick = new Entity(new Texture(_renderer, "res/sprites/brick.png"), 64, 64, 0, 700);
-    Entity *_move = new Entity(new Texture(_renderer, "res/sprites/brick.png"), 64, 64, aa, 360);
+    Entity *_background = new Entity(textures["background"], 1280, 720, 0, 0);
+    Entity *_brick = new Entity(textures["brick"], 64, 64, 0, 700);
+    Entity *_move = new Entity(textures["brick"], 64, 64, aa, 360);
 
     while (_window->checkEvent())
     {
