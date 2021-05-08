@@ -1,17 +1,33 @@
 #ifndef ENTITY
 #define ENTITY
 
-#include "texture.hpp"
+#include "renderer.hpp"
+
+class Texture;
 
 /*
     Базовая игровая сущность
 */
 class Entity
 {
-private:
+protected:
     Texture *_texture = nullptr;   // Текстура сущности
     SDL_Rect *_geometry = nullptr; // Геометрия сущности
+
+    /*
+        Прорисовка сущности
+    */
+    virtual void _renderer(SDL_Renderer *renderer);
+
 public:
+    Entity();
+
+    /*
+        Инициализация сущности:
+        Texture texture - текстура сущности
+    */
+    Entity(Texture *texture);
+
     /*
         Инициализация сущности:
         Texture texture - текстура сущности
@@ -22,22 +38,22 @@ public:
 
     /*
         Конструктор копирования
-        Копия разделяет объект класса Texture с родителем, 
-        поэтому обновление текстуры будет проходить для всех копий объекта
     */
     Entity(Entity *entity);
 
     /*
         Изменение размера сущности
+        int w, h - ширина и высота сущности
     */
     void setSize(int w, int h);
 
     /*
         Изменение положения сущности
+        int x, y - расположение сущности
     */
     void setPosition(int x, int y);
 
-    friend void Renderer::operator<< (Entity *entity);
+    friend void Renderer::operator<<(Entity *entity);
 
     ~Entity();
 };

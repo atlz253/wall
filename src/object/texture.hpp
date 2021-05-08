@@ -2,18 +2,18 @@
 #define TEXTURE
 
 #include <string>
-#include "renderer.hpp"
 
+class Renderer;
 typedef struct SDL_Rect SDL_Rect;
 typedef struct SDL_Texture SDL_Texture;
 
 /*
     Игровая текстура
 */
-class Texture final //TODO: попробовать переместить в entity.cpp? (неотдилимые объекты)
+class Texture final
 {
 private:
-    SDL_Texture *_texture = nullptr; // Текстура //TODO: shared_ptr?
+    SDL_Texture *_texture = nullptr; // Текстура
     SDL_Rect *_tile = nullptr;       // Область текстуры
 
 public:
@@ -53,7 +53,7 @@ public:
     */
     void setPosition(int x, int y);
 
-    friend void Renderer::operator<< (Entity *entity);
+    friend class Entity;
 
     ~Texture();
 };

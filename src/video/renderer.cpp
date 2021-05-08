@@ -23,6 +23,5 @@ SDL_Renderer *Renderer::getRender(void)
 
 void Renderer::operator<< (Entity *entity)
 {
-    if (SDL_RenderCopy(_renderer, entity->_texture->_texture, entity->_texture->_tile, entity->_geometry))
-        printError("SdlWindow: ошибка рендера.", SDL_GetError());
+    entity->_renderer(_renderer);
 }

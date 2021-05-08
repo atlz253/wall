@@ -21,7 +21,8 @@ add_library(WALL STATIC
                         src/video/renderer.cpp
                         src/video/window.cpp
                         src/wall/main.cpp
-                        src/wall/print.cpp)
+                        src/wall/print.cpp
+                        src/world/sky.cpp)
 target_link_libraries(WALL SDL2::Core SDL2::Image)
 target_include_directories(WALL 
                                 PUBLIC "${PROJECT_SOURCE_DIR}/src/object"

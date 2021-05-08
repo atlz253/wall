@@ -1,6 +1,7 @@
 #include "print.hpp"
 #include "texture.hpp"
 #include "SDL_image.h"
+#include "renderer.hpp"
 
 Texture::Texture(Renderer *renderer, std::string path)
 {
