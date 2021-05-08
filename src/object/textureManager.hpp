@@ -17,7 +17,7 @@ public:
     /*
         Получение объекта текстуры по ключу
     */
-    Texture *&operator[] (std::string name);
+    Texture *&key(std::string name);
 
     ~TextureManager();
 };

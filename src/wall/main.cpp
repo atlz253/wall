@@ -36,15 +36,15 @@ public:
 
 void Main::_gameLoop(void)
 {
-    TextureManager textures;
+    TextureManager *textures = new TextureManager();
 
-    textures["background"] = new Texture(_renderer, "res/sprites/background/bg.png");
-    textures["brick"] = new Texture(_renderer, "res/sprites/brick.png");
+    textures->key("background") = new Texture(_renderer, "res/sprites/background/bg.png");
+    textures->key("brick") = new Texture(_renderer, "res/sprites/brick.png");
 
     int aa = 0;
-    Entity *_background = new Entity(textures["background"], 1280, 720, 0, 0);
-    Entity *_brick = new Entity(textures["brick"], 64, 64, 0, 700);
-    Entity *_move = new Entity(textures["brick"], 64, 64, aa, 360);
+    Entity *_background = new Entity(textures->key("background"), 1280, 720, 0, 0);
+    Entity *_brick = new Entity(textures->key("brick"), 64, 64, 0, 700);
+    Entity *_move = new Entity(textures->key("brick"), 64, 64, aa, 360);
 
     while (_window->checkEvent())
     {
@@ -66,6 +66,8 @@ void Main::_gameLoop(void)
 
         _renderer->draw();
     }
+
+    delete textures;
 }
 
 Main::Main()

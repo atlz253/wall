@@ -7,7 +7,7 @@ TextureManager::TextureManager()
     printTrace("Инициализация менеджера текстур");
 }
 
-Texture *&TextureManager::operator[] (std::string name)
+Texture *&TextureManager::key(std::string name)
 {
     _iterator = _dict.find(name);
 
