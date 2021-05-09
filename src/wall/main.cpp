@@ -4,7 +4,7 @@
 #include "texture.hpp"
 #include "SDL_image.h"
 #include "textureManager.hpp"
-#include "sky.hpp"
+#include "background.hpp"
 
 class SdlSubSystem final
 {
@@ -40,31 +40,13 @@ void Main::_gameLoop(void)
 {
     TextureManager *textures = new TextureManager();
 
-    textures->key("background") = new Texture(_renderer, "res/Magic-Cliffs-Environment/PNG/sky.png");
-    textures->key("brick") = new Texture(_renderer, "res/sprites/brick.png");
-
-    int aa = 0;
-    Entity *_background = new Sky(textures->key("background"));
-    Entity *_brick = new Entity(textures->key("brick"), 64, 64, 0, 700);
-    Entity *_move = new Entity(textures->key("brick"), 64, 64, aa, 360);
+    Entity *_background = new Background(textures, _renderer);
 
     while (_window->checkEvent())
     {
-        /* updateRender(); */
         _renderer->clear();
 
         *_renderer << _background;
-
-        for (int i = 0; i < 1280 / 64 + 1; i++)
-        {
-            *_renderer << _brick;
-            _brick->setPosition(i * 64, 700);
-        }
-        _brick->setPosition(0, 700);
-
-        aa += 2;
-        _move->setPosition(aa, 360);
-        *_renderer << _move;
 
         _renderer->draw();
     }

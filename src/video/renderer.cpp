@@ -23,5 +23,5 @@ SDL_Renderer *Renderer::getRender(void)
 
 void Renderer::operator<< (Entity *entity)
 {
-    entity->_renderer(_renderer);
+    entity->_renderer(_renderer, entity->_texture, entity->_geometry);
 }

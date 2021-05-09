@@ -2,9 +2,9 @@
 #include "entity.hpp"
 #include "texture.hpp"
 
-void Entity::_renderer(SDL_Renderer *renderer)
+void Entity::_renderer(SDL_Renderer *renderer, Texture *texture, SDL_Rect *geometry)
 {
-    if (SDL_RenderCopy(renderer, _texture->_texture, _texture->_tile, _geometry))
+    if (SDL_RenderCopy(renderer, texture->_texture, texture->_tile, geometry))
         printError("SdlWindow: ошибка рендера.", SDL_GetError());
 }
 
@@ -12,14 +12,6 @@ Entity::Entity()
 {
     printTrace("Entity: создание сущности");
     _geometry = new SDL_Rect;
-}
-
-Entity::Entity(Texture *texture)
-{
-    printWarning("я здесь");
-    printTrace("Entity: создание сущности");
-    _geometry = new SDL_Rect;
-    _texture = texture;
 }
 
 Entity::Entity(Texture *texture, int w, int h, int x, int y)

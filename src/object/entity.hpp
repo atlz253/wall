@@ -17,16 +17,10 @@ protected:
     /*
         Прорисовка сущности
     */
-    virtual void _renderer(SDL_Renderer *renderer);
+    virtual void _renderer(SDL_Renderer *renderer, Texture *texture, SDL_Rect *geometry);
 
 public:
     Entity();
-
-    /*
-        Инициализация сущности:
-        Texture texture - текстура сущности
-    */
-    Entity(Texture *texture);
 
     /*
         Инициализация сущности:
