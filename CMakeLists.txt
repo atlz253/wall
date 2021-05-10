@@ -17,11 +17,13 @@ find_package(SDL2_image REQUIRED)
 add_library(WALL STATIC 
                         src/object/entity.cpp
                         src/object/layer.cpp
+                        src/object/rotateEntity.cpp
                         src/video/renderer.cpp
                         src/video/window.cpp
                         src/wall/main.cpp
                         src/wall/print.cpp
-                        src/world/background.cpp)
+                        src/world/background.cpp
+                        src/world/terrain.cpp)
 target_link_libraries(WALL SDL2::Core SDL2::Image)
 target_include_directories(WALL 
                                 PUBLIC "${PROJECT_SOURCE_DIR}/src/object"
