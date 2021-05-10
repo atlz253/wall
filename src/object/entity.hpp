@@ -71,8 +71,6 @@ protected:
     void _loadTexture(Renderer *renderer, std::string path);
 
 public:
-    Entity();
-
     /*
         Инициализация сущности:
         Texture texture - текстура сущности
@@ -118,6 +116,62 @@ public:
     virtual void renderer(void);
 
     ~Entity();
+};
+
+/*
+    Игровая сущность с возможностью вращения текстуры
+*/
+class RotateEntity : public Entity
+{
+protected:
+    double _angle = 0;                      // угол вращения
+    SDL_Point *_center = nullptr;           // Центр вращения сущности
+    SDL_RendererFlip _flip = SDL_FLIP_NONE; // Значение переворота текстуры
+public:
+    /*
+        Инициализация сущности:
+        Texture texture - текстура сущности
+        int w, h - ширина и высота сущности
+        int x, y - расположение сущности (по-умолчанию верхний левый угол)
+    */
+    RotateEntity(Renderer *renderer, std::string path, int w, int h, int x = 0, int y = 0) : Entity(renderer, path, w, h, x, y) {}
+
+    /*
+        Конструктор копирования
+        Копия будет указывать на ту же текстуру
+    */
+    RotateEntity(Entity *&entity, int x = 0, int y = 0) : Entity(entity, x, y) {}
+
+    /*
+        Отрисовка сущности на экран
+    */
+    void renderer(void) override;
+
+    /*
+        Изменение угла наклона
+        Без параметров угол установится в 0
+    */
+    void setAngle(const double angle = 0);
+
+    /*
+        Установка центра сущности
+        Без параметров центр будет установлен в верхнем левом углу
+    */
+    void setCenter(const int x = 0, const int y = 0);
+
+    /*
+        Установка параметров поворота текстуры
+        Без параметров текстура переворачиваться не будет
+        
+        Возможные параметры:
+        SDL_FLIP_NONE                           - текстура переворачиваться не будет
+        SDL_FLIP_VERTICAL                       - текстура отразиться по вертикали
+        SDL_FLIP_HORIZONTAL                     - текстура отразиться по горизонтали
+        SDL_FLIP_HORIZONTAL | SDL_FLIP_VERTICAL - текстура отразиться по диагонали
+    */
+    void setFlip(const SDL_RendererFlip flip = SDL_FLIP_NONE);
+
+    ~RotateEntity();
 };
 
 #endif

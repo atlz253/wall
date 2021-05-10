@@ -15,12 +15,6 @@ void Entity::_loadTexture(Renderer *renderer, std::string path)
         printError("Texture: не удалось загрузить текстуру.", IMG_GetError());
 }
 
-Entity::Entity()
-{
-    printTrace("Entity: создание сущности");
-    _geometry = new SDL_Rect;
-}
-
 Entity::Entity(Renderer *renderer, std::string path, int w, int h, int x, int y)
 {
     printTrace("Entity: создание сущности");
@@ -49,6 +43,17 @@ void Entity::setPosition(int x, int y)
 {
     _geometry->x = x;
     _geometry->y = y;
+}
+
+void Entity::setTile(int x, int y, int w, int h)
+{
+    if (!_tile)
+        _tile = new SDL_Rect;
+    
+    _tile->x = x;
+    _tile->y = y;
+    _tile->w = w;
+    _tile->h = h;
 }
 
 void Entity::process(void)
