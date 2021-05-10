@@ -6,10 +6,11 @@
 class Clouds : public Entity
 {
 private:
-    int _startPosition;
+    int _startPosition = 0; // Начальная позиция облака
+    int _frame = 0;         // Индикатор для отрисовки
 
 public:
-    Clouds(Renderer *renderer, std::string path, int w, int h, int x = 0, int y = 0) : Entity(renderer, path, w, h, x, y) 
+    Clouds(Renderer *renderer, std::string path, int w, int h, int x = 0, int y = 0) : Entity(renderer, path, w, h, x, y)
     {
         _startPosition = x;
     }
@@ -21,7 +22,11 @@ public:
 
     void process(void) override
     {
-        _geometry->x += 1;
+        if (++_frame == 3)
+        {
+            _geometry->x += 1;
+            _frame = 0;
+        }
     }
 
     void renderer(void) override
