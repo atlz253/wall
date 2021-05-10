@@ -1,65 +1,59 @@
+#include "print.hpp"
+#include "entity.hpp"
+#include "renderer.hpp"
 #include "background.hpp"
-#include "texture.hpp"
-#include "textureManager.hpp"
-#include <iostream>
 
-Background::Background(TextureManager *&textures, Renderer *&renderer)
+class Clouds : public Entity
 {
-    textures->key("sky") = new Texture(renderer, "res/Magic-Cliffs-Environment/PNG/sky.png");
-    textures->key("sea") = new Texture(renderer, "res/Magic-Cliffs-Environment/PNG/sea.png");
-    textures->key("clouds") = new Texture(renderer, "res/Magic-Cliffs-Environment/PNG/clouds.png");
+private:
+    int _startPosition;
 
-    _texture = textures->key("sky");
-    _geometry->h = 608;
-    _geometry->w = 124;
-    _geometry->y = 0;
+public:
+    Clouds(Renderer *renderer, std::string path, int w, int h, int x = 0, int y = 0) //FIXME: что за фигня с конструкторами??? Я не смогу использовать конструкторы из Entity?!
+    {
+        setSize(w, h);
+        setPosition(x, y);
+        _startPosition = x;
+        _loadTexture(renderer, path);
+    }
 
-    _seaTexture = textures->key("sea");
-    _seaGeometry = new SDL_Rect;
-    _seaGeometry->h = 192;
-    _seaGeometry->w = 124;
-    _seaGeometry->y = _geometry->h;
+    void process(void) override
+    {
+        _geometry->x += 1;
+    }
 
-    _cloudsTexture = textures->key("clouds");
-    _cloudsGeometry = new SDL_Rect;
-    _cloudsGeometry->h = 472;
-    _cloudsGeometry->w = 1088;
-    _cloudsGeometry->y = 136;
-    _cloudsGeometry->x = 0;
-}
+    void renderer(void) override
+    {
+        if (_geometry->x <= 1280)
+            Entity::renderer();
 
-void Background::_renderer(SDL_Renderer *renderer, Texture *texture, SDL_Rect *geometry)
+        if (_geometry->x - _startPosition == 1088)
+            _geometry->x = _startPosition;
+    }
+};
+
+Background::Background(Renderer *renderer)
 {
-    _geometry->x = 0;
-    _seaGeometry->x = 0;
+    Entity *p;
 
-    for (int i = 0; i < 11; i++)
-    {
-        _geometry->x = i * _geometry->w;
-        _seaGeometry->x = i * _seaGeometry->w;
+    printTrace("Background: инициализация неба");
+    p = new Entity(renderer, "res/Magic-Cliffs-Environment/PNG/sky.png", 124, 608);
+    _list.push_back(p);
+    for (int i = 1; i < 11; i++)
+        _list.push_back(new Entity(p, i * 124));
 
-        Entity::_renderer(renderer, _texture, _geometry);
-        Entity::_renderer(renderer, _seaTexture, _seaGeometry);
-    }
+    printTrace("Background: инициализация моря");
+    p = new Entity(renderer, "res/Magic-Cliffs-Environment/PNG/sea.png", 124, 192, 0, 608);
+    _list.push_back(p);
+    for (int i = 1; i < 11; i++)
+        _list.push_back(new Entity(p, i * 124, 608));
 
-    _cloudsAnimation += 1;
-
-    if (_cloudsAnimation > 0)
-    {
-        _cloudsGeometry->x = _cloudsAnimation - 1088;
-        Entity::_renderer(renderer, _cloudsTexture, _cloudsGeometry);
-    }
-
-    _cloudsGeometry->x = 0 + _cloudsAnimation;
-    Entity::_renderer(renderer, _cloudsTexture, _cloudsGeometry);
-
-    if (_cloudsAnimation < 192)
-    {
-        _cloudsGeometry->x = 1088 + _cloudsAnimation;
-        Entity::_renderer(renderer, _cloudsTexture, _cloudsGeometry);
-    }
-    else if (_cloudsAnimation == 1088)
-    {
-        _cloudsAnimation = 0;
-    }
+    printTrace("Background: инициализация облаков");
+    // p = new Clouds(renderer, "res/Magic-Cliffs-Environment/PNG/clouds.png", 1088, 472, 0, 136);
+    // _list.push_back(p);
+    // _list.push_back(new Clouds(p, -1088, 136));
+    // _list.push_back(new Clouds(p, 1088, 136));
+    _list.push_back(new Clouds(renderer, "res/Magic-Cliffs-Environment/PNG/clouds.png", 1088, 472, 0, 136));
+    _list.push_back(new Clouds(renderer, "res/Magic-Cliffs-Environment/PNG/clouds.png", 1088, 472, -1088, 136));
+    _list.push_back(new Clouds(renderer, "res/Magic-Cliffs-Environment/PNG/clouds.png", 1088, 472, 1088, 136));
 }

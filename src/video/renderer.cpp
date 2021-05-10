@@ -11,7 +11,7 @@ void Renderer::clear(void)
     SDL_RenderClear(_renderer);
 }
 
-void Renderer::draw(void) 
+void Renderer::draw(void)
 {
     SDL_RenderPresent(_renderer);
 }
@@ -19,9 +19,4 @@ void Renderer::draw(void)
 SDL_Renderer *Renderer::getRender(void)
 {
     return _renderer;
-}
-
-void Renderer::operator<< (Entity *entity)
-{
-    entity->_renderer(_renderer, entity->_texture, entity->_geometry);
 }

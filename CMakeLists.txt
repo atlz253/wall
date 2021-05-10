@@ -16,8 +16,7 @@ find_package(SDL2_image REQUIRED)
 # библиотека основных компонентов
 add_library(WALL STATIC 
                         src/object/entity.cpp
-                        src/object/texture.cpp
-                        src/object/textureManager.cpp
+                        src/object/layer.cpp
                         src/video/renderer.cpp
                         src/video/window.cpp
                         src/wall/main.cpp

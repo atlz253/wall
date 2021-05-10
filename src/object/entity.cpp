@@ -1,11 +1,18 @@
 #include "print.hpp"
 #include "entity.hpp"
-#include "texture.hpp"
+#include "SDL_image.h"
+#include "renderer.hpp"
 
-void Entity::_renderer(SDL_Renderer *renderer, Texture *texture, SDL_Rect *geometry)
+void Entity::_loadTexture(Renderer *renderer, std::string path)
 {
-    if (SDL_RenderCopy(renderer, texture->_texture, texture->_tile, geometry))
-        printError("SdlWindow: ошибка рендера.", SDL_GetError());
+    printTrace("Entity: загрузка текстуры", path);
+    if (_texture)
+        SDL_DestroyTexture(_texture);
+
+    _texture = IMG_LoadTexture(renderer->getRender(), path.c_str());
+
+    if (!_texture)
+        printError("Texture: не удалось загрузить текстуру.", IMG_GetError());
 }
 
 Entity::Entity()
@@ -14,26 +21,22 @@ Entity::Entity()
     _geometry = new SDL_Rect;
 }
 
-Entity::Entity(Texture *texture, int w, int h, int x, int y)
+Entity::Entity(Renderer *renderer, std::string path, int w, int h, int x, int y)
 {
     printTrace("Entity: создание сущности");
     _geometry = new SDL_Rect;
-    _texture = texture;
     setSize(w, h);
     setPosition(x, y);
+    _loadTexture(renderer, path);
 }
 
-Entity::Entity(Entity *entity)
+Entity::Entity(Entity *&entity, int x, int y)
 {
-    printTrace("Entity: копирование сущности");
+    _texture = entity->_texture;
 
     _geometry = new SDL_Rect;
-    _geometry->h = entity->_geometry->h;
-    _geometry->w = entity->_geometry->w;
-    _geometry->x = entity->_geometry->x;
-    _geometry->y = entity->_geometry->y;
-
-    _texture = entity->_texture;
+    setSize(entity->_geometry->w, entity->_geometry->h);
+    setPosition(x, y);
 }
 
 void Entity::setSize(int w, int h)
@@ -48,8 +51,21 @@ void Entity::setPosition(int x, int y)
     _geometry->y = y;
 }
 
+void Entity::process(void)
+{
+}
+
+void Entity::renderer(void)
+{
+    if (SDL_RenderCopy(_texture->renderer, _texture, _tile, _geometry))
+        printError("SdlWindow: ошибка рендера.", SDL_GetError());
+}
+
 Entity::~Entity()
 {
-    printTrace("Entity: геометрии сущности");
+    printTrace("Entity: удаление геометрии сущности");
     delete _geometry;
+
+    printTrace("Texture: удаление текстуры");
+    SDL_DestroyTexture(_texture);
 }

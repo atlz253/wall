@@ -33,12 +33,7 @@ public:
     */
     SDL_Renderer *getRender(void);
 
-    /*
-        Операция прорисовки сущности на рендер
-    */
-    void operator<< (Entity *entity);
-
-    friend void SdlWindow::operator>> (Renderer *renderer);
+    friend void SdlWindow::operator>>(Renderer *renderer);
 
     ~Renderer();
 };

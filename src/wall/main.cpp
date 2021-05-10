@@ -1,9 +1,9 @@
 #include "main.hpp"
 #include "print.hpp"
+#include "window.hpp"
 #include "entity.hpp"
-#include "texture.hpp"
 #include "SDL_image.h"
-#include "textureManager.hpp"
+#include "renderer.hpp"
 #include "background.hpp"
 
 class SdlSubSystem final
@@ -38,20 +38,16 @@ public:
 
 void Main::_gameLoop(void)
 {
-    TextureManager *textures = new TextureManager();
-
-    Entity *_background = new Background(textures, _renderer);
+    Layer *background = new Background(_renderer);
 
     while (_window->checkEvent())
     {
         _renderer->clear();
 
-        *_renderer << _background;
+        background->renderer();
 
         _renderer->draw();
     }
-
-    delete textures;
 }
 
 Main::Main()
