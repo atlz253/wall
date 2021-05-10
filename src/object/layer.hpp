@@ -1,3 +1,6 @@
+#ifndef LAYER
+#define LAYER
+
 #include <list>
 
 class Entity;
@@ -21,3 +24,5 @@ public:
 
     ~Layer();
 };
+
+#endif
