@@ -55,4 +55,7 @@ Background::Background(Renderer *renderer)
     _list.push_back(p);
     _list.push_back(new Clouds(p, -1088, 136));
     _list.push_back(new Clouds(p, 1088, 136));
+
+    printTrace("Background: инициализация далеких земель");
+    _list.push_back(new Entity(renderer, "res/Magic-Cliffs-Environment/PNG/far-grounds.png", 1232, 220, 24, 388));
 }
