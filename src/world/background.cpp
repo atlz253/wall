@@ -9,12 +9,14 @@ private:
     int _startPosition;
 
 public:
-    Clouds(Renderer *renderer, std::string path, int w, int h, int x = 0, int y = 0) //FIXME: что за фигня с конструкторами??? Я не смогу использовать конструкторы из Entity?!
+    Clouds(Renderer *renderer, std::string path, int w, int h, int x = 0, int y = 0) : Entity(renderer, path, w, h, x, y) 
     {
-        setSize(w, h);
-        setPosition(x, y);
         _startPosition = x;
-        _loadTexture(renderer, path);
+    }
+
+    Clouds(Entity *entity, int x = 0, int y = 0) : Entity(entity, x, y)
+    {
+        _startPosition = x;
     }
 
     void process(void) override
@@ -49,11 +51,8 @@ Background::Background(Renderer *renderer)
         _list.push_back(new Entity(p, i * 124, 608));
 
     printTrace("Background: инициализация облаков");
-    // p = new Clouds(renderer, "res/Magic-Cliffs-Environment/PNG/clouds.png", 1088, 472, 0, 136);
-    // _list.push_back(p);
-    // _list.push_back(new Clouds(p, -1088, 136));
-    // _list.push_back(new Clouds(p, 1088, 136));
-    _list.push_back(new Clouds(renderer, "res/Magic-Cliffs-Environment/PNG/clouds.png", 1088, 472, 0, 136));
-    _list.push_back(new Clouds(renderer, "res/Magic-Cliffs-Environment/PNG/clouds.png", 1088, 472, -1088, 136));
-    _list.push_back(new Clouds(renderer, "res/Magic-Cliffs-Environment/PNG/clouds.png", 1088, 472, 1088, 136));
+    p = new Clouds(renderer, "res/Magic-Cliffs-Environment/PNG/clouds.png", 1088, 472, 0, 136);
+    _list.push_back(p);
+    _list.push_back(new Clouds(p, -1088, 136));
+    _list.push_back(new Clouds(p, 1088, 136));
 }
