@@ -31,6 +31,26 @@ Entity::Entity(Entity *&entity, int x, int y)
     _geometry = new SDL_Rect;
     setSize(entity->_geometry->w, entity->_geometry->h);
     setPosition(x, y);
+
+    if (entity->_tile)
+    {
+        _tile = new SDL_Rect;
+        _tile->h = entity->_tile->h;
+        _tile->w = entity->_tile->w;
+        _tile->x = entity->_tile->x;
+        _tile->y = entity->_tile->y;
+    }
+}
+
+Entity::Entity(Entity *&entity, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH, int tileX, int tileY)
+{
+    _texture = entity->_texture;
+
+    _geometry = new SDL_Rect;
+    setSize(entityW, entityH);
+    setPosition(entityX, entityY);
+
+    setTile(tileX, tileY, tileW, tileH);
 }
 
 void Entity::setSize(int w, int h)
@@ -49,7 +69,7 @@ void Entity::setTile(int x, int y, int w, int h)
 {
     if (!_tile)
         _tile = new SDL_Rect;
-    
+
     _tile->x = x;
     _tile->y = y;
     _tile->w = w;

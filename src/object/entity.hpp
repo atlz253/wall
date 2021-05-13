@@ -86,6 +86,16 @@ public:
     Entity(Entity *&entity, int x = 0, int y = 0);
 
     /*
+        Конструктор копирования
+        Копия будет указывать на ту же текстуру
+        int entityW, entityH - ширина и высота сущности
+        int entityX, entityY - расположение сущности
+        int tileW, tileH - ширина и высота области текстуры
+        int tileX, tileY - располажение области текстуры
+    */
+    Entity(Entity *&entity, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH, int tileX, int tileY);
+
+    /*
         Изменение размера сущности
         int w, h - ширина и высота сущности
     */
@@ -141,6 +151,17 @@ public:
         Копия будет указывать на ту же текстуру
     */
     RotateEntity(Entity *&entity, int x = 0, int y = 0) : Entity(entity, x, y) {}
+
+    /*
+        Конструктор копирования
+        Копия будет указывать на ту же текстуру
+        int entityW, entityH - ширина и высота сущности
+        int entityX, entityY - расположение сущности
+        int tileW, tileH - ширина и высота области текстуры
+        int tileX, tileY - располажение области текстуры
+        SDL_RendererFlip flip - параметр поворота текстуры
+    */
+    RotateEntity(Entity *&entity, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH, int tileX, int tileY, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
     /*
         Отрисовка сущности на экран

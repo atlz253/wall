@@ -3,6 +3,7 @@
 #include "window.hpp"
 #include "entity.hpp"
 #include "SDL_image.h"
+#include "terrain.hpp"
 #include "renderer.hpp"
 #include "background.hpp"
 
@@ -38,13 +39,16 @@ public:
 
 void Main::_gameLoop(void)
 {
-    Layer *background = new Background(_renderer);
+    Layer 
+        *background = new Background(_renderer),
+        *terrain = new Terrain(_renderer);
 
     while (_window->checkEvent())
     {
         _renderer->clear();
 
         background->renderer();
+        terrain->renderer();
 
         _renderer->draw();
     }
@@ -57,7 +61,7 @@ Main::Main()
 int Main::run(void)
 {
     SdlSubSystem *sdlSubSystem = new SdlSubSystem();
-    _window = new SdlWindow();
+    _window = new SdlWindow(); //TODO: SDL_CreateWindowAndRenderer
     _renderer = new Renderer();
     *_window >> _renderer;
 
