@@ -15,6 +15,10 @@ void Entity::_loadTexture(Renderer *renderer, std::string path)
         printError("Texture: не удалось загрузить текстуру.", IMG_GetError());
 }
 
+Entity::Entity()
+{
+}
+
 Entity::Entity(Renderer *renderer, std::string path, int w, int h, int x, int y)
 {
     printTrace("Entity: создание сущности");

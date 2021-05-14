@@ -1,5 +1,31 @@
 #include "print.hpp"
 #include "entity.hpp"
+#include "renderer.hpp"
+
+RotateEntity::RotateEntity(Renderer *renderer, std::string path, int w, int h, int x, int y, SDL_RendererFlip flip) : Entity(renderer, path, w, h, x, y)
+{
+    _flip = flip;
+}
+
+RotateEntity::RotateEntity(RotateEntity *&entity, SDL_RendererFlip flip, int x, int y)
+{
+    _texture = entity->_texture;
+
+    _geometry = new SDL_Rect;
+    setSize(entity->_geometry->w, entity->_geometry->h);
+    setPosition(x, y);
+
+    if (entity->_tile)
+    {
+        _tile = new SDL_Rect;
+        _tile->h = entity->_tile->h;
+        _tile->w = entity->_tile->w;
+        _tile->x = entity->_tile->x;
+        _tile->y = entity->_tile->y;
+    }
+
+    _flip = flip;
+}
 
 RotateEntity::RotateEntity(Entity *&entity, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH, int tileX, int tileY, SDL_RendererFlip flip) : Entity::Entity(entity, entityW, entityH, entityX, entityY, tileW, tileH, tileX, tileY)
 {

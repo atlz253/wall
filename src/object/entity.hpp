@@ -71,6 +71,8 @@ protected:
     void _loadTexture(Renderer *renderer, std::string path);
 
 public:
+    Entity();
+
     /*
         Инициализация сущности:
         Texture texture - текстура сущности
@@ -143,14 +145,15 @@ public:
         Texture texture - текстура сущности
         int w, h - ширина и высота сущности
         int x, y - расположение сущности (по-умолчанию верхний левый угол)
+        SDL_RendererFlip flip - параметр поворота текстуры
     */
-    RotateEntity(Renderer *renderer, std::string path, int w, int h, int x = 0, int y = 0) : Entity(renderer, path, w, h, x, y) {}
+    RotateEntity(Renderer *renderer, std::string path, int w, int h, int x = 0, int y = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
     /*
         Конструктор копирования
         Копия будет указывать на ту же текстуру
     */
-    RotateEntity(Entity *&entity, int x = 0, int y = 0) : Entity(entity, x, y) {}
+    RotateEntity(RotateEntity *&entity, SDL_RendererFlip flip, int x = 0, int y = 0);
 
     /*
         Конструктор копирования
