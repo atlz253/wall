@@ -16,18 +16,11 @@ private:
 
     SDL_Window *_window = nullptr;     // Основное окно игры
 
-    SDL_Event _event; // Обработчик событий. // TODO: убрать
-
 public:
     /*
         Инициализация окна
     */
     SdlWindow();
-
-    /*
-        Проверка событий SDL
-    */
-    bool checkEvent(void);
 
     /*
         Операция содания рендера

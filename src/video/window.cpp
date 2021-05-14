@@ -21,22 +21,6 @@ SdlWindow::SdlWindow()
     }
 }
 
-bool SdlWindow::checkEvent()
-{
-    printTrace("SdlWindow: проверка события");
-
-    while (SDL_PollEvent(&_event)) //TODO: использовать SDL_WaitEvent
-    {
-        if (_event.type == SDL_QUIT)
-        {
-            printTrace("SdlWindow: SDL_Quit event");
-            return false;
-        }
-    }
-
-    return true;
-}
-
 void SdlWindow::operator>> (Renderer *renderer)
 {
     printTrace("SdlWindow: создание рендера");

@@ -1,11 +1,13 @@
 #include "main.hpp"
 #include "print.hpp"
-#include "window.hpp"
+#include "action.hpp"
 #include "entity.hpp"
+#include "window.hpp"
 #include "SDL_image.h"
 #include "terrain.hpp"
 #include "renderer.hpp"
 #include "background.hpp"
+#include "eventSubSystem.hpp"
 
 class SdlSubSystem final
 {
@@ -18,6 +20,11 @@ public:
             printError("Ошибка инициализации SDL2:", SDL_GetError());
             exit(EXIT_FAILURE);
         }
+
+        /*
+            Не отключать композитор рабочих столов на linux дистрибутивах
+        */
+        SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
 
         printTrace("SdlSubSystem: инициализация SDL2_Image");
         if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
@@ -39,19 +46,24 @@ public:
 
 void Main::_gameLoop(void)
 {
+    EventSubSystem *events = new EventSubSystem();
     Layer 
         *background = new Background(_renderer),
-        *terrain = new Terrain(_renderer);
+        *terrain = new Terrain(_renderer),
+        *action = new Action(_renderer);
 
-    while (_window->checkEvent())
+    while (events->checkEvents())
     {
         _renderer->clear();
 
         background->renderer();
+        action->renderer();
         terrain->renderer();
 
         _renderer->draw();
     }
+
+    delete events;
 }
 
 Main::Main()

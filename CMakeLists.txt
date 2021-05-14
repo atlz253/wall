@@ -15,6 +15,7 @@ find_package(SDL2_image REQUIRED)
 
 # библиотека основных компонентов
 add_library(WALL STATIC 
+                        src/event/eventSubSystem.cpp
                         src/object/entity.cpp
                         src/object/layer.cpp
                         src/object/rotateEntity.cpp
@@ -26,6 +27,7 @@ add_library(WALL STATIC
                         src/world/terrain.cpp)
 target_link_libraries(WALL SDL2::Core SDL2::Image)
 target_include_directories(WALL 
+                                PUBLIC "${PROJECT_SOURCE_DIR}/src/event"
                                 PUBLIC "${PROJECT_SOURCE_DIR}/src/object"
                                 PUBLIC "${PROJECT_SOURCE_DIR}/src/video"
                                 PUBLIC "${PROJECT_SOURCE_DIR}/src/wall"
