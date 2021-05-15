@@ -2,18 +2,38 @@
 #include "entity.hpp"
 #include "renderer.hpp"
 
-RotateEntity::RotateEntity(Renderer *renderer, std::string path, int w, int h, int x, int y, SDL_RendererFlip flip) : Entity(renderer, path, w, h, x, y)
+RotateEntity::RotateEntity() : Entity::Entity()
 {
+}
+
+RotateEntity::RotateEntity(SDL_Texture *texture, int w, int h, int x, int y, SDL_RendererFlip flip) : Entity(texture, w, h, x, y)
+{
+    _center = new SDL_Point;
+    _center->x = _geometry->x + _geometry->w/2;
+    _center->y = _geometry->y + _geometry->h/2;
+
     _flip = flip;
 }
 
-RotateEntity::RotateEntity(RotateEntity *&entity, SDL_RendererFlip flip, int x, int y)
+RotateEntity::RotateEntity(Renderer *renderer, std::string path, int w, int h, int x, int y, SDL_RendererFlip flip) : Entity(renderer, path, w, h, x, y)
+{
+    _center = new SDL_Point;
+    _center->x = _geometry->x + _geometry->w/2;
+    _center->y = _geometry->y + _geometry->h/2;
+
+    _flip = flip;
+}
+
+RotateEntity::RotateEntity(RotateEntity *&entity, SDL_RendererFlip flip, int x, int y) : Entity::Entity()
 {
     _texture = entity->_texture;
 
-    _geometry = new SDL_Rect;
     setSize(entity->_geometry->w, entity->_geometry->h);
     setPosition(x, y);
+
+    _center = new SDL_Point;
+    _center->x = _geometry->x + _geometry->w/2;
+    _center->y = _geometry->y + _geometry->h/2;
 
     if (entity->_tile)
     {
@@ -48,11 +68,15 @@ void RotateEntity::setCenter(const int x, const int y)
     if (!_center)
         _center = new SDL_Point;
 
-    _center->x = x;
-    _center->y = y;
+    _center->x = _geometry->x + x;
+    _center->y = _geometry->y + y;
 }
 
 void RotateEntity::setFlip(const SDL_RendererFlip flip)
 {
     _flip = flip;
+}
+
+RotateEntity::~RotateEntity()
+{
 }

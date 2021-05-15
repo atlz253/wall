@@ -17,22 +17,28 @@ void Entity::_loadTexture(Renderer *renderer, std::string path)
 
 Entity::Entity()
 {
-}
-
-Entity::Entity(Renderer *renderer, std::string path, int w, int h, int x, int y)
-{
     printTrace("Entity: создание сущности");
     _geometry = new SDL_Rect;
+}
+
+Entity::Entity(SDL_Texture *texture, int w, int h, int x, int y) : Entity::Entity()
+{
+    setSize(w, h);
+    setPosition(x, y);
+    _texture = texture;
+}
+
+Entity::Entity(Renderer *renderer, std::string path, int w, int h, int x, int y) : Entity::Entity()
+{
     setSize(w, h);
     setPosition(x, y);
     _loadTexture(renderer, path);
 }
 
-Entity::Entity(Entity *&entity, int x, int y)
+Entity::Entity(Entity *&entity, int x, int y) : Entity::Entity()
 {
     _texture = entity->_texture;
 
-    _geometry = new SDL_Rect;
     setSize(entity->_geometry->w, entity->_geometry->h);
     setPosition(x, y);
 
@@ -46,11 +52,10 @@ Entity::Entity(Entity *&entity, int x, int y)
     }
 }
 
-Entity::Entity(Entity *&entity, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH, int tileX, int tileY)
+Entity::Entity(Entity *&entity, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH, int tileX, int tileY) : Entity::Entity()
 {
     _texture = entity->_texture;
 
-    _geometry = new SDL_Rect;
     setSize(entityW, entityH);
     setPosition(entityX, entityY);
 
@@ -94,7 +99,4 @@ Entity::~Entity()
 {
     printTrace("Entity: удаление геометрии сущности");
     delete _geometry;
-
-    printTrace("Texture: удаление текстуры");
-    SDL_DestroyTexture(_texture);
 }
