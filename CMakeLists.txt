@@ -21,6 +21,7 @@ add_library(WALL STATIC
                         src/object/rotateEntity.cpp
                         src/video/renderer.cpp
                         src/video/window.cpp
+                        src/wall/globals.cpp
                         src/wall/main.cpp
                         src/wall/print.cpp
                         src/world/background.cpp
