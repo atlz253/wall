@@ -12,7 +12,7 @@ class Renderer;
 class Layer
 {
 protected:
-    std::list<Entity *> _list;               // Список используемых текстур
+    std::list<Entity *> _list;               // Список сущностей
     std::list<Entity *>::iterator _iterator; // Итератор для работы со списком
 public:
     Layer();
