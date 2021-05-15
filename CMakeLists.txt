@@ -20,17 +20,22 @@ add_library(WALL STATIC
                         src/object/layer.cpp
                         src/object/rotateEntity.cpp
                         src/object/textureManager.cpp
+                        src/units/base.cpp
+                        src/units/knight.cpp
+                        src/units/unit.cpp
                         src/video/renderer.cpp
                         src/video/window.cpp
                         src/wall/globals.cpp
                         src/wall/main.cpp
                         src/wall/print.cpp
+                        src/world/action.cpp
                         src/world/background.cpp
                         src/world/terrain.cpp)
 target_link_libraries(WALL SDL2::Core SDL2::Image)
 target_include_directories(WALL 
                                 PUBLIC "${PROJECT_SOURCE_DIR}/src/event"
                                 PUBLIC "${PROJECT_SOURCE_DIR}/src/object"
+                                PUBLIC "${PROJECT_SOURCE_DIR}/src/units"
                                 PUBLIC "${PROJECT_SOURCE_DIR}/src/video"
                                 PUBLIC "${PROJECT_SOURCE_DIR}/src/wall"
                                 PUBLIC "${PROJECT_SOURCE_DIR}/src/world")

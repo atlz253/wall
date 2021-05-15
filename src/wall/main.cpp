@@ -51,19 +51,22 @@ void Main::_gameLoop(void)
     Layer 
         *background = new Background(renderer),
         *terrain = new Terrain(renderer);
-    
+    Action *action = new Action(renderer);    
 
     while (events->checkEvents())
     {
         renderer->clear();
 
         background->renderer();
-        
+        action->renderer();
         terrain->renderer();
 
         renderer->draw();
     }
 
+    delete background;
+    delete terrain;
+    delete action;
     delete events;
 }
 
