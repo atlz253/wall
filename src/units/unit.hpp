@@ -23,6 +23,8 @@ class Unit : public RotateEntity
       Метод вызывается при каждой перерисовке кадра перед отрисовкой на экран.
       Здесь происходит изменение состояния и параметров сущности.
   */
+  void process() override;
+
   virtual void process(Unit *next);
 
   /*

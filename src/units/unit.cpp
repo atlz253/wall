@@ -1,8 +1,25 @@
 #include "unit.hpp"
 
+#include "SDL2/SDL.h"
+#include "globals.hpp"
+#include "renderer.hpp"
+
+#define VISION 1 // "лучи" зрения юнитов
+
 Unit::Unit() : RotateEntity::RotateEntity() {}
 
-void Unit::process(Unit *next) {}
+void Unit::process()
+{
+  if (VISION)
+  {
+    SDL_SetRenderDrawColor(renderer->getRender(), 255, 0, 0, 255);
+    SDL_RenderDrawLine(renderer->getRender(), _center->x, _center->y, getFront(), _center->y);
+    SDL_SetRenderDrawColor(renderer->getRender(), 0, 255, 0, 255);
+    SDL_RenderDrawLine(renderer->getRender(), _center->x, _center->y, getBack(), _center->y);
+  }
+}
+
+void Unit::process(Unit *next) { Unit::process(); }
 
 void Unit::getDamage(unsigned short int damage)
 {
