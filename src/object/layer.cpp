@@ -10,7 +10,7 @@ void Layer::renderer(void)
   for (_iterator = _list.begin(); _iterator != _list.end(); _iterator++)
   {
     (*_iterator)->process();
-    (*_iterator)->renderer();
+    (*_iterator)->render();
   }
 }
 

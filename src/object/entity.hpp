@@ -69,7 +69,7 @@ class Entity
   /*
       Загрузка текстуры
   */
-  void _loadTexture(Renderer *renderer, std::string path);  // TODO: убрать
+  void _loadTexture(Renderer *render, std::string path);  // TODO: убрать
 
  public:
   Entity();
@@ -88,7 +88,7 @@ class Entity
       int w, h - ширина и высота сущности
       int x, y - расположение сущности (по-умолчанию верхний левый угол)
   */
-  Entity(Renderer *renderer, std::string path, int w, int h, int x = 0, int y = 0);  // TODO: убрать
+  Entity(Renderer *render, std::string path, int w, int h, int x = 0, int y = 0);  // TODO: убрать
 
   /*
       Конструктор копирования
@@ -135,7 +135,7 @@ class Entity
   /*
       Отрисовка сущности на экран
   */
-  virtual void renderer(void);
+  virtual void render(void);
 
   ~Entity();
 };
@@ -168,7 +168,7 @@ class RotateEntity : public Entity
       int x, y - расположение сущности (по-умолчанию верхний левый угол)
       SDL_RendererFlip flip - параметр поворота текстуры
   */
-  RotateEntity(Renderer *renderer, std::string path, int w, int h, int x = 0, int y = 0,
+  RotateEntity(Renderer *render, std::string path, int w, int h, int x = 0, int y = 0,
                SDL_RendererFlip flip = SDL_FLIP_NONE);  // TODO: убрать
 
   /*
@@ -192,7 +192,7 @@ class RotateEntity : public Entity
   /*
       Отрисовка сущности на экран
   */
-  void renderer(void) override;
+  void render(void) override;
 
   /*
       Изменение угла наклона

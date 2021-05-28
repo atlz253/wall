@@ -27,9 +27,9 @@ class Clouds : public Entity
     }
   }
 
-  void renderer(void) override
+  void render(void) override
   {
-    if (_geometry->x <= 1280) Entity::renderer();
+    if (_geometry->x <= 1280) Entity::render();
 
     if (_geometry->x - _startPosition == 1088) _geometry->x = _startPosition;
   }

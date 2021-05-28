@@ -47,8 +47,8 @@ void Action::renderer(void)
 {
   node *cur = _listStart;
 
-  _baseLeft->renderer();
-  _baseRight->renderer();
+  _baseLeft->render();
+  _baseRight->render();
 
   while (cur)
   {
@@ -69,7 +69,7 @@ void Action::renderer(void)
     else
       curUnit->process(_baseRight);
 
-    cur->unit->renderer();
+    cur->unit->render();
     cur = cur->next;
   }
 }
