@@ -52,7 +52,7 @@ Knight::Knight(int x, SDL_RendererFlip flip) : Unit::Unit()
 
   _hp = 100;
   _speed = 4;
-  _backRange = 10;
+  _backRange = 35;
   _frontRange = 30;
 
   if (!textures->key("knightRun")) textures->loadTexture("knightRun", "res/Knight/noBKG_KnightRun_strip.png");
@@ -70,13 +70,14 @@ Knight::Knight(int x, SDL_RendererFlip flip) : Unit::Unit()
   _tile->y = 0;
 
   _center = new SDL_Point;
-  _center->x = _geometry->x + _geometry->w / 2;
-  _center->y = _geometry->y + _geometry->h / 2;
+  _center->x = _geometry->x + _geometry->w / 2 - 5;
+  _center->y = _geometry->y + _geometry->h / 2 - 10;
   _flip = flip;
 }
 
 void Knight::process(Unit *next)
 {
+  Unit::process(next);
   std::cout << next->getFront() << ' ' << getFront() << std::endl;
   if (next->getBack() == getFront())
   {
@@ -225,9 +226,9 @@ void Knight::process(Unit *next)
 int Knight::getBack(void)
 {
   if (_flip)
-    return _center->x - _backRange;
-  else
     return _center->x + _backRange;
+  else
+    return _center->x - _backRange;
 }
 
 int Knight::getFront(void)

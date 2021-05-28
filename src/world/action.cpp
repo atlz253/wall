@@ -16,8 +16,8 @@ Action::Action(Renderer *renderer)
   _baseLeft = new Base(-96, SDL_FLIP_HORIZONTAL);
   _baseRight = new Base(1088);
 
-  //  _add(new Knight(300));
-  //  _add(new Knight(400));
+//  _add(new Knight(300));
+//  _add(new Knight(400));
   _add(new Knight(500));
   _add(new Knight(800, SDL_FLIP_HORIZONTAL));
   //  _add(new Knight(1000, SDL_FLIP_HORIZONTAL));
@@ -47,7 +47,10 @@ void Action::renderer(void)
 {
   node *cur = _listStart;
 
+  _baseLeft->process();
   _baseLeft->render();
+
+  _baseRight->process();
   _baseRight->render();
 
   while (cur)
