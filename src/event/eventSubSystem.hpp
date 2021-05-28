@@ -5,15 +5,15 @@ typedef union SDL_Event SDL_Event;
 */
 class EventSubSystem final
 {
-private:
-    SDL_Event *_event; // Обработчик событий
-public:
-    EventSubSystem();
+ private:
+  SDL_Event *_event;  // Обработчик событий
+ public:
+  EventSubSystem();
 
-    /*
-        Проверка новых игровых событий
-    */
-    bool checkEvents(void);
+  /*
+      Проверка новых игровых событий
+  */
+  bool checkEvents(void);
 
-    ~EventSubSystem();
+  ~EventSubSystem();
 };

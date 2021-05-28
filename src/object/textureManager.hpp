@@ -11,23 +11,23 @@ typedef struct SDL_Texture SDL_Texture;
 */
 class TextureManager final
 {
-private:
-    std::map<std::string, SDL_Texture*> _dict; // контейнер текстур
-    std::map<std::string, SDL_Texture*> :: iterator _iterator; // итератор для работы с контейнером
-public:
-    TextureManager();
+ private:
+  std::map<std::string, SDL_Texture *> _dict;                // контейнер текстур
+  std::map<std::string, SDL_Texture *>::iterator _iterator;  // итератор для работы с контейнером
+ public:
+  TextureManager();
 
-    /*
-        Загрузка текстуры
-    */
-    void loadTexture(std::string name, std::string path);
+  /*
+      Загрузка текстуры
+  */
+  void loadTexture(std::string name, std::string path);
 
-    /*
-        Получение объекта текстуры по ключу
-    */
-    SDL_Texture *&key(std::string name);
+  /*
+      Получение объекта текстуры по ключу
+  */
+  SDL_Texture *&key(std::string name);
 
-    ~TextureManager();
+  ~TextureManager();
 };
 
 #endif

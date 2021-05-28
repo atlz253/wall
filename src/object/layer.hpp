@@ -11,18 +11,18 @@ class Renderer;
 */
 class Layer
 {
-protected:
-    std::list<Entity *> _list;               // Список сущностей
-    std::list<Entity *>::iterator _iterator; // Итератор для работы со списком
-public:
-    Layer();
+ protected:
+  std::list<Entity *> _list;                // Список сущностей
+  std::list<Entity *>::iterator _iterator;  // Итератор для работы со списком
+ public:
+  Layer();
 
-    /*
-        Отрисовка элементов слоя
-    */
-    virtual void renderer(void);
+  /*
+      Отрисовка элементов слоя
+  */
+  virtual void renderer(void);
 
-    ~Layer();
+  ~Layer();
 };
 
 #endif

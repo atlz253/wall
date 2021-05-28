@@ -1,22 +1,12 @@
-#include "print.hpp"
-#include "entity.hpp"
 #include "renderer.hpp"
 
-Renderer::Renderer()
-{
-}
+#include "entity.hpp"
+#include "print.hpp"
 
-void Renderer::clear(void)
-{
-    SDL_RenderClear(_renderer);
-}
+Renderer::Renderer() {}
 
-void Renderer::draw(void)
-{
-    SDL_RenderPresent(_renderer);
-}
+void Renderer::clear(void) { SDL_RenderClear(_renderer); }
 
-SDL_Renderer *Renderer::getRender(void)
-{
-    return _renderer;
-}
+void Renderer::draw(void) { SDL_RenderPresent(_renderer); }
+
+SDL_Renderer *Renderer::getRender(void) { return _renderer; }

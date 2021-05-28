@@ -12,30 +12,30 @@ class Entity;
 */
 class Renderer final
 {
-private:
-    SDL_Renderer *_renderer = nullptr;
+ private:
+  SDL_Renderer *_renderer = nullptr;
 
-public:
-    Renderer();
+ public:
+  Renderer();
 
-    /*
-        Очистка рендера
-    */
-    void clear(void);
+  /*
+      Очистка рендера
+  */
+  void clear(void);
 
-    /*
-        Вывод рендера на экран
-    */
-    void draw(void);
+  /*
+      Вывод рендера на экран
+  */
+  void draw(void);
 
-    /*
-        Возвращает стандартное представление рендера SDL
-    */
-    SDL_Renderer *getRender(void);
+  /*
+      Возвращает стандартное представление рендера SDL
+  */
+  SDL_Renderer *getRender(void);
 
-    friend void SdlWindow::operator>>(Renderer *renderer);
+  friend void SdlWindow::operator>>(Renderer *renderer);
 
-    ~Renderer();
+  ~Renderer();
 };
 
 #endif

@@ -2,9 +2,6 @@
     Точка входа в программу
 */
 
-#include "main.hpp"
+#include "wall.hpp"
 
-int main(void)
-{
-    return Main().run();
-}
+int main(void) { return Main().run(); }

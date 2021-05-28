@@ -1,7 +1,7 @@
 #ifndef SDLWINDOW
 #define SDLWINDOW
 
-#include "SDL.h"
+#include "SDL2/SDL.h"
 
 class Renderer;
 
@@ -10,24 +10,24 @@ class Renderer;
 */
 class SdlWindow final
 {
-private:
-    const int _SCREEN_WIDTH = 1280; // TODO: переместить в globals.cpp
-    const int _SCREEN_HEIGHT = 720;
+ private:
+  const int _SCREEN_WIDTH = 1280;  // TODO: переместить в globals.cpp
+  const int _SCREEN_HEIGHT = 720;
 
-    SDL_Window *_window = nullptr;     // Основное окно игры
+  SDL_Window *_window = nullptr;  // Основное окно игры
 
-public:
-    /*
-        Инициализация окна
-    */
-    SdlWindow();
+ public:
+  /*
+      Инициализация окна
+  */
+  SdlWindow();
 
-    /*
-        Операция содания рендера
-    */
-    void operator>> (Renderer *renderer);
+  /*
+      Операция содания рендера
+  */
+  void operator>>(Renderer *renderer);
 
-    ~SdlWindow();
+  ~SdlWindow();
 };
 
 #endif

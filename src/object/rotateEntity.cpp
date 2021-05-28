@@ -74,4 +74,4 @@ void RotateEntity::setFlip(const SDL_RendererFlip flip) { _flip = flip; }
 
 SDL_RendererFlip RotateEntity::getFlip(void) { return _flip; }
 
-RotateEntity::~RotateEntity() {} //FIXME: реализовать деструктор
+RotateEntity::~RotateEntity() {}  // FIXME: реализовать деструктор
