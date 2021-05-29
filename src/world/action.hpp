@@ -14,6 +14,8 @@ class Action final  // TODO: сделать Layer - шаблоном?
   Base *_leftBase;
   Base *_rightBase;
 
+  void _unitsRenderer(void);
+
  public:
   Action(Renderer *renderer);
 

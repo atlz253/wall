@@ -34,7 +34,7 @@ Action::Action(Renderer *renderer)  // TODO: убрать параметр rende
   _rightTeam->push(new Knight(1000, SDL_FLIP_HORIZONTAL));
 }
 
-void Action::renderer(void)
+void Action::_unitsRenderer(void)
 {
   std::queue<Unit *> *leftTmp = new std::queue<Unit *>;
   std::queue<Unit *> *rightTmp = new std::queue<Unit *>;
@@ -45,99 +45,54 @@ void Action::renderer(void)
 
   while (!_leftTeam->empty() || !_rightTeam->empty())
   {
-    Unit *cur = nullptr;
+    Unit *cur = nullptr, *leftFront = _leftTeam->front(), *rightFront = _rightTeam->front();
+    bool leftTeamFilled = !_leftTeam->empty(), rightTeamFilled = !_rightTeam->empty();
 
-    if (!_leftTeam->empty())
+    if (leftTeamFilled && !leftFront->getHealth())
     {
-      if (!_leftTeam->front()->getHealth())
-      {
-        cur = _leftTeam->front();
-        deathTmp->push(cur);
-        _leftTeam->pop();
-      }
-      else if (!_rightTeam->empty())
-      {
-        if (_leftTeam->front()->getId() > _rightTeam->front()->getId())
-        {
-          cur = _rightTeam->front();
-
-          if (!rightTmp->empty())
-            cur->process(rightTmp->back());
-          else if (!leftTmp->empty() && _leftTeam->empty())
-            cur->process(leftTmp->front());
-          else if (!_leftTeam->empty())
-            cur->process(_leftTeam->front());
-          else
-            cur->process(_leftBase);
-
-          rightTmp->push(cur);
-          _rightTeam->pop();
-        }
-        else
-        {
-          cur = _leftTeam->front();
-
-          if (!leftTmp->empty())
-            cur->process(leftTmp->back());
-          else if (!rightTmp->empty() && _rightTeam->empty())
-            cur->process(rightTmp->front());
-          else if (!_rightTeam->empty())
-            cur->process(_rightTeam->front());
-          else
-            cur->process(_rightBase);
-
-          leftTmp->push(cur);
-          _leftTeam->pop();
-        }
-      }
-      else
-      {
-        cur = _leftTeam->front();
-
-        if (!leftTmp->empty())
-          cur->process(leftTmp->back());
-        else if (!rightTmp->empty() && _rightTeam->empty())
-          cur->process(rightTmp->front());
-        else if (!_rightTeam->empty())
-          cur->process(_rightTeam->front());
-        else
-          cur->process(_rightBase);
-
-        leftTmp->push(cur);
-        _leftTeam->pop();
-      }
+      cur = leftFront;
+      deathTmp->push(cur);
+      _leftTeam->pop();
     }
-    else
+    else if (rightTeamFilled && !rightFront->getHealth())
     {
-      if (!_rightTeam->empty())
-      {
-        if (!_rightTeam->front()->getHealth())
-        {
-          cur = _rightTeam->front();
-          deathTmp->push(cur);
-          _rightTeam->pop();
-        }
-        else
-        {
-          cur = _rightTeam->front();
+      cur = rightFront;
+      deathTmp->push(cur);
+      _rightTeam->pop();
+    }
+    else if ((leftTeamFilled && !rightTeamFilled) ||
+             (leftTeamFilled && rightTeamFilled && leftFront->getId() < rightFront->getId()))
+    {
+      cur = leftFront;
 
-          if (!rightTmp->empty())
-            cur->process(rightTmp->back());
-          else if (!leftTmp->empty() && _leftTeam->empty())
-            cur->process(leftTmp->front());
-          else if (!_leftTeam->empty())
-            cur->process(_leftTeam->front());
-          else
-            cur->process(_leftBase);
-
-          rightTmp->push(cur);
-          _rightTeam->pop();
-        }
-      }
+      if (!leftTmp->empty())
+        cur->process(leftTmp->back());
+      else if (!rightTeamFilled && !rightTmp->empty())
+        cur->process(rightTmp->front());
+      else if (rightTeamFilled)
+        cur->process(rightFront);
       else
-      {
-        break;
-      }
+        cur->process(_rightBase);
+
+      leftTmp->push(cur);
+      _leftTeam->pop();
+    }
+    else if ((!leftTeamFilled && rightTeamFilled) ||
+             (leftTeamFilled && rightTeamFilled && leftFront->getId() > rightFront->getId()))
+    {
+      cur = rightFront;
+
+      if (!rightTmp->empty())
+        cur->process(rightTmp->back());
+      else if (!leftTeamFilled && !leftTmp->empty())
+        cur->process(leftTmp->front());
+      else if (leftTeamFilled)
+        cur->process(leftFront);
+      else
+        cur->process(_leftBase);
+
+      rightTmp->push(cur);
+      _rightTeam->pop();
     }
 
     cur->render();
@@ -158,6 +113,8 @@ void Action::renderer(void)
   _rightTeam = rightTmp;
   _deathQueue = deathTmp;
 }
+
+void Action::renderer(void) { _unitsRenderer(); }
 
 Action::~Action()
 {
