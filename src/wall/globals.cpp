@@ -1,6 +1,5 @@
 #include "globals.hpp"
 
-#include "renderer.hpp"
-
 Renderer *renderer = new Renderer();
+EventSubSystem *events = new EventSubSystem();
 TextureManager *textures = new TextureManager();

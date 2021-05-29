@@ -4,10 +4,8 @@
 #include "action.hpp"
 #include "background.hpp"
 #include "entity.hpp"
-#include "eventSubSystem.hpp"
 #include "globals.hpp"
 #include "print.hpp"
-#include "renderer.hpp"
 #include "terrain.hpp"
 #include "window.hpp"
 
@@ -48,7 +46,6 @@ class SdlSubSystem final
 
 void Main::_gameLoop(void)
 {
-  EventSubSystem *events = new EventSubSystem();
   Layer *background = new Background(renderer), *terrain = new Terrain(renderer);
   Action *action = new Action(renderer);
 
@@ -66,7 +63,6 @@ void Main::_gameLoop(void)
   delete background;
   delete terrain;
   delete action;
-  delete events;
 }
 
 Main::Main() {}
