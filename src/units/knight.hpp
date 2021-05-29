@@ -22,7 +22,5 @@ class Knight final : public Unit
   */
   int getFront(void) override;
 
-  void setDamage(unsigned short int damage) override;
-
   ~Knight();
 };

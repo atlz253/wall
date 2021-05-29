@@ -159,9 +159,3 @@ int Knight::getFront(void)
   else
     return _center->x + _frontRange;
 }
-
-void Knight::setDamage(unsigned short int damage)
-{
-  Unit::setDamage(damage);
-  std::cout << _hp << std::endl;
-}
