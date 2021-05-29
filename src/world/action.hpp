@@ -9,6 +9,7 @@ class Action final  // TODO: сделать Layer - шаблоном?
  private:
   std::queue<Unit*> *_leftTeam;
   std::queue<Unit*> *_rightTeam;
+  std::queue<Unit*> *_deathQueue;
 
   Base *_leftBase;
   Base *_rightBase;
