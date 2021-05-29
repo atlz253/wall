@@ -51,6 +51,7 @@ HEADERS += \
 OTHER_FILES += \
   res/Knight/noBKG_KnightAttack_strip.png \
   res/Knight/noBKG_KnightRun_strip.png \
+  res/Knight/noBKG_KnightIdle_strip.png \
   res/Magic-Cliffs-Environment/PNG/* \
   res/Taiga-Asset-Pack_v2_vnitti/PNG/Props.png
 

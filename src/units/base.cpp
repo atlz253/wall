@@ -11,7 +11,7 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
 
   if (!textures->key("base")) textures->loadTexture("base", "res/Taiga-Asset-Pack_v2_vnitti/PNG/Props.png");
   _texture = textures->key("base");
-  setTile(112, 48, 144, 128);
+  setTile(0, 48, 144, 128);
   _flip = flip;
 
   setSize(144 * 2, 128 * 2);
@@ -29,7 +29,7 @@ int Base::getBack(void) { return getFront(); }
 int Base::getFront(void)
 {
   if (_flip)
-    return _center->x + _frontRange;
-  else
     return _center->x - _frontRange;
+  else
+    return _center->x + _frontRange;
 }

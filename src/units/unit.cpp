@@ -4,9 +4,11 @@
 #include "globals.hpp"
 #include "renderer.hpp"
 
-#define VISION 1 // "лучи" зрения юнитов
+#define VISION 1  // "лучи" зрения юнитов
 
-Unit::Unit() : RotateEntity::RotateEntity() {}
+unsigned int Unit::_unitsCount = 0;
+
+Unit::Unit() : RotateEntity::RotateEntity() { _id = ++_unitsCount; }
 
 void Unit::process()
 {
@@ -32,5 +34,7 @@ void Unit::getDamage(unsigned short int damage)
 int Unit::getBack(void) { return 0; }
 
 int Unit::getFront(void) { return 0; }
+
+unsigned short int Unit::getId(void) { return _id; }
 
 Unit::~Unit() {}
