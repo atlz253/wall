@@ -15,7 +15,7 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
   _flip = flip;
 
   setSize(144 * 2, 128 * 2);
-  setPosition(x, 304);
+  setPosition(x, 270);
 
   _center = new SDL_Point;
   _center->x = _geometry->x + _geometry->w / 2;
