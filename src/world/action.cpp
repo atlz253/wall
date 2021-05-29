@@ -23,15 +23,6 @@ Action::Action(Renderer *renderer)  // TODO: убрать параметр rende
 
   _leftBase = new Base(-96);
   _rightBase = new Base(1088, SDL_FLIP_HORIZONTAL);
-
-  _leftTeam->push(new Knight(700));
-  _leftTeam->push(new Knight(600));
-  _leftTeam->push(new Knight(500));
-  _leftTeam->push(new Knight(400));
-
-  //  _add(new Knight(300));
-  _rightTeam->push(new Knight(800, SDL_FLIP_HORIZONTAL));
-  _rightTeam->push(new Knight(1000, SDL_FLIP_HORIZONTAL));
 }
 
 void Action::_unitsRenderer(void)
@@ -39,9 +30,6 @@ void Action::_unitsRenderer(void)
   std::queue<Unit *> *leftTmp = new std::queue<Unit *>;
   std::queue<Unit *> *rightTmp = new std::queue<Unit *>;
   std::queue<Unit *> *deathTmp = new std::queue<Unit *>;
-
-  _leftBase->render();
-  _rightBase->render();
 
   while (!_leftTeam->empty() || !_rightTeam->empty())
   {
@@ -114,7 +102,27 @@ void Action::_unitsRenderer(void)
   _deathQueue = deathTmp;
 }
 
-void Action::renderer(void) { _unitsRenderer(); }
+void Action::_baseRenderer(void)
+{
+  Unit *tmp;
+
+  tmp = _leftBase->keyCheck();
+  if (tmp)
+    _leftTeam->push(tmp);
+  _leftBase->render();
+
+
+  tmp = _rightBase->keyCheck();
+  if (tmp)
+    _rightTeam->push(tmp);
+  _rightBase->render();
+}
+
+void Action::renderer(void)
+{
+  _baseRenderer();
+  _unitsRenderer();
+}
 
 Action::~Action()
 {

@@ -16,6 +16,8 @@ class Action final  // TODO: сделать Layer - шаблоном?
 
   void _unitsRenderer(void);
 
+  void _baseRenderer(void);
+
  public:
   Action(Renderer *renderer);
 

@@ -1,6 +1,7 @@
 #include "eventSubSystem.hpp"
 
-#include "SDL2/SDL.h"
+#include <iostream>
+
 #include "print.hpp"
 
 EventSubSystem::EventSubSystem() { _event = new SDL_Event; }
@@ -9,6 +10,8 @@ bool EventSubSystem::checkEvents(void)
 {
   while (SDL_PollEvent(_event))
   {
+    _keysState = SDL_GetKeyboardState(nullptr);
+
     switch (_event->type)
     {
       case SDL_WINDOWEVENT:
@@ -30,5 +33,7 @@ bool EventSubSystem::checkEvents(void)
 
   return true;
 }
+
+const Uint8* EventSubSystem::getKeysState(void) { return _keysState; }
 
 EventSubSystem::~EventSubSystem() { delete _event; }

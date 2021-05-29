@@ -9,7 +9,7 @@ class Base final : public Unit
  public:
   Base(int x = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
-  void process(void) override;
+  Unit *keyCheck(void);
 
   /*
       Получение точки затылка юнита

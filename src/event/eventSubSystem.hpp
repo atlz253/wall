@@ -1,4 +1,4 @@
-typedef union SDL_Event SDL_Event;
+#include "SDL2/SDL.h"
 
 /*
     Подсистема обработки событий SDL
@@ -6,7 +6,9 @@ typedef union SDL_Event SDL_Event;
 class EventSubSystem final
 {
  private:
-  SDL_Event *_event;  // Обработчик событий
+  SDL_Event* _event;  // Обработчик событий
+  const Uint8* _keysState;
+
  public:
   EventSubSystem();
 
@@ -14,6 +16,10 @@ class EventSubSystem final
       Проверка новых игровых событий
   */
   bool checkEvents(void);
+
+  const Uint8* getKeysState(void);
+
+  void eventClear(void);
 
   ~EventSubSystem();
 };
