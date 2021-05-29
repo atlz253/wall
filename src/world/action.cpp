@@ -19,21 +19,25 @@ Action::Action(Renderer *renderer)  // TODO: убрать параметр rende
   _rightTeam = new std::queue<Unit *>;
 
   printTrace("Action: строим укрепточки");
-  _leftTeam->push(new Base(-96));
-  _rightTeam->push(new Base(1088, SDL_FLIP_HORIZONTAL));
 
-  _leftTeam->push(new Knight(700));
-//  _leftTeam->push(new Knight(400));
+  _leftBase = new Base(-96);
+  _rightBase = new Base(1088, SDL_FLIP_HORIZONTAL);
+
+    _leftTeam->push(new Knight(700));
+    _leftTeam->push(new Knight(400));
 
   //  _add(new Knight(300));
-    _rightTeam->push(new Knight(800, SDL_FLIP_HORIZONTAL));
-  //  _add(new Knight(1000, SDL_FLIP_HORIZONTAL));
+  _rightTeam->push(new Knight(800, SDL_FLIP_HORIZONTAL));
+  _rightTeam->push(new Knight(1000, SDL_FLIP_HORIZONTAL));
 }
 
 void Action::renderer(void)
 {
   std::queue<Unit *> *_leftTmp = new std::queue<Unit *>;
   std::queue<Unit *> *_rightTmp = new std::queue<Unit *>;
+
+  _leftBase->render();
+  _rightBase->render();
 
   while (!_leftTeam->empty() || !_rightTeam->empty())
   {
@@ -47,12 +51,14 @@ void Action::renderer(void)
         {
           cur = _rightTeam->front();
 
-          if (!_rightTmp->empty() && _rightTmp->back()->getId() != RIGHT_BASE_ID)
+          if (!_rightTmp->empty())
             cur->process(_rightTmp->back());
-          else if (!_leftTmp->empty() && (_leftTeam->empty() || _leftTeam->back()->getId() != LEFT_BASE_ID))
-            cur->process(_leftTmp->back());
-          else
+          else if (!_leftTmp->empty() && _leftTeam->empty())
+            cur->process(_leftTmp->front());
+          else if (!_leftTeam->empty())
             cur->process(_leftTeam->front());
+          else
+            cur->process(_leftBase);
 
           _rightTmp->push(cur);
           _rightTeam->pop();
@@ -61,12 +67,14 @@ void Action::renderer(void)
         {
           cur = _leftTeam->front();
 
-          if (!_leftTmp->empty() && _leftTmp->back()->getId() != LEFT_BASE_ID)
+          if (!_leftTmp->empty())
             cur->process(_leftTmp->back());
-          else if (!_rightTmp->empty() && (_rightTeam->empty() || _rightTmp->back()->getId() != RIGHT_BASE_ID))
-            cur->process(_rightTmp->back());
-          else
+          else if (!_rightTmp->empty() && _rightTeam->empty())
+            cur->process(_rightTmp->front());
+          else if (!_rightTeam->empty())
             cur->process(_rightTeam->front());
+          else
+            cur->process(_rightBase);
 
           _leftTmp->push(cur);
           _leftTeam->pop();
@@ -76,12 +84,14 @@ void Action::renderer(void)
       {
         cur = _leftTeam->front();
 
-        if (!_leftTmp->empty() && _leftTmp->back()->getId() != LEFT_BASE_ID)
+        if (!_leftTmp->empty())
           cur->process(_leftTmp->back());
-        else if (!_rightTmp->empty() && (_rightTeam->empty() || _rightTmp->back()->getId() != RIGHT_BASE_ID))
-          cur->process(_rightTmp->back());
-        else
+        else if (!_rightTmp->empty() && _rightTeam->empty())
+          cur->process(_rightTmp->front());
+        else if (!_rightTeam->empty())
           cur->process(_rightTeam->front());
+        else
+          cur->process(_rightBase);
 
         _leftTmp->push(cur);
         _leftTeam->pop();
@@ -93,12 +103,14 @@ void Action::renderer(void)
       {
         cur = _rightTeam->front();
 
-        if (!_rightTmp->empty() && _rightTmp->back()->getId() != RIGHT_BASE_ID)
+        if (!_rightTmp->empty())
           cur->process(_rightTmp->back());
-        else if (!_leftTmp->empty() && (_leftTeam->empty() || _leftTeam->back()->getId() != LEFT_BASE_ID))
-          cur->process(_leftTmp->back());
-        else
+        else if (!_leftTmp->empty() && _leftTeam->empty())
+          cur->process(_leftTmp->front());
+        else if (!_leftTeam->empty())
           cur->process(_leftTeam->front());
+        else
+          cur->process(_leftBase);
 
         _rightTmp->push(cur);
         _rightTeam->pop();
