@@ -23,7 +23,7 @@ void Unit::process()
 
 void Unit::process(Unit *next) { Unit::process(); }
 
-void Unit::getDamage(unsigned short int damage)
+void Unit::setDamage(unsigned short int damage)
 {
   if (_hp > damage)
     _hp -= damage;
@@ -34,6 +34,8 @@ void Unit::getDamage(unsigned short int damage)
 int Unit::getBack(void) { return 0; }
 
 int Unit::getFront(void) { return 0; }
+
+unsigned short int Unit::getHealth(void) { return _hp; }
 
 unsigned short int Unit::getId(void) { return _id; }
 
