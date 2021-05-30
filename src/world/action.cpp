@@ -82,10 +82,12 @@ void Action::_unitsRenderer(void)
   }
 
   delete _leftTeam;
-  delete _rightTeam;
-  delete _deathQueue;
   _leftTeam = leftTmp;
+
+  delete _rightTeam;
   _rightTeam = rightTmp;
+
+  delete _deathQueue;
   _deathQueue = deathTmp;
 }
 
