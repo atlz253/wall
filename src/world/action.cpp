@@ -11,7 +11,7 @@ Action::Action(Renderer *renderer)  // TODO: убрать параметр rende
 {
   _leftTeam = new std::queue<Unit *>;
   _rightTeam = new std::queue<Unit *>;
-  _deathQueue = new std::queue<Unit *>; //TODO: исчезновение трупов
+  _deathQueue = new std::queue<Unit *>;  // TODO: исчезновение трупов
 
   printTrace("Action: строим укрепточки");
 
@@ -27,55 +27,48 @@ void Action::_unitsRenderer(void)
 
   while (!_leftTeam->empty() || !_rightTeam->empty())
   {
-    Unit *cur = nullptr, *leftFront = _leftTeam->front(), *rightFront = _rightTeam->front();
+    Base *enemiesBase;
+    std::queue<Unit *> *friends, *friendsTmp, *enemies, *enemiesTmp;
     bool leftTeamFilled = !_leftTeam->empty(), rightTeamFilled = !_rightTeam->empty();
+    Unit *cur = nullptr, *leftFront = _leftTeam->front(), *rightFront = _rightTeam->front();
 
-    if (leftTeamFilled && !leftFront->getHealth())
-    {
-      cur = leftFront;
-      deathTmp->push(cur);
-      _leftTeam->pop();
-    }
-    else if (rightTeamFilled && !rightFront->getHealth())
-    {
-      cur = rightFront;
-      deathTmp->push(cur);
-      _rightTeam->pop();
-    }
-    else if ((leftTeamFilled && !rightTeamFilled) ||
-             (leftTeamFilled && rightTeamFilled && leftFront->getId() < rightFront->getId()))
+    if ((leftTeamFilled && !rightTeamFilled) ||
+        (leftTeamFilled && rightTeamFilled && leftFront->getId() < rightFront->getId()))
     {
       cur = leftFront;
 
-      if (!leftTmp->empty())
-        cur->process(leftTmp->back());
-      else if (!rightTmp->empty())
-        cur->process(rightTmp->front());
-      else if (rightTeamFilled)
-        cur->process(rightFront);
-      else
-        cur->process(_rightBase);
+      friends = _leftTeam;
+      friendsTmp = leftTmp;
 
-      leftTmp->push(cur);
-      _leftTeam->pop();
+      enemies = _rightTeam;
+      enemiesTmp = rightTmp;
+      enemiesBase = _rightBase;
     }
-    else if ((!leftTeamFilled && rightTeamFilled) ||
-             (leftTeamFilled && rightTeamFilled && leftFront->getId() > rightFront->getId()))
+    else
     {
       cur = rightFront;
 
-      if (!rightTmp->empty())
-        cur->process(rightTmp->back());
-      else if (!leftTmp->empty())
-        cur->process(leftTmp->front());
-      else if (leftTeamFilled)
-        cur->process(leftFront);
-      else
-        cur->process(_leftBase);
+      friends = _rightTeam;
+      friendsTmp = rightTmp;
 
-      rightTmp->push(cur);
-      _rightTeam->pop();
+      enemies = _leftTeam;
+      enemiesTmp = leftTmp;
+      enemiesBase = _leftBase;
     }
+
+    if (!cur->getHealth())
+      friendsTmp = deathTmp;
+    else if (!friendsTmp->empty())
+      cur->process(friendsTmp->back());
+    else if (!enemiesTmp->empty())
+      cur->process(enemiesTmp->front());
+    else if (!enemies->empty())
+      cur->process(enemies->front());
+    else
+      cur->process(enemiesBase);
+
+    friends->pop();
+    friendsTmp->push(cur);
 
     cur->render();
   }
@@ -101,14 +94,11 @@ void Action::_baseRenderer(void)
   Unit *tmp;
 
   tmp = _leftBase->keyCheck();
-  if (tmp)
-    _leftTeam->push(tmp);
+  if (tmp) _leftTeam->push(tmp);
   _leftBase->render();
 
-
   tmp = _rightBase->keyCheck();
-  if (tmp)
-    _rightTeam->push(tmp);
+  if (tmp) _rightTeam->push(tmp);
   _rightBase->render();
 }
 
