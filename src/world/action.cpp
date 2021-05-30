@@ -7,17 +7,11 @@
 #include "knight.hpp"
 #include "print.hpp"
 
-enum baseId
-{
-  LEFT_BASE_ID = 1,
-  RIGHT_BASE_ID = 2
-};
-
 Action::Action(Renderer *renderer)  // TODO: убрать параметр renderer
 {
   _leftTeam = new std::queue<Unit *>;
   _rightTeam = new std::queue<Unit *>;
-  _deathQueue = new std::queue<Unit *>;
+  _deathQueue = new std::queue<Unit *>; //TODO: исчезновение трупов
 
   printTrace("Action: строим укрепточки");
 
@@ -55,7 +49,7 @@ void Action::_unitsRenderer(void)
 
       if (!leftTmp->empty())
         cur->process(leftTmp->back());
-      else if (!rightTeamFilled && !rightTmp->empty())
+      else if (!rightTmp->empty())
         cur->process(rightTmp->front());
       else if (rightTeamFilled)
         cur->process(rightFront);
@@ -72,7 +66,7 @@ void Action::_unitsRenderer(void)
 
       if (!rightTmp->empty())
         cur->process(rightTmp->back());
-      else if (!leftTeamFilled && !leftTmp->empty())
+      else if (!leftTmp->empty())
         cur->process(leftTmp->front());
       else if (leftTeamFilled)
         cur->process(leftFront);
