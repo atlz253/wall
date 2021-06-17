@@ -56,6 +56,7 @@ void Main::_gameLoop(void)
     background->renderer();
     action->renderer();
     terrain->renderer();
+    gui->renderer();
 
     renderer->draw();
   }

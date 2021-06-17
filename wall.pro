@@ -29,6 +29,7 @@ SOURCES += \
   src/wall/wall.cpp \
   src/world/action.cpp \
   src/world/background.cpp \
+  src/world/gui.cpp \
   src/world/terrain.cpp
 
 HEADERS += \
@@ -46,6 +47,7 @@ HEADERS += \
   src/wall/wall.hpp \
   src/world/action.hpp \
   src/world/background.hpp \
+  src/world/gui.hpp \
   src/world/terrain.hpp
 
 OTHER_FILES += \
@@ -54,6 +56,9 @@ OTHER_FILES += \
   res/Knight/noBKG_KnightIdle_strip.png \
   res/Knight/noBKG_KnightDeath_strip.png \
   res/Magic-Cliffs-Environment/PNG/* \
-  res/Taiga-Asset-Pack_v2_vnitti/PNG/Props.png
+  res/Taiga-Asset-Pack_v2_vnitti/PNG/Props.png \
+  res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/Health-Bar-Asset-Pack-2.2-by-Adwit-Rahman.psd \
+  res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue.png \
+  res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue2.png \
 
 QMAKE_POST_LINK += cp -rf $$PWD/res $$OUT_PWD/ $$escape_expand(\\n\\t)

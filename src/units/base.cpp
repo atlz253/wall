@@ -4,10 +4,75 @@
 #include "knight.hpp"
 #include "print.hpp"
 
+class HealthLine final : public Entity
+{
+ private:
+  SDL_RendererFlip _flip;
+  const unsigned short int _HPpoint = BASE_HP / (111 * 3);
+
+ public:
+  HealthLine(Base* base) : Entity::Entity()
+  {
+    _flip = base->getFlip();
+
+    if (!textures->key("healthLine"))
+      textures->loadTexture("healthLine", "res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue.png");
+    _texture = textures->key("healthLine");
+    setTile(13, 68, 111, 6);
+
+    setSize(111 * 3, 6 * 3);
+
+    if (_flip)
+      setPosition(SCREEN_WIDTH - 111 * 3, 1 * 3);
+    else
+      setPosition(0, 1 * 3);
+  }
+
+  void process(unsigned short int health)
+  {
+    if (_flip)
+      setPosition(SCREEN_WIDTH - health / _HPpoint, 1 * 3);
+    else
+      setPosition(health / _HPpoint - 111 * 3, 1 * 3);
+  }
+};
+
+class HealthBar final : public RotateEntity
+{
+ private:
+  Base* _base;
+
+  HealthLine* _line;
+
+ public:
+  HealthBar(Base* base) : RotateEntity::RotateEntity()
+  {
+    _base = base;
+    _flip = base->getFlip();
+
+    _line = new HealthLine(_base);
+    gui->addEntity(_line);
+
+    if (!textures->key("healthBar"))
+      textures->loadTexture("healthBar", "res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue2.png");
+    _texture = textures->key("healthBar");
+    setTile(13, 47, 111, 8);
+
+    setSize(111 * 3, 8 * 3);
+
+    if (_flip)
+      setPosition(SCREEN_WIDTH - 111 * 3, 0);
+    else
+      setPosition(0, 0);
+  }
+
+  void process(void) override { _line->process(_base->getHealth()); }
+};
+
 Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
 {
-  _hp = 2000;
   _speed = 0;
+  _hp = BASE_HP;
   _backRange = 0;
   _frontRange = 100;
 
@@ -22,6 +87,8 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
   _center = new SDL_Point;
   _center->x = _geometry->x + _geometry->w / 2;
   _center->y = _geometry->y + _geometry->h / 2 + 45;
+
+  gui->addEntity(new HealthBar(this));
 }
 
 Unit* Base::keyCheck(void)
@@ -35,8 +102,7 @@ Unit* Base::keyCheck(void)
   }
   else
   {
-    if (_speed != 0)
-      _speed--;
+    if (_speed != 0) _speed--;
     return nullptr;
   }
 
