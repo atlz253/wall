@@ -3,7 +3,7 @@ CONFIG += console c++14
 CONFIG -= app_bundle
 CONFIG -= qt
 
-LIBS += -L/usr/local/lib -lSDL2 -lSDL2_image
+LIBS += -L/usr/local/lib -lSDL2 -lSDL2_image -lSDL2_ttf
 
 INCLUDEPATH += src/event \
                src/object \
@@ -16,6 +16,7 @@ SOURCES += \
   src/event/eventSubSystem.cpp \
   src/main.cpp \
   src/object/entity.cpp \
+  src/object/font.cpp \
   src/object/layer.cpp \
   src/object/rotateEntity.cpp \
   src/object/textureManager.cpp \
@@ -35,6 +36,7 @@ SOURCES += \
 HEADERS += \
   src/event/eventSubSystem.hpp \
   src/object/entity.hpp \
+  src/object/font.hpp \
   src/object/layer.hpp \
   src/object/textureManager.hpp \
   src/units/base.hpp \
@@ -51,6 +53,7 @@ HEADERS += \
   src/world/terrain.hpp
 
 OTHER_FILES += \
+  res/font.ttf \
   res/Knight/noBKG_KnightAttack_strip.png \
   res/Knight/noBKG_KnightRun_strip.png \
   res/Knight/noBKG_KnightIdle_strip.png \

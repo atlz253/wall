@@ -1,9 +1,11 @@
 #include "wall.hpp"
 
 #include "SDL2/SDL_image.h"
+#include "SDL2/SDL_ttf.h"
 #include "action.hpp"
 #include "background.hpp"
 #include "entity.hpp"
+#include "font.hpp"
 #include "globals.hpp"
 #include "print.hpp"
 #include "terrain.hpp"
@@ -32,6 +34,13 @@ class SdlSubSystem final
       printError("Ошибка инициализации SDL2_Image:", IMG_GetError());
       exit(EXIT_FAILURE);
     }
+
+    printTrace("SdlSubSystem: инициализация SDL2_ttf");
+    if (TTF_Init())
+    {
+      printError("Ошибка инициализации SDL2_Image:", TTF_GetError());
+      exit(EXIT_FAILURE);
+    }
   }
 
   ~SdlSubSystem()
@@ -41,6 +50,9 @@ class SdlSubSystem final
 
     printTrace("SdlSubSystem: завершение работы SDL2_Image");
     IMG_Quit();
+
+    printTrace("SdlSubSystem: завершение работы SDL2_ttf");
+    TTF_Quit();
   }
 };
 
@@ -48,6 +60,9 @@ void Main::_gameLoop(void)
 {
   Layer *background = new Background(renderer), *terrain = new Terrain(renderer);
   Action *action = new Action(renderer);
+
+  gui->addEntity(new Entity(renderText("Q", 32, {255, 0, 0, 255}), 32, 50, 0, 18));
+  gui->addEntity(new Entity(renderText("}", 32, {255, 0, 0, 255}), 32, 50, SCREEN_WIDTH - 32, 18));
 
   while (events->checkEvents())
   {
