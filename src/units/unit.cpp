@@ -39,4 +39,6 @@ unsigned short int Unit::getHealth(void) { return _hp; }
 
 unsigned short int Unit::getId(void) { return _id; }
 
+UINT16 Unit::getReward(void) { return 0; }
+
 Unit::~Unit() {}

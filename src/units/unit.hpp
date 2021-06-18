@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "globals.hpp"
 #include "entity.hpp"
 
 /*
@@ -11,8 +12,8 @@
 class Unit : public RotateEntity
 {
  protected:
-  unsigned int _id;  // уникальный номер юнита //TODO: Убрать, если не используется
-  unsigned short int _hp;           // количество жизней юнита
+  unsigned int _id;  // уникальный номер юнита
+  unsigned short int _hp;           // количество жизней юнита //TODO: заменить на UINT макросы
   unsigned short int _speed;        // скорость юнита
   unsigned short int _damage;       // урон юнита
   unsigned short int _backRange;    // радиус действия сзади
@@ -43,6 +44,8 @@ class Unit : public RotateEntity
   unsigned short int getHealth(void);
 
   unsigned short int getId(void);
+
+  virtual UINT16 getReward(void);
 
   /*
       Получение урона

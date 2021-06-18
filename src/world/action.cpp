@@ -57,15 +57,26 @@ void Action::_unitsRenderer(void)
     }
 
     if (!cur->getHealth())
+    {
       friendsTmp = deathTmp;
+      enemiesBase->addMoney(cur->getReward());
+    }
     else if (!friendsTmp->empty())
+    {
       cur->process(friendsTmp->back());
+    }
     else if (!enemiesTmp->empty())
+    {
       cur->process(enemiesTmp->front());
+    }
     else if (!enemies->empty())
+    {
       cur->process(enemies->front());
+    }
     else
+    {
       cur->process(enemiesBase);
+    }
 
     friends->pop();
     friendsTmp->push(cur);

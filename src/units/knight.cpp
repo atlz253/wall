@@ -70,7 +70,7 @@ void Knight::process(Unit *next)
     }
   }
   else if (_flip == next->getFlip() &&
-      ((!_flip && next->getBack() <= getFront()) || (_flip && next->getBack() >= getFront())))
+           ((!_flip && next->getBack() <= getFront()) || (_flip && next->getBack() >= getFront())))
   {
     if (_isRuning)
     {
@@ -159,3 +159,5 @@ int Knight::getFront(void)
   else
     return _center->x + _frontRange;
 }
+
+UINT16 Knight::getReward(void) { return KNIGHT_COST + 25; }

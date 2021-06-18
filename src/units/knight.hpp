@@ -24,5 +24,7 @@ class Knight final : public Unit
   */
   int getFront(void) override;
 
+  UINT16 getReward(void) override;
+
   ~Knight();
 };

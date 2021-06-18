@@ -1,4 +1,3 @@
-#include "globals.hpp"
 #include "unit.hpp"
 
 #define BASE_HP 2000
@@ -27,4 +26,6 @@ class Base final : public Unit
   int getFront(void) override;
 
   UINT16 getMoney(void);
+
+  void addMoney(UINT16 money);
 };

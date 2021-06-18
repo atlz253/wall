@@ -148,3 +148,5 @@ int Base::getFront(void)
 }
 
 UINT16 Base::getMoney(void) { return _money; }
+
+void Base::addMoney(UINT16 money) { _money += money; }
