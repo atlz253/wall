@@ -53,7 +53,8 @@ HEADERS += \
   src/world/terrain.hpp
 
 OTHER_FILES += \
-  res/font.ttf \
+  res/joystix_monospace.ttf \
+  res/typodermic-eula-02-2014.pdf \
   res/Knight/noBKG_KnightAttack_strip.png \
   res/Knight/noBKG_KnightRun_strip.png \
   res/Knight/noBKG_KnightIdle_strip.png \

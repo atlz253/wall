@@ -7,7 +7,7 @@
 
 SDL_Texture *renderText(std::string text, int size, SDL_Color color)
 {
-  TTF_Font *font = TTF_OpenFont("res/font.ttf", size);
+  TTF_Font *font = TTF_OpenFont("res/joystix_monospace.ttf", size); //TODO: вместо открытия каждый раз создать глобальную переменную
   if (!font)
   {
     printError("не удалось открыть шрифт", TTF_GetError());
