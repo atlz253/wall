@@ -1,3 +1,4 @@
+#include "globals.hpp"
 #include "unit.hpp"
 
 #define BASE_HP 2000
@@ -7,6 +8,9 @@
 */
 class Base final : public Unit
 {
+ private:
+  UINT16 _money;
+
  public:
   Base(int x = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
@@ -21,4 +25,6 @@ class Base final : public Unit
       Получение лицевой точки юнита
   */
   int getFront(void) override;
+
+  UINT16 getMoney(void);
 };

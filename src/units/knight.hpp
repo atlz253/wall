@@ -1,5 +1,7 @@
 #include "unit.hpp"
 
+#define KNIGHT_COST 100
+
 class Knight final : public Unit
 {
  private:

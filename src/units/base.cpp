@@ -1,5 +1,8 @@
 #include "base.hpp"
 
+#include <iostream>
+
+#include "font.hpp"
 #include "globals.hpp"
 #include "knight.hpp"
 #include "print.hpp"
@@ -69,8 +72,30 @@ class HealthBar final : public RotateEntity
   void process(void) override { _line->process(_base->getHealth()); }
 };
 
+class MoneyBar final : public Entity
+{
+ private:
+  Base* _base;
+
+ public:
+  MoneyBar(Base* base) : Entity::Entity() { _base = base; }
+
+  void process(void) override
+  {
+    std::string text = std::to_string(_base->getMoney()) + '$';
+    _texture = renderText(text, 64, {255, 0, 0, 255});
+    setSize(25 * text.length(), 36);
+
+    if (_base->getFlip())
+      setPosition(SCREEN_WIDTH - 25 * text.length(), 8 * 3);
+    else
+      setPosition(0, 8 * 3);
+  }
+};
+
 Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
 {
+  _money = 300;
   _speed = 0;
   _hp = BASE_HP;
   _backRange = 0;
@@ -89,15 +114,18 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
   _center->y = _geometry->y + _geometry->h / 2 + 45;
 
   gui->addEntity(new HealthBar(this));
+  gui->addEntity(new MoneyBar(this));
 }
 
 Unit* Base::keyCheck(void)
 {
   const Uint8* keysState = events->getKeysState();
 
-  if (!_speed && ((_flip && keysState[SDL_SCANCODE_RIGHTBRACKET]) || (!_flip && keysState[SDL_SCANCODE_Q])))
+  if (!_speed && _money >= KNIGHT_COST &&
+      ((_flip && keysState[SDL_SCANCODE_RIGHTBRACKET]) || (!_flip && keysState[SDL_SCANCODE_Q])))
   {
     _speed = 100;
+    _money -= 100;
     return new Knight(getFront(), _flip);
   }
   else
@@ -118,3 +146,5 @@ int Base::getFront(void)
   else
     return _center->x + _frontRange;
 }
+
+UINT16 Base::getMoney(void) { return _money; }
