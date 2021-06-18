@@ -4,6 +4,7 @@
 
 #include "globals.hpp"
 #include "print.hpp"
+#include "random.hpp"
 
 const int runFrames[8] = {32, 128, 224, 320, 416, 512, 608, 704},
           attackFrames[22] = {48,   192,  336,  480,  624,  768,  912,  1056, 1200, 1328, 1488,
@@ -104,7 +105,10 @@ void Knight::process(Unit *next)
       if (++_frame == 22)
       {
         _frame = 0;
-        next->setDamage(_damage);
+        if (_hp > _damage)
+          next->setDamage(random(_damage, _hp));
+        else
+          next->setDamage(_damage);
       }
 
       _tile->x = attackFrames[_frame];
@@ -160,4 +164,4 @@ int Knight::getFront(void)
     return _center->x + _frontRange;
 }
 
-UINT16 Knight::getReward(void) { return KNIGHT_COST + 25; }
+UINT16 Knight::getReward(void) { return random(0, KNIGHT_COST + 25); }

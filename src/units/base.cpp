@@ -6,6 +6,7 @@
 #include "globals.hpp"
 #include "knight.hpp"
 #include "print.hpp"
+#include "random.hpp"
 
 class HealthLine final : public Entity
 {
@@ -100,6 +101,7 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
   _hp = BASE_HP;
   _backRange = 0;
   _frontRange = 100;
+  _earnSpeed = 0;
 
   if (!textures->key("base")) textures->loadTexture("base", "res/Taiga-Asset-Pack_v2_vnitti/PNG/Props.png");
   _texture = textures->key("base");
@@ -150,3 +152,12 @@ int Base::getFront(void)
 UINT16 Base::getMoney(void) { return _money; }
 
 void Base::addMoney(UINT16 money) { _money += money; }
+
+void Base::process(void)
+{
+  if (++_earnSpeed >= 50 + _hp / 20)
+  {
+    _earnSpeed = 0;
+    addMoney(random(1, 10));
+  }
+}

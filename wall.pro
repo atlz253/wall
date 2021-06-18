@@ -27,6 +27,7 @@ SOURCES += \
   src/video/window.cpp \
   src/wall/globals.cpp \
   src/wall/print.cpp \
+  src/wall/random.cpp \
   src/wall/wall.cpp \
   src/world/action.cpp \
   src/world/background.cpp \
@@ -46,6 +47,7 @@ HEADERS += \
   src/video/window.hpp \
   src/wall/globals.hpp \
   src/wall/print.hpp \
+  src/wall/random.hpp \
   src/wall/wall.hpp \
   src/world/action.hpp \
   src/world/background.hpp \

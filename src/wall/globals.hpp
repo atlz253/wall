@@ -6,6 +6,7 @@
 #include "renderer.hpp"
 #include "textureManager.hpp"
 
+typedef std::uint8_t UINT8;
 typedef std::uint16_t UINT16;
 
 const int SCREEN_WIDTH = 1280;  // Ширина окна

@@ -9,6 +9,7 @@ class Base final : public Unit
 {
  private:
   UINT16 _money;
+  UINT8 _earnSpeed;
 
  public:
   Base(int x = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
@@ -28,4 +29,6 @@ class Base final : public Unit
   UINT16 getMoney(void);
 
   void addMoney(UINT16 money);
+
+  void process(void) override;
 };
