@@ -61,9 +61,6 @@ void Main::_gameLoop(void)
   Layer *background = new Background(renderer), *terrain = new Terrain(renderer);
   Action *action = new Action(renderer);
 
-  gui->addEntity(new Entity(renderText("Q", 32, {255, 0, 0, 255}), 32, 50, 0, 18));
-  gui->addEntity(new Entity(renderText("}", 32, {255, 0, 0, 255}), 32, 50, SCREEN_WIDTH - 32, 18));
-
   while (events->checkEvents())
   {
     renderer->clear();
