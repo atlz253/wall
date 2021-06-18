@@ -33,7 +33,11 @@ Knight::Knight(int x, SDL_RendererFlip flip) : Unit::Unit()
   if (!textures->key("knightDeath")) textures->loadTexture("knightDeath", "res/Knight/noBKG_KnightDeath_strip.png");
 
   setSize(48 * 2, 48 * 2);
-  setPosition(x, 441);
+
+  if (_flip)
+    setPosition(x + 48, 441);
+  else
+    setPosition(x - 48, 441);
 
   _tile = new SDL_Rect;
   _tile->w = 48;

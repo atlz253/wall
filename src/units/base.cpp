@@ -99,8 +99,7 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
   _money = 300;
   _speed = 0;
   _hp = BASE_HP;
-  _backRange = 0;
-  _frontRange = 100;
+  _frontRange = 30;
   _earnSpeed = 0;
 
   if (!textures->key("base")) textures->loadTexture("base", "res/Taiga-Asset-Pack_v2_vnitti/PNG/Props.png");
@@ -112,7 +111,10 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
   setPosition(x, 270);
 
   _center = new SDL_Point;
-  _center->x = _geometry->x + _geometry->w / 2;
+  if (_flip)
+    _center->x = _geometry->x + _geometry->w / 2 - 60;
+  else
+    _center->x = _geometry->x + _geometry->w / 2 + 60;
   _center->y = _geometry->y + _geometry->h / 2 + 45;
 
   gui->addEntity(new HealthBar(this));
@@ -128,7 +130,7 @@ Unit* Base::keyCheck(void)
   {
     _speed = 100;
     _money -= 100;
-    return new Knight(getFront(), _flip);
+    return new Knight(getBack(), _flip);
   }
   else
   {
@@ -139,7 +141,7 @@ Unit* Base::keyCheck(void)
   events->eventClear();
 }
 
-int Base::getBack(void) { return getFront(); }
+int Base::getBack(void) { return _center->x; }
 
 int Base::getFront(void)
 {
@@ -155,6 +157,8 @@ void Base::addMoney(UINT16 money) { _money += money; }
 
 void Base::process(void)
 {
+  Unit::process();
+
   if (++_earnSpeed >= 50 + _hp / 20)
   {
     _earnSpeed = 0;
