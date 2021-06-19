@@ -186,6 +186,6 @@ void Base::process(void)
   if (++_earnSpeed >= 50 + _hp / 20)
   {
     _earnSpeed = 0;
-    addMoney(random(1, 10));
+    addMoney(random(1, 20 - _hp/200));
   }
 }
