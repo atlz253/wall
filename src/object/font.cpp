@@ -5,20 +5,40 @@
 #include "globals.hpp"
 #include "print.hpp"
 
-SDL_Texture *renderText(std::string text, int size, SDL_Color color)
+TTF_Font *Font::_getFont(FontSize size)
 {
-  TTF_Font *font = TTF_OpenFont("res/joystix_monospace.ttf", size); //TODO: вместо открытия каждый раз создать глобальную переменную
-  if (!font)
+  switch (size)
   {
-    printError("не удалось открыть шрифт", TTF_GetError());
-    return nullptr;
+    case FONT_HIGH:
+      return _fontHigh;
+    case FONT_MEDIUM:
+      return _fontMedium;
+    case FONT_LOW:
+      return _fontLow;
   }
+
+  return nullptr;
+}
+
+Font::Font() { printTrace("Инициализация шрифтов"); }
+
+void Font::open(std::string path)
+{
+  _fontHigh = TTF_OpenFont(path.c_str(), FONT_HIGH);
+  _fontMedium = TTF_OpenFont(path.c_str(), FONT_MEDIUM);
+  _fontLow = TTF_OpenFont(path.c_str(), FONT_LOW);
+
+  if (!_fontHigh || !_fontMedium || !_fontLow) printError("не удалось открыть шрифт", TTF_GetError());
+}
+
+SDL_Texture *Font::getTexture(std::string text, FontSize size, SDL_Color color)
+{
+  TTF_Font *font = _getFont(size);
 
   SDL_Surface *surf = TTF_RenderUTF8_Blended(font, text.c_str(), color);
   if (!surf)
   {
-    TTF_CloseFont(font);
-    printError("Не удалось преобразовать текст в поверхность", SDL_GetError());
+    printError("Не удалось преобразовать текст в поверхность", TTF_GetError());
     return nullptr;
   }
 
@@ -26,9 +46,15 @@ SDL_Texture *renderText(std::string text, int size, SDL_Color color)
   if (!texture)
   {
     printError("Не удалось преобразовать поверхность текста в текстуру", SDL_GetError());
+    return nullptr;
   }
 
   SDL_FreeSurface(surf);
-  TTF_CloseFont(font);
+
   return texture;
+}
+
+void Font::getSize(std::string text, FontSize size, SDL_Rect *geometry)
+{
+  TTF_SizeUTF8(_getFont(size), text.c_str(), &geometry->w, &geometry->h);
 }

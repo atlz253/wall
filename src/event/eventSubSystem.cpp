@@ -36,6 +36,7 @@ bool EventSubSystem::checkEvents(void)
         switch (_event->user.code)
         {
           case DEFEAT_EVENT:
+            SDL_Rect* geometry = new SDL_Rect;
             std::string text = "Игрок ";
             Base* base = (Base*)_event->user.data1;
             if (base->getFlip())
@@ -43,8 +44,11 @@ bool EventSubSystem::checkEvents(void)
             else
               text = text + "2 победил";
 
-            gui->addEntity(new Entity(renderText(text, 64, {255, 0, 0, 255}), 25 * text.length(), 36, 300, 340));
+            font->getSize(text, FONT_HIGH, geometry);
+            gui->addEntity(new Entity(font->getTexture(text, FONT_HIGH, {255, 0, 0, 255}), geometry->w, geometry->h,
+                                      (SCREEN_WIDTH - geometry->w) / 2, (SCREEN_HEIGHT - geometry->h) / 2));
             _action = false;
+            delete geometry;
             break;
         }
         break;

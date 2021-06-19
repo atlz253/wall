@@ -79,18 +79,19 @@ class MoneyBar final : public Entity
   Base* _base;
 
  public:
-  MoneyBar(Base* base) : Entity::Entity() { _base = base; }
+  MoneyBar(Base* base) : Entity::Entity() { _base = base;}
 
   void process(void) override
   {
     std::string text = std::to_string(_base->getMoney()) + '$';
-    _texture = renderText(text, 64, {255, 0, 0, 255});
-    setSize(25 * text.length(), 36);
+    SDL_DestroyTexture(_texture);
+    _texture = font->getTexture(text, FONT_MEDIUM, {255, 0, 0, 255});
+    font->getSize(text, FONT_MEDIUM, _geometry);
 
     if (_base->getFlip())
-      setPosition(SCREEN_WIDTH - 25 * text.length(), 8 * 3);
+      setPosition(SCREEN_WIDTH - _geometry->w, _geometry->h);
     else
-      setPosition(0, 8 * 3);
+      setPosition(0, _geometry->h);
   }
 };
 
