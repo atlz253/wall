@@ -155,6 +155,30 @@ UINT16 Base::getMoney(void) { return _money; }
 
 void Base::addMoney(UINT16 money) { _money += money; }
 
+void Base::setDamage(UINT16 damage)
+{
+  if (!_hp)
+  {
+    return;
+  }
+  else
+  {
+    if (_hp >= damage)
+      _hp -= damage;
+    else
+      _hp = 0;
+
+    if (_hp <= 0)
+    {
+      SDL_Event *defeat = new SDL_Event;
+      defeat->type = SDL_USEREVENT;
+      defeat->user.code = DEFEAT_EVENT;
+      defeat->user.data1 = this;
+      SDL_PushEvent(defeat);
+    }
+   }
+}
+
 void Base::process(void)
 {
   Unit::process();

@@ -104,16 +104,22 @@ void Action::_unitsRenderer(void)
 
 void Action::_baseRenderer(void)
 {
-  Unit *tmp;
+  Unit *tmp = nullptr;
 
-  _leftBase->process();
-  tmp = _leftBase->keyCheck();
-  if (tmp) _leftTeam->push(tmp);
+  if (events->getAction())
+  {
+    _leftBase->process();
+    tmp = _leftBase->keyCheck();
+    if (tmp) _leftTeam->push(tmp);
+  }
   _leftBase->render();
 
-  _rightBase->process();
-  tmp = _rightBase->keyCheck();
-  if (tmp) _rightTeam->push(tmp);
+  if (events->getAction())
+  {
+    _rightBase->process();
+    tmp = _rightBase->keyCheck();
+    if (tmp) _rightTeam->push(tmp);
+  }
   _rightBase->render();
 }
 

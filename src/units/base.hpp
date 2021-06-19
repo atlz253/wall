@@ -30,5 +30,7 @@ class Base final : public Unit
 
   void addMoney(UINT16 money);
 
+  void setDamage(UINT16 damage) override;
+
   void process(void) override;
 };

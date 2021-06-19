@@ -1,10 +1,18 @@
 #include "eventSubSystem.hpp"
 
 #include <iostream>
+#include <string>
 
+#include "base.hpp"
+#include "font.hpp"
+#include "globals.hpp"
 #include "print.hpp"
 
-EventSubSystem::EventSubSystem() { _event = new SDL_Event; }
+EventSubSystem::EventSubSystem()
+{
+  _action = true;
+  _event = new SDL_Event;
+}
 
 bool EventSubSystem::checkEvents(void)
 {
@@ -24,6 +32,22 @@ bool EventSubSystem::checkEvents(void)
             break;
         }
         break;
+      case SDL_USEREVENT:
+        switch (_event->user.code)
+        {
+          case DEFEAT_EVENT:
+            std::string text = "Игрок ";
+            Base* base = (Base*)_event->user.data1;
+            if (base->getFlip())
+              text = text + "1 победил";
+            else
+              text = text + "2 победил";
+
+            gui->addEntity(new Entity(renderText(text, 64, {255, 0, 0, 255}), 25 * text.length(), 36, 300, 340));
+            _action = false;
+            break;
+        }
+        break;
       case SDL_QUIT:
         printTrace("SdlWindow: SDL_Quit event");
         return false;
@@ -35,5 +59,7 @@ bool EventSubSystem::checkEvents(void)
 }
 
 const Uint8* EventSubSystem::getKeysState(void) { return _keysState; }
+
+bool EventSubSystem::getAction(void) { return _action; }
 
 EventSubSystem::~EventSubSystem() { delete _event; }

@@ -25,7 +25,9 @@ void Unit::process(Unit *next) { Unit::process(); }
 
 void Unit::setDamage(unsigned short int damage)
 {
-  if (_hp > damage)
+  if (!_hp)
+    return;
+  else if (_hp > damage)
     _hp -= damage;
   else
     _hp = 0;
