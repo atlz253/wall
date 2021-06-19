@@ -14,7 +14,7 @@ SDL_Texture *renderText(std::string text, int size, SDL_Color color)
     return nullptr;
   }
 
-  SDL_Surface *surf = TTF_RenderText_Blended(font, text.c_str(), color);
+  SDL_Surface *surf = TTF_RenderUTF8_Blended(font, text.c_str(), color);
   if (!surf)
   {
     TTF_CloseFont(font);
