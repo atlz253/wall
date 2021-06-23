@@ -22,6 +22,8 @@ class SdlWindow final
   */
   SdlWindow();
 
+  void freeze(void);
+
   /*
       Операция содания рендера
   */

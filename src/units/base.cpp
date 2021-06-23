@@ -86,7 +86,7 @@ class MoneyBar final : public Entity
     std::string text = std::to_string(_base->getMoney()) + '$';
     SDL_DestroyTexture(_texture);
     _texture = font->getTexture(text, FONT_MEDIUM, {255, 0, 0, 255});
-    font->getSize(text, FONT_MEDIUM, _geometry);
+    font->getSize(text, FONT_MEDIUM, &_geometry->w, &_geometry->h);
 
     if (_base->getFlip())
       setPosition(SCREEN_WIDTH - _geometry->w, _geometry->h);
@@ -138,8 +138,6 @@ Unit* Base::keyCheck(void)
     if (_speed != 0) _speed--;
     return nullptr;
   }
-
-  events->eventClear();
 }
 
 int Base::getBack(void) { return _center->x; }

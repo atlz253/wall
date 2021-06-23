@@ -8,7 +8,9 @@ class Gui final : public Layer
  public:
   Gui();
 
-  void addEntity(Entity *entity);
+  void menu(void);
+
+  void rules(void);
 
   ~Gui();
 };

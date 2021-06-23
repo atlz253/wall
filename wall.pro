@@ -15,10 +15,12 @@ INCLUDEPATH += src/event \
 SOURCES += \
   src/event/eventSubSystem.cpp \
   src/main.cpp \
+  src/object/button.cpp \
   src/object/entity.cpp \
   src/object/font.cpp \
   src/object/layer.cpp \
   src/object/rotateEntity.cpp \
+  src/object/text.cpp \
   src/object/textureManager.cpp \
   src/units/base.cpp \
   src/units/knight.cpp \
@@ -36,9 +38,11 @@ SOURCES += \
 
 HEADERS += \
   src/event/eventSubSystem.hpp \
+  src/object/button.hpp \
   src/object/entity.hpp \
   src/object/font.hpp \
   src/object/layer.hpp \
+  src/object/text.hpp \
   src/object/textureManager.hpp \
   src/units/base.hpp \
   src/units/knight.hpp \

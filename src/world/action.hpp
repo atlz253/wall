@@ -1,3 +1,6 @@
+#ifndef ACTION
+#define ACTION
+
 #include <queue>
 
 #include "layer.hpp"
@@ -22,7 +25,11 @@ class Action final : public Layer
  public:
   Action();
 
+  void start(void);
+
   void renderer(void) override;
 
   ~Action();
 };
+
+#endif  // ACTION

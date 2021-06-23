@@ -14,8 +14,6 @@ class Renderer;
 class Main final
 {
  private:
-  SdlWindow *_window;
-
   /*
       Игровой цикл
 

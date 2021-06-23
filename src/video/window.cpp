@@ -17,6 +17,15 @@ SdlWindow::SdlWindow()
   }
 }
 
+void SdlWindow::freeze(void)
+{
+  printTrace("SdlWindow: окно свернуто");
+  SDL_Event *event = new SDL_Event;
+
+  while (SDL_WaitEvent(event))
+    if (event->window.event == SDL_WINDOWEVENT_SHOWN) break;
+}
+
 void SdlWindow::operator>>(Renderer *renderer)
 {
   printTrace("SdlWindow: создание рендера");

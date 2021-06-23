@@ -7,6 +7,7 @@
 #include "entity.hpp"
 #include "font.hpp"
 #include "globals.hpp"
+#include "menu.hpp"
 #include "print.hpp"
 #include "terrain.hpp"
 #include "window.hpp"
@@ -41,6 +42,7 @@ class SdlSubSystem final
       printError("Ошибка инициализации SDL2_Image:", TTF_GetError());
       exit(EXIT_FAILURE);
     }
+    font->open("res/joystix_monospace.ttf");
   }
 
   ~SdlSubSystem()
@@ -58,8 +60,14 @@ class SdlSubSystem final
 
 void Main::_gameLoop(void)
 {
-  Layer *background = new Background(renderer), *terrain = new Terrain(renderer);
-  Action *action = new Action(renderer);
+  Layer *background = new Background(), *terrain = new Terrain();
+  action = new Action();
+  gui = new Gui();
+
+  SDL_Event *start = new SDL_Event;
+  start->type = SDL_USEREVENT;
+  start->user.code = MENU_EVENT;
+  SDL_PushEvent(start);
 
   while (events->checkEvents())
   {
@@ -83,9 +91,9 @@ Main::Main() {}
 int Main::run(void)
 {
   SdlSubSystem *sdlSubSystem = new SdlSubSystem();
-  _window = new SdlWindow();  // TODO: SDL_CreateWindowAndRenderer
+  window = new SdlWindow();
   renderer = new Renderer();
-  *_window >> renderer;
+  *window >> renderer;
 
   _gameLoop();
 
@@ -95,8 +103,8 @@ int Main::run(void)
   return 0;
 }
 
-Main::~Main()
+Main::~Main()  // TODO: удаление всего глобального
 {
   printTrace("Main: удаление окна");
-  delete _window;
+  delete window;
 }

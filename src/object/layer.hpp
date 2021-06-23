@@ -18,6 +18,8 @@ class Layer  // TODO: свой renderer для слоя
  public:
   Layer();
 
+  void addEntity(Entity *entity);
+
   virtual void process(void);
 
   /*

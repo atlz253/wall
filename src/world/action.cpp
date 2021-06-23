@@ -13,10 +13,8 @@ Action::Action()
   _rightTeam = new std::queue<Unit *>;
   _deathQueue = new std::queue<Unit *>;  // TODO: исчезновение трупов
 
-  printTrace("Action: строим укрепточки");
-
-  _leftBase = new Base(-96);
-  _rightBase = new Base(1088, SDL_FLIP_HORIZONTAL);
+  _leftBase = nullptr;
+  _rightBase = nullptr;
 }
 
 void Action::_unitsRenderer(void)
@@ -123,9 +121,17 @@ void Action::_baseRenderer(void)
   _rightBase->render();
 }
 
+void Action::start(void)
+{
+  printTrace("Action: строим укрепточки");
+
+  _leftBase = new Base(-96);
+  _rightBase = new Base(1088, SDL_FLIP_HORIZONTAL);
+}
+
 void Action::renderer(void)
 {
-  _baseRenderer();
+  if (_leftBase) _baseRenderer();
   _unitsRenderer();
 }
 
