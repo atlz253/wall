@@ -2,6 +2,7 @@
 #define LAYER
 
 #include <list>
+#include <queue>
 
 class Entity;
 class Renderer;
@@ -9,18 +10,22 @@ class Renderer;
 /*
     Слой отрисовки
 */
-class Layer
+class Layer  // TODO: свой renderer для слоя
 {
  protected:
-  std::list<Entity *> _list;                // Список сущностей
-  std::list<Entity *>::iterator _iterator;  // Итератор для работы со списком
+  std::queue<Entity *> *_queue;
+
  public:
   Layer();
+
+  virtual void process(void);
 
   /*
       Отрисовка элементов слоя
   */
   virtual void renderer(void);
+
+  void clear(void);
 
   ~Layer();
 };

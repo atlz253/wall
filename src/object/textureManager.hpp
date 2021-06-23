@@ -20,7 +20,8 @@ class TextureManager final
   /*
       Загрузка текстуры
   */
-  void loadTexture(std::string name, std::string path);
+  void loadTexture(std::string path);
+  void loadTexture(std::string name, std::string path); // TODO: убрать
 
   /*
       Получение объекта текстуры по ключу

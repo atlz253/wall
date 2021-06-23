@@ -9,6 +9,8 @@ class Gui final : public Layer
   Gui();
 
   void addEntity(Entity *entity);
+
+  ~Gui();
 };
 
 #endif  // GUI_HPP

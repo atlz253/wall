@@ -14,16 +14,6 @@ RotateEntity::RotateEntity(SDL_Texture *texture, int w, int h, int x, int y, SDL
   _flip = flip;
 }
 
-RotateEntity::RotateEntity(Renderer *renderer, std::string path, int w, int h, int x, int y, SDL_RendererFlip flip)
-    : Entity(renderer, path, w, h, x, y)
-{
-  _center = new SDL_Point;
-  _center->x = _geometry->x + _geometry->w / 2;
-  _center->y = _geometry->y + _geometry->h / 2;
-
-  _flip = flip;
-}
-
 RotateEntity::RotateEntity(RotateEntity *&entity, SDL_RendererFlip flip, int x, int y) : Entity::Entity()
 {
   _texture = entity->_texture;

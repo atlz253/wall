@@ -1,15 +1,16 @@
 #include <queue>
 
-#include "unit.hpp"
+#include "layer.hpp"
 
+class Unit;
 class Base;
 
-class Action final  // TODO: сделать Layer - шаблоном?
+class Action final : public Layer
 {
  private:
-  std::queue<Unit*> *_leftTeam;
-  std::queue<Unit*> *_rightTeam;
-  std::queue<Unit*> *_deathQueue;
+  std::queue<Unit *> *_leftTeam;
+  std::queue<Unit *> *_rightTeam;
+  std::queue<Unit *> *_deathQueue;
 
   Base *_leftBase;
   Base *_rightBase;
@@ -19,9 +20,9 @@ class Action final  // TODO: сделать Layer - шаблоном?
   void _baseRenderer(void);
 
  public:
-  Action(Renderer *renderer);
+  Action();
 
-  void renderer(void);
+  void renderer(void) override;
 
   ~Action();
 };

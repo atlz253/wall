@@ -7,7 +7,7 @@
 #include "knight.hpp"
 #include "print.hpp"
 
-Action::Action(Renderer *renderer)  // TODO: убрать параметр renderer
+Action::Action()
 {
   _leftTeam = new std::queue<Unit *>;
   _rightTeam = new std::queue<Unit *>;

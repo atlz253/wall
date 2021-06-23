@@ -80,15 +80,9 @@ class Entity
       int w, h - ширина и высота сущности
       int x, y - расположение сущности (по-умолчанию верхний левый угол)
   */
-  Entity(SDL_Texture *texture, int w, int h, int x = 0, int y = 0);
+  Entity(SDL_Texture *texture, int w, int h, int x = 0, int y = 0); // TODO: убрать
 
-  /*
-      Инициализация сущности:
-      Texture texture - текстура сущности
-      int w, h - ширина и высота сущности
-      int x, y - расположение сущности (по-умолчанию верхний левый угол)
-  */
-  Entity(Renderer *render, std::string path, int w, int h, int x = 0, int y = 0);  // TODO: убрать
+  Entity(std::string path, int w, int h, int x = 0, int y = 0);
 
   /*
       Конструктор копирования
@@ -160,16 +154,6 @@ class RotateEntity : public Entity
       SDL_RendererFlip flip - параметр поворота текстуры
   */
   RotateEntity(SDL_Texture *texture, int w, int h, int x = 0, int y = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
-
-  /*
-      Инициализация сущности:
-      Texture texture - текстура сущности
-      int w, h - ширина и высота сущности
-      int x, y - расположение сущности (по-умолчанию верхний левый угол)
-      SDL_RendererFlip flip - параметр поворота текстуры
-  */
-  RotateEntity(Renderer *render, std::string path, int w, int h, int x = 0, int y = 0,
-               SDL_RendererFlip flip = SDL_FLIP_NONE);  // TODO: убрать
 
   /*
       Конструктор копирования

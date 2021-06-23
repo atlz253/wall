@@ -3,5 +3,5 @@
 class Terrain final : public Layer
 {
  public:
-  Terrain(Renderer *renderer);
+  Terrain();
 };

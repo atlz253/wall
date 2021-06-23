@@ -7,10 +7,20 @@
 
 TextureManager::TextureManager() { printTrace("Инициализация менеджера текстур"); }
 
+void TextureManager::loadTexture(std::string path)
+{
+  printTrace("TextureManager: загрузка текстуры", path);
+  SDL_Texture *texture = IMG_LoadTexture(renderer->getRender(), path.c_str()); //TODO: есть ли уже текстура?
+
+  if (!texture) printError("TextureManager: не удалось загрузить текстуру.", IMG_GetError());
+
+  _dict[path] = texture;
+}
+
 void TextureManager::loadTexture(std::string name, std::string path)
 {
   printTrace("TextureManager: загрузка текстуры", path);
-  SDL_Texture *texture = IMG_LoadTexture(renderer->getRender(), path.c_str());
+  SDL_Texture *texture = IMG_LoadTexture(renderer->getRender(), path.c_str()); //TODO: есть ли уже текстура?
 
   if (!texture) printError("TextureManager: не удалось загрузить текстуру.", IMG_GetError());
 
