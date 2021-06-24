@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "button.hpp"
 #include "font.hpp"
 #include "globals.hpp"
 #include "knight.hpp"
@@ -99,6 +100,7 @@ void Base::_defeat(void)
 {
   int w, h;
   std::string text = "Игрок ";
+  SDL_Event* event;
 
   if (getFlip())
     text = text + *p1;
@@ -109,6 +111,11 @@ void Base::_defeat(void)
   font->getSize(text, FONT_HIGH, &w, &h);
   gui->addEntity(new Entity(font->getTexture(text, FONT_HIGH, {255, 0, 0, 255}), w, h, (SCREEN_WIDTH - w) / 2,
                             (SCREEN_HEIGHT - h) / 2));
+
+  event = new SDL_Event;
+  event->type = SDL_USEREVENT;
+  event->user.code = END_EVENT;
+  gui->addEntity(new Button("назад", (SCREEN_WIDTH - BUTTON_WIDTH) / 2, (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2, event));
 }
 
 Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()

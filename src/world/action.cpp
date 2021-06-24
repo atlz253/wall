@@ -135,7 +135,26 @@ void Action::renderer(void)
   _unitsRenderer();
 }
 
-Action::~Action()
+void Action::clear(void)
 {
-  // FIXME: реализовать деструктор
+  Layer::clear();
+
+  while (!_leftTeam->empty())
+  {
+    delete _leftTeam->front();
+    _leftTeam->pop();
+  }
+
+  while (!_rightTeam->empty())
+  {
+    delete _rightTeam->front();
+    _rightTeam->pop();
+  }
+
+  delete _leftBase;
+  _leftBase = nullptr;
+  delete _rightBase;
+  _rightBase = nullptr;
 }
+
+Action::~Action() { clear(); }

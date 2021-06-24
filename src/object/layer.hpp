@@ -27,7 +27,7 @@ class Layer  // TODO: свой renderer для слоя
   */
   virtual void renderer(void);
 
-  void clear(void);
+  virtual void clear(void);
 
   ~Layer();
 };

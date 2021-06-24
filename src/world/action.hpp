@@ -29,6 +29,8 @@ class Action final : public Layer
 
   void renderer(void) override;
 
+  void clear(void) override;
+
   ~Action();
 };
 

@@ -17,12 +17,8 @@ EventSubSystem::EventSubSystem()
 
 bool EventSubSystem::checkEvents(void)
 {
-  //  Uint32 type;
-
   while (SDL_PollEvent(_event))
   {
-    //    type = _event->type;
-
     switch (_event->type)
     {
       case SDL_WINDOWEVENT:
@@ -58,6 +54,11 @@ bool EventSubSystem::checkEvents(void)
           case DEFEAT_EVENT:
             _action = false;
             break;
+          case END_EVENT:
+            _action = true;
+            action->clear();
+            gui->menu();
+            break;
         }
         break;
       case SDL_QUIT:
@@ -89,8 +90,7 @@ bool EventSubSystem::leftClick(void)
   }
   else
   {
-    if (!(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)))
-      _mouseCheck = false;
+    if (!(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT))) _mouseCheck = false;
     return false;
   }
 }
