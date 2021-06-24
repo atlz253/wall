@@ -6,11 +6,14 @@
 #include "entity.hpp"
 #include "font.hpp"
 
-class Text final : public Entity
+class Text : public Entity
 {
- private:
+ protected:
   std::string _text;
   FontSize _size;
+  SDL_Color _color;
+
+  void _updateTexture(void);
 
  public:
   Text(std::string text, FontSize size, SDL_Color color, int x, int y);

@@ -5,7 +5,11 @@
 
 enum GameEvents
 {
-  DEFEAT_EVENT = 0
+  MENU_EVENT,
+  RULE_EVENT,
+  START_EVENT,
+  RECORDS_EVENT,
+  DEFEAT_EVENT
 };
 
 /*
@@ -17,6 +21,7 @@ class EventSubSystem final
   bool _action;
   SDL_Event* _event;  // Обработчик событий
   const Uint8* _keysState;
+  SDL_Point* _mousePosition;
 
  public:
   EventSubSystem();
@@ -26,13 +31,15 @@ class EventSubSystem final
   */
   bool checkEvents(void);
 
-  const Uint8* getKeysState(void);
-
   bool getAction(void);
 
-  void eventClear(void);
+  SDL_Event* getEvent(void);
+
+  SDL_Point* getMousePosition(void);
+
+  bool leftClick(void);
 
   ~EventSubSystem();
 };
 
-#endif // EVENTS_HPP
+#endif  // EVENTS_HPP

@@ -1,7 +1,10 @@
 #include "gui.hpp"
 
+#include <ostream>
+
 #include "button.hpp"
 #include "text.hpp"
+#include "input.hpp"
 
 static const int X = (SCREEN_WIDTH - BUTTON_WIDTH) / 2;
 static const int Y = (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2;
@@ -19,7 +22,10 @@ void Gui::menu(void)
   event->user.code = START_EVENT;
   addEntity(new Button("играть", X, Y - BUTTON_HEIGHT * 4, event));
 
-  addEntity(new Button("рекорды", X, Y - BUTTON_HEIGHT * 3, nullptr));
+  event = new SDL_Event;
+  event->type = SDL_USEREVENT;
+  event->user.code = RECORDS_EVENT;
+  addEntity(new Button("рекорды", X, Y - BUTTON_HEIGHT * 3, event));
 
   event = new SDL_Event;
   event->type = SDL_USEREVENT;
@@ -51,6 +57,30 @@ void Gui::rules(void)
   event->type = SDL_USEREVENT;
   event->user.code = MENU_EVENT;
   addEntity(new Button("назад", X, (SCREEN_HEIGHT - h) / 2 + BUTTON_HEIGHT, event));
+}
+
+void Gui::records(void)
+{
+  SDL_Event* event = new SDL_Event;
+
+  clear();
+
+  event->type = SDL_USEREVENT;
+  event->user.code = MENU_EVENT;
+  addEntity(new Button("назад", X, Y, event));
+}
+
+void Gui::input(void)
+{
+  SDL_Event* event = new SDL_Event;
+
+  clear();
+
+  addEntity(new Input(FONT_SMALL, {0, 0, 0, 255}, 0, Y + 50));
+
+  event->type = SDL_USEREVENT;
+  event->user.code = MENU_EVENT;
+  addEntity(new Button("назад", X, Y, event));
 }
 
 Gui::~Gui() {}

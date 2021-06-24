@@ -95,6 +95,11 @@ class MoneyBar final : public Entity
   }
 };
 
+void Base::_defeat(void)
+{
+
+}
+
 Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
 {
   _money = 300;
@@ -124,7 +129,7 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
 
 Unit* Base::keyCheck(void)
 {
-  const Uint8* keysState = events->getKeysState();
+  const Uint8* keysState = SDL_GetKeyboardState(nullptr);
 
   if (!_speed && _money >= KNIGHT_COST &&
       ((_flip && keysState[SDL_SCANCODE_RIGHTBRACKET]) || (!_flip && keysState[SDL_SCANCODE_Q])))

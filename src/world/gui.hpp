@@ -12,6 +12,10 @@ class Gui final : public Layer
 
   void rules(void);
 
+  void records(void);
+
+  void input(void);
+
   ~Gui();
 };
 

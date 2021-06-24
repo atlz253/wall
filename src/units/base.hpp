@@ -1,5 +1,7 @@
 #include "unit.hpp"
 
+#include <string>
+
 #define BASE_HP 2000
 
 /*
@@ -10,7 +12,9 @@ class Base final : public Unit
  private:
   UINT16 _money;
   UINT8 _earnSpeed;
+  std::string name;
 
+  void _defeat(void);
  public:
   Base(int x = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
 

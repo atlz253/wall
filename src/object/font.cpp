@@ -13,7 +13,7 @@ TTF_Font *Font::_getFont(FontSize size)
       return _fontHigh;
     case FONT_MEDIUM:
       return _fontMedium;
-    case FONT_LOW:
+    case FONT_SMALL:
       return _fontLow;
   }
 
@@ -26,7 +26,7 @@ void Font::open(std::string path)
 {
   _fontHigh = TTF_OpenFont(path.c_str(), FONT_HIGH);
   _fontMedium = TTF_OpenFont(path.c_str(), FONT_MEDIUM);
-  _fontLow = TTF_OpenFont(path.c_str(), FONT_LOW);
+  _fontLow = TTF_OpenFont(path.c_str(), FONT_SMALL);
 
   if (!_fontHigh || !_fontMedium || !_fontLow) printError("не удалось открыть шрифт", TTF_GetError());
 }
@@ -54,7 +54,7 @@ SDL_Texture *Font::getTexture(std::string text, FontSize size, SDL_Color color)
   return texture;
 }
 
-void Font::getSize(std::string text, FontSize size, SDL_Rect *geometry)
+void Font::getSize(std::string text, FontSize size, int *w, int *h)
 {
-  TTF_SizeUTF8(_getFont(size), text.c_str(), &geometry->w, &geometry->h);
+  TTF_SizeUTF8(_getFont(size), text.c_str(), w, h);
 }

@@ -92,7 +92,7 @@ void Entity::process(void) {}
 
 void Entity::render(void)
 {
-  if (SDL_RenderCopy(_texture->renderer, _texture, _tile, _geometry))
+  if (_texture && SDL_RenderCopy(_texture->renderer, _texture, _tile, _geometry))
     printError("SdlWindow: ошибка рендера.", SDL_GetError());
 }
 

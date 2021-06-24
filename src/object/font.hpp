@@ -9,7 +9,7 @@ enum FontSize
 {
   FONT_HIGH = 48,
   FONT_MEDIUM = 26,
-  FONT_LOW = 36
+  FONT_SMALL = 20
 };
 
 typedef struct _TTF_Font TTF_Font;
@@ -31,7 +31,7 @@ class Font final
 
   SDL_Texture *getTexture(std::string text, FontSize size, SDL_Color color);
 
-  void getSize(std::string text, FontSize size, SDL_Rect *geometry);
+  void getSize(std::string text, FontSize size, int *w, int *h);
 
   ~Font();
 };

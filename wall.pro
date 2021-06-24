@@ -18,6 +18,7 @@ SOURCES += \
   src/object/button.cpp \
   src/object/entity.cpp \
   src/object/font.cpp \
+  src/object/input.cpp \
   src/object/layer.cpp \
   src/object/rotateEntity.cpp \
   src/object/text.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
   src/object/button.hpp \
   src/object/entity.hpp \
   src/object/font.hpp \
+  src/object/input.hpp \
   src/object/layer.hpp \
   src/object/text.hpp \
   src/object/textureManager.hpp \
