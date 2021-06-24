@@ -57,7 +57,7 @@ Knight::Knight(int x, SDL_RendererFlip flip) : Unit::Unit()
 void Knight::process(Unit *next)
 {
   Unit::process();
-  //  std::cout << next->getFront() << ' ' << getFront() << std::endl;
+
   if (!_hp)
   {
     if (_texture != textures->key("knightDeath"))

@@ -4,7 +4,7 @@
 #include "globals.hpp"
 #include "renderer.hpp"
 
-#define VISION 0  // "лучи" зрения юнитов
+#define VISION 0 // "лучи" зрения юнитов
 
 unsigned int Unit::_unitsCount = 0;
 
