@@ -79,7 +79,7 @@ class MoneyBar final : public Entity
   Base* _base;
 
  public:
-  MoneyBar(Base* base) : Entity::Entity() { _base = base;}
+  MoneyBar(Base* base) : Entity::Entity() { _base = base; }
 
   void process(void) override
   {
@@ -97,7 +97,18 @@ class MoneyBar final : public Entity
 
 void Base::_defeat(void)
 {
+  int w, h;
+  std::string text = "Игрок ";
 
+  if (getFlip())
+    text = text + *p1;
+  else
+    text = text + *p2;
+  text += " победил";
+
+  font->getSize(text, FONT_HIGH, &w, &h);
+  gui->addEntity(new Entity(font->getTexture(text, FONT_HIGH, {255, 0, 0, 255}), w, h, (SCREEN_WIDTH - w) / 2,
+                            (SCREEN_HEIGHT - h) / 2));
 }
 
 Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
@@ -174,13 +185,14 @@ void Base::setDamage(UINT16 damage)
 
     if (_hp <= 0)
     {
-      SDL_Event *defeat = new SDL_Event;
+      SDL_Event* defeat = new SDL_Event;
       defeat->type = SDL_USEREVENT;
       defeat->user.code = DEFEAT_EVENT;
       defeat->user.data1 = this;
       SDL_PushEvent(defeat);
+      _defeat();
     }
-   }
+  }
 }
 
 void Base::process(void)
@@ -190,6 +202,6 @@ void Base::process(void)
   if (++_earnSpeed >= 50 + _hp / 20)
   {
     _earnSpeed = 0;
-    addMoney(random(1, 20 - _hp/200));
+    addMoney(random(1, 20 - _hp / 200));
   }
 }

@@ -55,19 +55,7 @@ bool EventSubSystem::checkEvents(void)
             gui->clear();
             action->start();
             break;
-          case DEFEAT_EVENT:  // TODO: обрабатывать поражение внутри Base
-            int w, h;
-            std::string text = "Игрок ";
-            Base* base = (Base*)_event->user.data1;
-            if (base->getFlip())
-              text = text + *p1;
-            else
-              text = text + *p2;
-            text += " победил";
-
-            font->getSize(text, FONT_HIGH, &w, &h);
-            gui->addEntity(new Entity(font->getTexture(text, FONT_HIGH, {255, 0, 0, 255}), w, h, (SCREEN_WIDTH - w) / 2,
-                                      (SCREEN_HEIGHT - h) / 2));
+          case DEFEAT_EVENT:
             _action = false;
             break;
         }
