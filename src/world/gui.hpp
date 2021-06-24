@@ -14,7 +14,9 @@ class Gui final : public Layer
 
   void records(void);
 
-  void input(void);
+  void p1_input(void);
+
+  void p2_input(void);
 
   ~Gui();
 };

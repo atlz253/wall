@@ -7,9 +7,10 @@ class Input final : public Text
 {
  private:
   uint32_t _time;
+  std::string *_ptext;
 
  public:
-  Input(FontSize size, SDL_Color color, int x, int y);
+  Input(std::string *text, FontSize size, SDL_Color color, int x, int y);
 
   void process(void);
 

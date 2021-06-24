@@ -20,6 +20,8 @@ class Text : public Entity
 
   void setColor(SDL_Color color);
 
+  int getWidth(void);
+
   std::string getText(void);
 
   ~Text();

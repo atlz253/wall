@@ -7,6 +7,8 @@ enum GameEvents
 {
   MENU_EVENT,
   RULE_EVENT,
+  P1_INPUT_EVENT,
+  P2_INPUT_EVENT,
   START_EVENT,
   RECORDS_EVENT,
   DEFEAT_EVENT
@@ -22,6 +24,7 @@ class EventSubSystem final
   SDL_Event* _event;  // Обработчик событий
   const Uint8* _keysState;
   SDL_Point* _mousePosition;
+  bool _mouseCheck;
 
  public:
   EventSubSystem();

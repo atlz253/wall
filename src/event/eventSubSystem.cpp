@@ -12,6 +12,7 @@ EventSubSystem::EventSubSystem()
   _action = true;
   _event = new SDL_Event;
   _mousePosition = new SDL_Point;
+  _mouseCheck = false;
 }
 
 bool EventSubSystem::checkEvents(void)
@@ -41,20 +42,28 @@ bool EventSubSystem::checkEvents(void)
           case RULE_EVENT:
             gui->rules();
             break;
-          case START_EVENT:
-            gui->input();
-            break;
           case RECORDS_EVENT:
             gui->records();
+            break;
+          case P1_INPUT_EVENT:
+            gui->p1_input();
+            break;
+          case P2_INPUT_EVENT:
+            gui->p2_input();
+            break;
+          case START_EVENT:
+            gui->clear();
+            action->start();
             break;
           case DEFEAT_EVENT:  // TODO: обрабатывать поражение внутри Base
             int w, h;
             std::string text = "Игрок ";
             Base* base = (Base*)_event->user.data1;
             if (base->getFlip())
-              text = text + "1 победил";
+              text = text + *p1;
             else
-              text = text + "2 победил";
+              text = text + *p2;
+            text += " победил";
 
             font->getSize(text, FONT_HIGH, &w, &h);
             gui->addEntity(new Entity(font->getTexture(text, FONT_HIGH, {255, 0, 0, 255}), w, h, (SCREEN_WIDTH - w) / 2,
@@ -85,10 +94,17 @@ SDL_Point* EventSubSystem::getMousePosition(void)
 
 bool EventSubSystem::leftClick(void)
 {
-  if (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT))
+  if (!_mouseCheck && (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)))
+  {
+    _mouseCheck = true;
     return true;
+  }
   else
+  {
+    if (!(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)))
+      _mouseCheck = false;
     return false;
+  }
 }
 
 EventSubSystem::~EventSubSystem() { delete _event; }

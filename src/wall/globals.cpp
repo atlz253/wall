@@ -7,3 +7,4 @@ TextureManager *textures = new TextureManager();
 Font *font = new Font();
 SdlWindow *window = nullptr;
 Action *action = nullptr;
+std::string *p1 = new std::string, *p2 = new std::string;

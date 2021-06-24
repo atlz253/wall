@@ -35,6 +35,8 @@ void Text::setColor(SDL_Color color)
   _texture = font->getTexture(_text, _size, color);
 }
 
+int Text::getWidth(void) { return _geometry->w; }
+
 std::string Text::getText(void) { return _text; }
 
 Text::~Text() {}

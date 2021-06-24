@@ -5,6 +5,8 @@
 
 Layer::Layer() { _queue = new std::queue<Entity *>; }
 
+void Layer::addEntity(Entity *entity) { _queue->push(entity); }
+
 void Layer::process(void) {}
 
 void Layer::renderer(void)
@@ -30,8 +32,10 @@ void Layer::clear(void)
     delete _queue->front();
     _queue->pop();
   }
-
-  delete _queue;
 }
 
-Layer::~Layer() { clear(); }
+Layer::~Layer()
+{
+  clear();
+  delete _queue;
+}

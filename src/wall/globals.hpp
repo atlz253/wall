@@ -1,6 +1,9 @@
 #ifndef GLOBALS
 #define GLOBALS
 
+#include <string>
+
+#include "input.hpp"
 #include "action.hpp"
 #include "eventSubSystem.hpp"
 #include "font.hpp"
@@ -22,5 +25,6 @@ extern EventSubSystem *events;
 extern TextureManager *textures;
 extern Font *font;
 extern Action *action;
+extern std::string *p1, *p2;
 
 #endif
