@@ -3,7 +3,7 @@
 #include "globals.hpp"
 #include "text.hpp"
 
-Button::Button(std::string text, int x = 0, int y = 0, SDL_Event *event = nullptr) : Entity::Entity(nullptr, 0, 0, x, y)
+Button::Button(std::string text, int x = 0, int y = 0, SDL_Event *event = nullptr) : Entity(0, 0, x, y)
 {
   int textW, textH;
 

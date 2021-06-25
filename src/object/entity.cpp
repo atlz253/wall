@@ -11,19 +11,19 @@ Entity::Entity()
   _geometry = new SDL_Rect;
 }
 
-Entity::Entity(SDL_Texture *texture, int w, int h, int x, int y) : Entity::Entity()
+Entity::Entity(int w, int h, int x, int y) : Entity()
 {
   setSize(w, h);
   setPosition(x, y);
-  _texture = texture;
 }
 
-Entity::Entity(std::string path, int w, int h, int x, int y)
-{
-  setSize(w, h);
-  setPosition(x, y);
+Entity::Entity(std::string path, int w, int h, int x, int y) : Entity(w, h, x, y) { _texture = textures->key(path); }
 
-  _texture = textures->key(path);
+Entity::Entity(std::string path, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH, int tileX,
+               int tileY)
+    : Entity(path, entityW, entityH, entityX, entityY)
+{
+  setTile(tileX, tileY, tileW, tileH);
 }
 
 Entity::Entity(Entity *&entity, int x, int y) : Entity::Entity()
@@ -41,18 +41,6 @@ Entity::Entity(Entity *&entity, int x, int y) : Entity::Entity()
     _tile->x = entity->_tile->x;
     _tile->y = entity->_tile->y;
   }
-}
-
-Entity::Entity(Entity *&entity, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH, int tileX,
-               int tileY)
-    : Entity::Entity()
-{
-  _texture = entity->_texture;
-
-  setSize(entityW, entityH);
-  setPosition(entityX, entityY);
-
-  setTile(tileX, tileY, tileW, tileH);
 }
 
 void Entity::setSize(int w, int h)

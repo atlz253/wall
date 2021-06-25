@@ -5,14 +5,21 @@
 
 RotateEntity::RotateEntity() : Entity::Entity() {}
 
-RotateEntity::RotateEntity(SDL_Texture *texture, int w, int h, int x, int y, SDL_RendererFlip flip)
-    : Entity(texture, w, h, x, y)
+RotateEntity::RotateEntity(std::string path, int w, int h, int x, int y, SDL_RendererFlip flip)
+    : Entity(path, w, h, x, y)
 {
   _center = new SDL_Point;
   _center->x = _geometry->x + _geometry->w / 2;
   _center->y = _geometry->y + _geometry->h / 2;
 
   _flip = flip;
+}
+
+RotateEntity::RotateEntity(std::string path, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH,
+                           int tileX, int tileY, SDL_RendererFlip flip)
+    : RotateEntity(path, entityW, entityH, entityX, entityY, flip)
+{
+  setTile(tileX, tileY, tileW, tileH);
 }
 
 RotateEntity::RotateEntity(RotateEntity *&entity, SDL_RendererFlip flip, int x, int y) : Entity::Entity()
@@ -35,13 +42,6 @@ RotateEntity::RotateEntity(RotateEntity *&entity, SDL_RendererFlip flip, int x, 
     _tile->y = entity->_tile->y;
   }
 
-  _flip = flip;
-}
-
-RotateEntity::RotateEntity(Entity *&entity, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH,
-                           int tileX, int tileY, SDL_RendererFlip flip)
-    : Entity::Entity(entity, entityW, entityH, entityX, entityY, tileW, tileH, tileX, tileY)
-{
   _flip = flip;
 }
 

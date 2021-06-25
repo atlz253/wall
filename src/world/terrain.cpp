@@ -4,10 +4,11 @@
 #include "globals.hpp"
 #include "print.hpp"
 
+const std::string tile = "res/Magic-Cliffs-Environment/PNG/tileset.png";
+
 Terrain::Terrain()
 {
-  printTrace("Terrain: загрузка тайлсета");
-  Entity *tile = new Entity(textures->key("res/Magic-Cliffs-Environment/PNG/tileset.png"), 16, 16), *tmp = nullptr;
+  Entity *tmp = nullptr;
 
   printTrace("Terrain: инициализация переднего плана");
 

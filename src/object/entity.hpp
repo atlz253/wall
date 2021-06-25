@@ -20,32 +20,17 @@ class Entity
  public:
   Entity();
 
-  /*
-      Инициализация сущности:
-      SDL_Texture *texture - используема сущностью текстура
-      int w, h - ширина и высота сущности
-      int x, y - расположение сущности (по-умолчанию верхний левый угол)
-  */
-  Entity(SDL_Texture *texture, int w, int h, int x = 0, int y = 0);  // TODO: убрать
+  Entity(int w, int h, int x = 0, int y = 0);
 
   Entity(std::string path, int w, int h, int x = 0, int y = 0);
+
+  Entity(std::string path, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH, int tileX, int tileY);
 
   /*
       Конструктор копирования
       Копия будет указывать на ту же текстуру
   */
   Entity(Entity *&entity, int x = 0, int y = 0);
-
-  /*
-      Конструктор копирования
-      Копия будет указывать на ту же текстуру
-      int entityW, entityH - ширина и высота сущности
-      int entityX, entityY - расположение сущности
-      int tileW, tileH - ширина и высота области текстуры
-      int tileX, tileY - располажение области текстуры
-  */
-  Entity(Entity *&entity, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH, int tileX,
-         int tileY);
 
   /*
       Изменение размера сущности
@@ -92,14 +77,9 @@ class RotateEntity : public Entity
  public:
   RotateEntity();
 
-  /*
-      Инициализация сущности:
-      SDL_Texture *texture - используема сущностью текстура
-      int w, h - ширина и высота сущности
-      int x, y - расположение сущности (по-умолчанию верхний левый угол)
-      SDL_RendererFlip flip - параметр поворота текстуры
-  */
-  RotateEntity(SDL_Texture *texture, int w, int h, int x = 0, int y = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
+  RotateEntity(std::string path, int w, int h, int x = 0, int y = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
+
+  RotateEntity(std::string path, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH, int tileX, int tileY, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
   /*
       Конструктор копирования
