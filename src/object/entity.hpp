@@ -5,55 +5,6 @@
 
 #include "SDL2/SDL.h"
 
-/*
-    ====================================================================
-    enum SDL_ScaleMode и struct SDL_Texture взяты из исходников SDL2
-    src/render/SDL_sysrender.h
-*/
-
-typedef struct SDL_SW_YUVTexture SDL_SW_YUVTexture;
-
-typedef enum
-{
-  SDL_ScaleModeNearest,
-  SDL_ScaleModeLinear,
-  SDL_ScaleModeBest
-} SDL_ScaleMode;
-
-/* Define the SDL texture structure */
-struct SDL_Texture
-{
-  const void *magic;
-  Uint32 format;           /**< The pixel format of the texture */
-  int access;              /**< SDL_TextureAccess */
-  int w;                   /**< The width of the texture */
-  int h;                   /**< The height of the texture */
-  int modMode;             /**< The texture modulation mode */
-  SDL_BlendMode blendMode; /**< The texture blend mode */
-  SDL_ScaleMode scaleMode; /**< The texture scale mode */
-  Uint8 r, g, b, a;        /**< Texture modulation values */
-
-  SDL_Renderer *renderer;
-
-  /* Support for formats not supported directly by the renderer */
-  SDL_Texture *native;
-  SDL_SW_YUVTexture *yuv;
-  void *pixels;
-  int pitch;
-  SDL_Rect locked_rect;
-
-  Uint32 last_command_generation; /* last command queue generation this texture was in. */
-
-  void *driverdata; /**< Driver specific texture representation */
-
-  SDL_Texture *prev;
-  SDL_Texture *next;
-};
-
-/*
-    ====================================================================
-*/
-
 class Renderer;
 
 /*
@@ -75,7 +26,7 @@ class Entity
       int w, h - ширина и высота сущности
       int x, y - расположение сущности (по-умолчанию верхний левый угол)
   */
-  Entity(SDL_Texture *texture, int w, int h, int x = 0, int y = 0); // TODO: убрать
+  Entity(SDL_Texture *texture, int w, int h, int x = 0, int y = 0);  // TODO: убрать
 
   Entity(std::string path, int w, int h, int x = 0, int y = 0);
 

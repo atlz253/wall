@@ -1,4 +1,5 @@
 #include "entity.hpp"
+#include "globals.hpp"
 #include "print.hpp"
 #include "renderer.hpp"
 
@@ -46,7 +47,7 @@ RotateEntity::RotateEntity(Entity *&entity, int entityW, int entityH, int entity
 
 void RotateEntity::render(void)
 {
-  if (SDL_RenderCopyEx(_texture->renderer, _texture, _tile, _geometry, _angle, _center, _flip))
+  if (SDL_RenderCopyEx(renderer->getRender(), _texture, _tile, _geometry, _angle, _center, _flip))
     printError("SdlWindow: ошибка рендера.", SDL_GetError());
 }
 
