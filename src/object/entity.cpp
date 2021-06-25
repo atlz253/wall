@@ -5,16 +5,6 @@
 #include "print.hpp"
 #include "renderer.hpp"
 
-void Entity::_loadTexture(Renderer *renderer, std::string path)
-{
-  printTrace("Entity: загрузка текстуры", path);
-  if (_texture) SDL_DestroyTexture(_texture);
-
-  _texture = IMG_LoadTexture(renderer->getRender(), path.c_str());
-
-  if (!_texture) printError("Texture: не удалось загрузить текстуру.", IMG_GetError());
-}
-
 Entity::Entity()
 {
   printTrace("Entity: создание сущности");

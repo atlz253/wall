@@ -66,11 +66,6 @@ class Entity
   SDL_Rect *_geometry = nullptr;    // Геометрия сущности
   SDL_Rect *_tile = nullptr;        // Область текстуры
 
-  /*
-      Загрузка текстуры
-  */
-  void _loadTexture(Renderer *render, std::string path);  // TODO: убрать
-
  public:
   Entity();
 
