@@ -58,3 +58,10 @@ void Font::getSize(std::string text, FontSize size, int *w, int *h)
 {
   TTF_SizeUTF8(_getFont(size), text.c_str(), w, h);
 }
+
+Font::~Font()
+{
+  TTF_CloseFont(_fontHigh);
+  TTF_CloseFont(_fontMedium);
+  TTF_CloseFont(_fontLow);
+}

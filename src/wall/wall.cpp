@@ -1,24 +1,24 @@
 #include "wall.hpp"
 
+#include <iostream>
+
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
 #include "action.hpp"
 #include "background.hpp"
-#include "entity.hpp"
 #include "globals.hpp"
-#include "print.hpp"
 #include "terrain.hpp"
-#include "window.hpp"
 
 class SdlSubSystem final
 {
  public:
   SdlSubSystem()
   {
-    printTrace("SdlSubSystem: инициализация SDL2");
+
+    std::cout << "SdlSubSystem: инициализация SDL2" << std::endl;
     if (SDL_Init(SDL_INIT_VIDEO))
     {
-      printError("Ошибка инициализации SDL2:", SDL_GetError());
+      std::cout << "Ошибка инициализации SDL2:" << SDL_GetError() << std::endl;
       exit(EXIT_FAILURE);
     }
 
@@ -27,40 +27,39 @@ class SdlSubSystem final
     */
     SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
 
-    printTrace("SdlSubSystem: инициализация SDL2_Image");
+    std::cout << "SdlSubSystem: инициализация SDL2_Image"  << std::endl;
     if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
     {
-      printError("Ошибка инициализации SDL2_Image:", IMG_GetError());
+      std::cout << "Ошибка инициализации SDL2_Image:" << IMG_GetError() << std::endl;
       exit(EXIT_FAILURE);
     }
 
-    printTrace("SdlSubSystem: инициализация SDL2_ttf");
+    std::cout << "SdlSubSystem: инициализация SDL2_ttf" << std::endl;
     if (TTF_Init())
     {
-      printError("Ошибка инициализации SDL2_Image:", TTF_GetError());
+      std::cout << "Ошибка инициализации SDL2_Image:" << TTF_GetError() << std::endl;
       exit(EXIT_FAILURE);
     }
-    font->open("res/joystix_monospace.ttf");
   }
 
   ~SdlSubSystem()
   {
-    printTrace("SdlSubSystem: завершение работы SDL2");
+    std::cout << "SdlSubSystem: завершение работы SDL2" << std::endl;
     SDL_Quit();
 
-    printTrace("SdlSubSystem: завершение работы SDL2_Image");
+    std::cout << "SdlSubSystem: завершение работы SDL2_Image" << std::endl;
     IMG_Quit();
 
-    printTrace("SdlSubSystem: завершение работы SDL2_ttf");
+    std::cout << "SdlSubSystem: завершение работы SDL2_ttf" << std::endl;
     TTF_Quit();
   }
 };
 
+SdlSubSystem *sdlSubSystem;
+
 void Main::_gameLoop(void)
 {
   Layer *background = new Background(), *terrain = new Terrain();
-  action = new Action();
-  gui = new Gui();
 
   SDL_Event *start = new SDL_Event;
   start->type = SDL_USEREVENT;
@@ -81,28 +80,50 @@ void Main::_gameLoop(void)
 
   delete background;
   delete terrain;
-  delete action;
 }
 
-Main::Main() {}
-
-int Main::run(void)
+Main::Main()
 {
-  SdlSubSystem *sdlSubSystem = new SdlSubSystem();
+  sdlSubSystem = new SdlSubSystem();
+
   window = new SdlWindow();
   renderer = new Renderer();
   *window >> renderer;
 
-  _gameLoop();
+  p1 = new std::string;
+  p2 = new std::string;
 
-  printTrace("Main: завершение работы подсистемы SDL2");
-  delete sdlSubSystem;
+  font = new Font();
+  font->open("res/joystix_monospace.ttf");
+
+  events = new EventSubSystem();
+  textures = new TextureManager();
+
+  gui = new Gui();
+  action = new Action();
+}
+
+int Main::run(void)
+{
+  _gameLoop();
 
   return 0;
 }
 
-Main::~Main()  // TODO: удаление всего глобального
+Main::~Main()
 {
-  printTrace("Main: удаление окна");
+  delete gui;
+  delete action;
+
   delete window;
+  delete renderer;
+
+  delete p1;
+  delete p2;
+
+  delete font;
+  delete events;
+  delete textures;
+
+  delete sdlSubSystem;
 }
