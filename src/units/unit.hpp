@@ -12,13 +12,13 @@
 class Unit : public RotateEntity
 {
  protected:
-  unsigned int _id;  // уникальный номер юнита
-  UINT16 _hp;           // количество жизней юнита //TODO: заменить на UINT макросы
-  unsigned short int _speed;        // скорость юнита
-  UINT16 _damage;       // урон юнита
-  unsigned short int _backRange;    // радиус действия сзади
-  unsigned short int _frontRange;   // радиус действия спереди
-  static unsigned int _unitsCount;  // количество юнитов за всю игру
+  Uint32 _id;  // уникальный номер юнита
+  Uint16 _hp;           // количество жизней юнита //TODO: заменить на UINT макросы
+  Uint16 _speed;        // скорость юнита
+  Uint16 _damage;       // урон юнита
+  Uint16 _backRange;    // радиус действия сзади
+  Uint16 _frontRange;   // радиус действия спереди
+  static Uint32 _unitsCount;  // количество юнитов за всю игру
 
  public:
   Unit();
@@ -41,18 +41,18 @@ class Unit : public RotateEntity
   */
   virtual int getFront(void);
 
-  UINT16 getHealth(void);
+  Uint16 getHealth(void);
 
   unsigned short int getId(void);
 
-  virtual UINT16 getReward(void);
+  virtual Uint16 getReward(void);
 
   unsigned int getCount(void);
 
   /*
       Получение урона
   */
-  virtual void setDamage(UINT16 damage);
+  virtual void setDamage(Uint16 damage);
 
   ~Unit();
 };

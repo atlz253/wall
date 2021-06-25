@@ -192,11 +192,11 @@ int Base::getFront(void)
     return _center->x + _frontRange;
 }
 
-UINT16 Base::getMoney(void) { return _money; }
+Uint16 Base::getMoney(void) { return _money; }
 
-void Base::addMoney(UINT16 money) { _money += money; }
+void Base::addMoney(Uint16 money) { _money += money; }
 
-void Base::setDamage(UINT16 damage)
+void Base::setDamage(Uint16 damage)
 {
   if (!_hp)
   {

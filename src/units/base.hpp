@@ -10,8 +10,8 @@
 class Base final : public Unit
 {
  private:
-  UINT16 _money;
-  UINT8 _earnSpeed;
+  Uint16 _money;
+  Uint8 _earnSpeed;
   std::string name;
 
   void _defeat(void);
@@ -30,11 +30,11 @@ class Base final : public Unit
   */
   int getFront(void) override;
 
-  UINT16 getMoney(void);
+  Uint16 getMoney(void);
 
-  void addMoney(UINT16 money);
+  void addMoney(Uint16 money);
 
-  void setDamage(UINT16 damage) override;
+  void setDamage(Uint16 damage) override;
 
   void process(void) override;
 };

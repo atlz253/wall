@@ -169,4 +169,4 @@ int Knight::getFront(void)
     return _center->x + _frontRange;
 }
 
-UINT16 Knight::getReward(void) { return random(0, KNIGHT_COST + 25); }
+Uint16 Knight::getReward(void) { return random(0, KNIGHT_COST + 25); }

@@ -5,10 +5,10 @@
 class Knight final : public Unit
 {
  private:
-  int _frame;           // Текущий кадр
-  int _frameCount;      // Счетчик обновления текстуры
-  int _animationSpeed;  // Скорость анимации
-  bool _isRuning;       // Перемещается ли персонаж?
+  Uint8 _frame;           // Текущий кадр
+  Uint8 _frameCount;      // Счетчик обновления текстуры
+  Uint8 _animationSpeed;  // Скорость анимации
+  bool _isRuning;         // Перемещается ли персонаж?
  public:
   Knight(int x = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
@@ -24,7 +24,7 @@ class Knight final : public Unit
   */
   int getFront(void) override;
 
-  UINT16 getReward(void) override;
+  Uint16 getReward(void) override;
 
   ~Knight();
 };

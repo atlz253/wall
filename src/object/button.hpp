@@ -6,8 +6,8 @@
 #include "entity.hpp"
 #include "globals.hpp"
 
-const UINT8 BUTTON_WIDTH = 150;  // TODO: использовать типы из SDL
-const UINT8 BUTTON_HEIGHT = 30;
+const Uint8 BUTTON_WIDTH = 150;  // TODO: использовать типы из SDL
+const Uint8 BUTTON_HEIGHT = 30;
 
 class Text;
 

@@ -18,9 +18,6 @@ typedef struct record
   unsigned int score;
 } record;
 
-typedef std::uint8_t UINT8;
-typedef std::uint16_t UINT16;
-
 const int SCREEN_WIDTH = 1280;  // Ширина окна
 const int SCREEN_HEIGHT = 720;  // Высота окна
 
