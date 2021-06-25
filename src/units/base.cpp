@@ -1,5 +1,6 @@
 #include "base.hpp"
 
+#include <fstream>
 #include <iostream>
 
 #include "button.hpp"
@@ -101,21 +102,44 @@ void Base::_defeat(void)
   int w, h;
   std::string text = "Игрок ";
   SDL_Event* event;
+  struct record* rec = new record;
+  std::ofstream file("records.bin", std::ios::binary | std::ios::app);
+
+  rec->score = getCount() * 50 + _money;
+  file.write((char*)&rec->score, sizeof(rec->score));
 
   if (getFlip())
+  {
+    size_t length = p1->length() + 1;
+    file.write((char*)&length, sizeof(length));
+    file.write((char*)p1->c_str(), length);
+
     text = text + *p1;
+  }
   else
+  {
+    size_t length = p2->length() + 1;
+    file.write((char*)&length, sizeof(length));
+    file.write((char*)p2->c_str(), length);
+
     text = text + *p2;
+  }
   text += " победил";
 
-  font->getSize(text, FONT_HIGH, &w, &h);
-  gui->addEntity(new Entity(font->getTexture(text, FONT_HIGH, {255, 0, 0, 255}), w, h, (SCREEN_WIDTH - w) / 2,
-                            (SCREEN_HEIGHT - h) / 2));
+  font->getSize(text, FONT_MEDIUM, &w, &h);
+  gui->addEntity(new Text(text, FONT_MEDIUM, {255, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 200));
+
+  text = "счет: " + std::to_string(rec->score);
+  font->getSize(text, FONT_MEDIUM, &w, &h);
+  gui->addEntity(new Text(text, FONT_MEDIUM, {255, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 100));
 
   event = new SDL_Event;
   event->type = SDL_USEREVENT;
   event->user.code = END_EVENT;
-  gui->addEntity(new Button("назад", (SCREEN_WIDTH - BUTTON_WIDTH) / 2, (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2, event));
+  gui->addEntity(new Button("в меню", (SCREEN_WIDTH - BUTTON_WIDTH) / 2,
+                            (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2 + BUTTON_HEIGHT, event));
+
+  file.close();
 }
 
 Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
@@ -209,6 +233,6 @@ void Base::process(void)
   if (++_earnSpeed >= 50 + _hp / 20)
   {
     _earnSpeed = 0;
-    addMoney(random(1, 20 - _hp / 200));
+    addMoney(random(1, 20 - _hp / 220));
   }
 }

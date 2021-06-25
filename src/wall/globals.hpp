@@ -12,6 +12,12 @@
 #include "textureManager.hpp"
 #include "window.hpp"
 
+typedef struct record
+{
+  std::string name;
+  unsigned int score;
+} record;
+
 typedef std::uint8_t UINT8;
 typedef std::uint16_t UINT16;
 

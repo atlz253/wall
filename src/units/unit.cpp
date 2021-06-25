@@ -4,7 +4,7 @@
 #include "globals.hpp"
 #include "renderer.hpp"
 
-#define VISION 0 // "лучи" зрения юнитов
+#define VISION 0  // "лучи" зрения юнитов
 
 unsigned int Unit::_unitsCount = 0;
 
@@ -42,5 +42,7 @@ unsigned short int Unit::getHealth(void) { return _hp; }
 unsigned short int Unit::getId(void) { return _id; }
 
 UINT16 Unit::getReward(void) { return 0; }
+
+unsigned int Unit::getCount(void) { return _unitsCount; }
 
 Unit::~Unit() {}

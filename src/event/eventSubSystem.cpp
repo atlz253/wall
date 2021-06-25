@@ -38,6 +38,8 @@ bool EventSubSystem::checkEvents(void)
           case RULE_EVENT:
             gui->rules();
             break;
+          case CLEAR_RECORDS_EVENT:
+            remove("records.bin");
           case RECORDS_EVENT:
             gui->records();
             break;

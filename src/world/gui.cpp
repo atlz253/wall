@@ -1,10 +1,11 @@
 #include "gui.hpp"
 
-#include <ostream>
+#include <fstream>
 
 #include "button.hpp"
-#include "text.hpp"
+#include "globals.hpp"
 #include "input.hpp"
+#include "text.hpp"
 
 static const int X = (SCREEN_WIDTH - BUTTON_WIDTH) / 2;
 static const int Y = (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2;
@@ -61,13 +62,44 @@ void Gui::rules(void)
 
 void Gui::records(void)
 {
+  record* rec = new record;
+  std::string text;
   SDL_Event* event = new SDL_Event;
+  std::ifstream file("records.bin", std::ios::binary);
 
   clear();
 
+  if (file.is_open())
+  {
+    int n = 5, w, h;
+
+    while (true)
+    {
+      file.read((char*)&rec->score, sizeof(rec->score));
+      if (file.eof()) break;
+
+      size_t length;
+      file.read((char*)&length, sizeof(length));
+      char* buf = new char[length];
+      file.read(buf, length);
+      rec->name = buf;
+      delete[] buf;
+
+      text = rec->name + " " + std::to_string(rec->score);
+      font->getSize(text, FONT_SMALL, &w, &h);
+      addEntity(new Text(text, FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, h * n));
+      n++;
+    }
+  }
+
   event->type = SDL_USEREVENT;
   event->user.code = MENU_EVENT;
-  addEntity(new Button("назад", X, Y, event));
+  addEntity(new Button("назад", X + 100, Y, event));
+
+  event = new SDL_Event;
+  event->type = SDL_USEREVENT;
+  event->user.code = CLEAR_RECORDS_EVENT;
+  addEntity(new Button("очистить", X - 100, Y, event));
 }
 
 void Gui::p1_input(void)
@@ -78,8 +110,9 @@ void Gui::p1_input(void)
   clear();
 
   font->getSize("введите имя 1 игрока", FONT_SMALL, &w, &h);
-  addEntity(new Text("введите имя 1 игрока", FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - h * 3));
-  addEntity(new Input(p1, FONT_SMALL, {0, 0, 0, 255}, SCREEN_WIDTH/2, Y - BUTTON_HEIGHT));
+  addEntity(new Text("введите имя 1 игрока", FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2,
+                     (SCREEN_HEIGHT - h) / 2 - h * 3));
+  addEntity(new Input(p1, FONT_SMALL, {0, 0, 0, 255}, SCREEN_WIDTH / 2, Y - BUTTON_HEIGHT));
 
   event = new SDL_Event;
   event->type = SDL_USEREVENT;
@@ -100,8 +133,9 @@ void Gui::p2_input(void)
   clear();
 
   font->getSize("введите имя 2 игрока", FONT_SMALL, &w, &h);
-  addEntity(new Text("введите имя 2 игрока", FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - h * 3));
-  addEntity(new Input(p2, FONT_SMALL, {0, 0, 0, 255}, SCREEN_WIDTH/2, Y - BUTTON_HEIGHT));
+  addEntity(new Text("введите имя 2 игрока", FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2,
+                     (SCREEN_HEIGHT - h) / 2 - h * 3));
+  addEntity(new Input(p2, FONT_SMALL, {0, 0, 0, 255}, SCREEN_WIDTH / 2, Y - BUTTON_HEIGHT));
 
   event = new SDL_Event;
   event->type = SDL_USEREVENT;

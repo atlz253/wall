@@ -47,6 +47,8 @@ class Unit : public RotateEntity
 
   virtual UINT16 getReward(void);
 
+  unsigned int getCount(void);
+
   /*
       Получение урона
   */
