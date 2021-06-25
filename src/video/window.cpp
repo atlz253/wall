@@ -1,14 +1,15 @@
 #include "window.hpp"
 
 #include "SDL2/SDL_image.h"
+#include "globals.hpp"
 #include "print.hpp"
 #include "renderer.hpp"
 
 SdlWindow::SdlWindow()
 {
   printTrace("SdlWindow: создание окна");
-  _window = SDL_CreateWindow("wall", SDL_WINDOWPOS_CENTERED_MASK, SDL_WINDOWPOS_CENTERED_MASK, _SCREEN_WIDTH,
-                             _SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
+  _window = SDL_CreateWindow("wall", SDL_WINDOWPOS_CENTERED_MASK, SDL_WINDOWPOS_CENTERED_MASK, SCREEN_WIDTH,
+                             SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
 
   if (!_window)
   {
