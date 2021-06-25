@@ -34,6 +34,4 @@ void Input::process()
   }
 }
 
-Input::~Input() {
-SDL_StopTextInput();
-}
+Input::~Input() { SDL_StopTextInput(); }

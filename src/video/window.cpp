@@ -31,7 +31,7 @@ void SdlWindow::operator>>(Renderer *renderer)
 {
   printTrace("SdlWindow: создание рендера");
   renderer->_renderer =
-      SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);  // TODO: время кадра
+      SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
   if (!renderer->_renderer) printError("SdlWindow: не удалось создать рендер:", SDL_GetError());
 }

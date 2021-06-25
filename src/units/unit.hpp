@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "globals.hpp"
 #include "entity.hpp"
+#include "globals.hpp"
 
 /*
     Базовый класс игрового юнита
@@ -12,12 +12,12 @@
 class Unit : public RotateEntity
 {
  protected:
-  Uint32 _id;  // уникальный номер юнита
-  Uint16 _hp;           // количество жизней юнита //TODO: заменить на UINT макросы
-  Uint16 _speed;        // скорость юнита
-  Uint16 _damage;       // урон юнита
-  Uint16 _backRange;    // радиус действия сзади
-  Uint16 _frontRange;   // радиус действия спереди
+  Uint32 _id;                 // уникальный номер юнита
+  Uint16 _hp;                 // количество жизней юнита
+  Uint16 _speed;              // скорость юнита
+  Uint16 _damage;             // урон юнита
+  Uint16 _backRange;          // радиус действия сзади
+  Uint16 _frontRange;         // радиус действия спереди
   static Uint32 _unitsCount;  // количество юнитов за всю игру
 
  public:
