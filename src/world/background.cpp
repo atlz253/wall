@@ -14,8 +14,7 @@ class Clouds : public Entity
  public:
   Clouds(int w, int h, int x = 0, int y = 0) : Entity()
   {
-    if (!textures->key("clouds")) textures->loadTexture("clouds", "res/Magic-Cliffs-Environment/PNG/clouds.png");
-    _texture = textures->key("clouds");
+    _texture = textures->key("res/Magic-Cliffs-Environment/PNG/clouds.png");
 
     _geometry->w = w;
     _geometry->h = h;
@@ -51,13 +50,11 @@ Background::Background()
 
   printTrace("Terrain: инициализация заднего плана");
   printTrace("Background: создаем небесную твердь");
-  textures->loadTexture("res/Magic-Cliffs-Environment/PNG/sky.png");
   p = new Entity(textures->key("res/Magic-Cliffs-Environment/PNG/sky.png"), 124, 608);
   _queue->push(p);
   for (int i = 1; i < 11; i++) _queue->push(new Entity(p, i * 124));
 
   printTrace("Background: разливаем воду");
-  textures->loadTexture("res/Magic-Cliffs-Environment/PNG/sea.png");
   p = new Entity(textures->key("res/Magic-Cliffs-Environment/PNG/sea.png"), 124, 192, 0, 608);
   _queue->push(p);
   for (int i = 1; i < 11; i++) _queue->push(new Entity(p, i * 124, 608));
@@ -69,11 +66,9 @@ Background::Background()
   _queue->push(new Clouds(p, 1088, 136));
 
   printTrace("Background: создаем далекие земели");
-  textures->loadTexture("res/Magic-Cliffs-Environment/PNG/far-grounds.png");
   _queue->push(new Entity(textures->key("res/Magic-Cliffs-Environment/PNG/far-grounds.png"), 1232, 220, 24, 388));
 
   printTrace("Terrain: распыляем темноту");
-  textures->loadTexture("res/Magic-Cliffs-Environment/PNG/tileset.png");
   p = new Entity(textures->key("res/Magic-Cliffs-Environment/PNG/tileset.png"), 16 * 22, 16 * 6, 480, 560);
   p->setTile(112, 272, 16, 16);
   _queue->push(p);

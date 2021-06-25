@@ -7,7 +7,6 @@
 Terrain::Terrain()
 {
   printTrace("Terrain: загрузка тайлсета");
-  textures->loadTexture("res/Magic-Cliffs-Environment/PNG/tileset.png");
   Entity *tile = new Entity(textures->key("res/Magic-Cliffs-Environment/PNG/tileset.png"), 16, 16), *tmp = nullptr;
 
   printTrace("Terrain: инициализация переднего плана");

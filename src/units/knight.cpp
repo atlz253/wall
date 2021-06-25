@@ -1,6 +1,7 @@
 #include "knight.hpp"
 
 #include <iostream>
+#include <string>
 
 #include "globals.hpp"
 #include "print.hpp"
@@ -11,6 +12,11 @@ const int runFrames[8] = {32, 128, 224, 320, 416, 512, 608, 704},
                               1632, 1776, 1920, 2064, 2208, 2352, 2528, 2672, 2816, 2960, 3104},
           idleFrames[15] = {16, 80, 144, 208, 272, 336, 400, 464, 528, 592, 656, 720, 784, 848, 912},
           deathFrames[15] = {32, 128, 224, 320, 416, 512, 608, 704, 800, 896, 992, 1088, 1184, 1280, 1376};
+
+const std::string knightRun = "res/Knight/noBKG_KnightRun_strip.png",
+                  knightAttack = "res/Knight/noBKG_KnightAttack_strip.png",
+                  knightIdle = "res/Knight/noBKG_KnightIdle_strip.png",
+                  knightDeath = "res/Knight/noBKG_KnightDeath_strip.png";
 
 Knight::Knight(int x, SDL_RendererFlip flip) : Unit::Unit()
 {
@@ -25,12 +31,7 @@ Knight::Knight(int x, SDL_RendererFlip flip) : Unit::Unit()
   _backRange = 20;
   _frontRange = 30;
 
-  if (!textures->key("knightRun")) textures->loadTexture("knightRun", "res/Knight/noBKG_KnightRun_strip.png");
-  _texture = textures->key("knightRun");
-
-  if (!textures->key("knightAttack")) textures->loadTexture("knightAttack", "res/Knight/noBKG_KnightAttack_strip.png");
-  if (!textures->key("knightIdle")) textures->loadTexture("knightIdle", "res/Knight/noBKG_KnightIdle_strip.png");
-  if (!textures->key("knightDeath")) textures->loadTexture("knightDeath", "res/Knight/noBKG_KnightDeath_strip.png");
+  _texture = textures->key(knightRun);
 
   setSize(48 * 2, 48 * 2);
 
@@ -60,12 +61,12 @@ void Knight::process(Unit *next)
 
   if (!_hp)
   {
-    if (_texture != textures->key("knightDeath"))
+    if (_texture != textures->key(knightDeath))
     {
       _isRuning = false;
       _frameCount = 0;
       _frame = 0;
-      _texture = textures->key("knightDeath");
+      _texture = textures->key(knightDeath);
       _tile->x = deathFrames[0];
     }
     else if (++_frameCount == _animationSpeed && _frame < 14)
@@ -82,7 +83,7 @@ void Knight::process(Unit *next)
       _isRuning = false;
       _frameCount = 0;
       _frame = 0;
-      _texture = textures->key("knightIdle");
+      _texture = textures->key(knightIdle);
       _tile->x = idleFrames[0];
     }
     else if (++_frameCount == _animationSpeed)
@@ -101,7 +102,7 @@ void Knight::process(Unit *next)
       _isRuning = false;
       _frameCount = 0;
       _frame = 0;
-      _texture = textures->key("knightAttack");
+      _texture = textures->key(knightAttack);
       _tile->x = attackFrames[0];
     }
     else if (++_frameCount == _animationSpeed)
@@ -127,7 +128,7 @@ void Knight::process(Unit *next)
       _isRuning = true;
       _frameCount = 0;
       _frame = 0;
-      _texture = textures->key("knightRun");
+      _texture = textures->key(knightRun);
       _tile->x = runFrames[0];
     }
     else if (++_frameCount == _animationSpeed)

@@ -5,33 +5,23 @@
 #include "print.hpp"
 #include "renderer.hpp"
 
-TextureManager::TextureManager() { printTrace("Инициализация менеджера текстур"); }
-
-void TextureManager::loadTexture(std::string path)
+void TextureManager::_loadTexture(std::string path)
 {
   printTrace("TextureManager: загрузка текстуры", path);
-  SDL_Texture *texture = IMG_LoadTexture(renderer->getRender(), path.c_str()); //TODO: есть ли уже текстура?
+  SDL_Texture *texture = IMG_LoadTexture(renderer->getRender(), path.c_str());
 
   if (!texture) printError("TextureManager: не удалось загрузить текстуру.", IMG_GetError());
 
   _dict[path] = texture;
 }
 
-void TextureManager::loadTexture(std::string name, std::string path)
-{
-  printTrace("TextureManager: загрузка текстуры", path);
-  SDL_Texture *texture = IMG_LoadTexture(renderer->getRender(), path.c_str()); //TODO: есть ли уже текстура?
-
-  if (!texture) printError("TextureManager: не удалось загрузить текстуру.", IMG_GetError());
-
-  _dict[name] = texture;
-}
+TextureManager::TextureManager() { printTrace("Инициализация менеджера текстур"); }
 
 SDL_Texture *&TextureManager::key(std::string name)
 {
   _iterator = _dict.find(name);
 
-  if (_iterator->first != name) _dict[name] = nullptr;  // на всякий случай создаем пару ключ:значение
+  if (_iterator->first != name) _loadTexture(name);
 
   return _dict[name];
 }

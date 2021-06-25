@@ -1,7 +1,7 @@
 #include "entity.hpp"
 
-#include "globals.hpp"
 #include "SDL2/SDL_image.h"
+#include "globals.hpp"
 #include "print.hpp"
 #include "renderer.hpp"
 
@@ -33,7 +33,6 @@ Entity::Entity(std::string path, int w, int h, int x, int y)
   setSize(w, h);
   setPosition(x, y);
 
-  if (!textures->key(path)) textures->loadTexture(path);
   _texture = textures->key(path);
 }
 

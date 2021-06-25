@@ -14,14 +14,14 @@ class TextureManager final
  private:
   std::map<std::string, SDL_Texture *> _dict;                // контейнер текстур
   std::map<std::string, SDL_Texture *>::iterator _iterator;  // итератор для работы с контейнером
- public:
-  TextureManager();
 
   /*
       Загрузка текстуры
   */
-  void loadTexture(std::string path);
-  void loadTexture(std::string name, std::string path); // TODO: убрать
+  void _loadTexture(std::string path);
+
+ public:
+  TextureManager();
 
   /*
       Получение объекта текстуры по ключу

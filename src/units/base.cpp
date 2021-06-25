@@ -21,9 +21,7 @@ class HealthLine final : public Entity
   {
     _flip = base->getFlip();
 
-    if (!textures->key("healthLine"))
-      textures->loadTexture("healthLine", "res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue.png");
-    _texture = textures->key("healthLine");
+    _texture = textures->key("res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue.png");
     setTile(13, 68, 111, 6);
 
     setSize(111 * 3, 6 * 3);
@@ -59,9 +57,7 @@ class HealthBar final : public RotateEntity
     _line = new HealthLine(_base);
     gui->addEntity(_line);
 
-    if (!textures->key("healthBar"))
-      textures->loadTexture("healthBar", "res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue2.png");
-    _texture = textures->key("healthBar");
+    _texture = textures->key("res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue2.png");
     setTile(13, 47, 111, 8);
 
     setSize(111 * 3, 8 * 3);
@@ -150,8 +146,7 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
   _frontRange = 30;
   _earnSpeed = 0;
 
-  if (!textures->key("base")) textures->loadTexture("base", "res/Taiga-Asset-Pack_v2_vnitti/PNG/Props.png");
-  _texture = textures->key("base");
+  _texture = textures->key("res/Taiga-Asset-Pack_v2_vnitti/PNG/Props.png");
   setTile(0, 48, 144, 128);
   _flip = flip;
 
