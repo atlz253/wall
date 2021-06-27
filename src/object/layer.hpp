@@ -10,7 +10,7 @@ class Renderer;
 /*
     Слой отрисовки
 */
-class Layer  // TODO: свой renderer для слоя
+class Layer
 {
  protected:
   std::queue<Entity *> *_queue;

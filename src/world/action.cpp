@@ -11,7 +11,7 @@ Action::Action()
 {
   _leftTeam = new std::queue<Unit *>;
   _rightTeam = new std::queue<Unit *>;
-  _deathQueue = new std::queue<Unit *>;  // TODO: исчезновение трупов
+  _deathQueue = new std::queue<Unit *>;
 
   _leftBase = nullptr;
   _rightBase = nullptr;
