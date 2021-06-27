@@ -137,8 +137,6 @@ void Action::renderer(void)
 
 void Action::clear(void)
 {
-  Layer::clear();
-
   while (!_leftTeam->empty())
   {
     delete _leftTeam->front();
@@ -149,6 +147,12 @@ void Action::clear(void)
   {
     delete _rightTeam->front();
     _rightTeam->pop();
+  }
+
+  while (!_deathQueue->empty())
+  {
+    delete _deathQueue->front();
+    _deathQueue->pop();
   }
 
   delete _leftBase;

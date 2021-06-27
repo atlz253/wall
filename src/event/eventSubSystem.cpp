@@ -58,6 +58,8 @@ bool EventSubSystem::checkEvents(void)
             break;
           case END_EVENT:
             _action = true;
+            *p1 = *p2 = "";
+
             action->clear();
             gui->menu();
             break;
