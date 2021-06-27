@@ -17,31 +17,44 @@ enum GameEvents
 };
 
 /*
-    Подсистема обработки событий SDL
+    Подсистема событий SDL
 */
 class EventSubSystem final
 {
  private:
   bool _action;
-  SDL_Event* _event;  // Обработчик событий
-  const Uint8* _keysState;
-  SDL_Point* _mousePosition;
+
+  SDL_Event* _event;
+
   bool _mouseCheck;
+  SDL_Point* _mousePosition;
 
  public:
   EventSubSystem();
 
   /*
-      Проверка новых игровых событий
-  */
+   * Проверка новых игровых событий
+   */
   bool checkEvents(void);
 
+  /*
+   * Запущена ли игра?
+   */
   bool getAction(void);
 
+  /*
+   * Получение текущего события
+   */
   SDL_Event* getEvent(void);
 
+  /*
+   * Получение позиции мыши
+   */
   SDL_Point* getMousePosition(void);
 
+  /*
+   * Проверка на левый клик мыши
+   */
   bool leftClick(void);
 
   ~EventSubSystem();

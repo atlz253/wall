@@ -10,9 +10,11 @@
 EventSubSystem::EventSubSystem()
 {
   _action = true;
+
   _event = new SDL_Event;
-  _mousePosition = new SDL_Point;
+
   _mouseCheck = false;
+  _mousePosition = new SDL_Point;
 }
 
 bool EventSubSystem::checkEvents(void)
