@@ -96,30 +96,90 @@ class MoneyBar final : public Entity
 void Base::_defeat(void)
 {
   int w, h;
-  std::string text = "Игрок ";
   SDL_Event* event;
-  struct record* rec = new record;
-  std::ofstream file("records.bin", std::ios::binary | std::ios::app);
+  std::string text = "Игрок ";
+  struct record *rec = new record, *tmp = new record;
+  std::ifstream ifile("records.bin", std::ios::binary);
+  std::ofstream ofile("_tmp", std::ios::binary | std::ios::app);
 
   rec->score = getCount() * 50 + _money;
-  file.write((char*)&rec->score, sizeof(rec->score));
+  clearCount();
 
-  if (getFlip())
+  if (ifile.is_open())
   {
-    size_t length = p1->length() + 1;
-    file.write((char*)&length, sizeof(length));
-    file.write((char*)p1->c_str(), length);
+    int n = 0;
+    bool isWritten = false;
 
-    text = text + *p1;
+    while (n < 9)
+    {
+      ifile.read((char*)&tmp->score, sizeof(tmp->score));
+
+      size_t tlength;
+      ifile.read((char*)&tlength, sizeof(tlength));
+      char* buf = new char[tlength];
+      ifile.read(buf, tlength);
+      tmp->name = buf;
+      delete[] buf;
+
+      std::cout << tmp->score << " " << rec->score << std::endl;
+
+      if (ifile.eof())
+      {
+        break;
+      }
+      else if (!isWritten && ((tmp->score < rec->score) || (ifile.eof() && n < 9)))
+      {
+        ofile.write((char*)&rec->score, sizeof(rec->score));
+        if (getFlip())
+        {
+          size_t length = p1->length() + 1;
+          ofile.write((char*)&length, sizeof(length));
+          ofile.write((char*)p1->c_str(), length);
+        }
+        else
+        {
+          size_t length = p2->length() + 1;
+          ofile.write((char*)&length, sizeof(length));
+          ofile.write((char*)p2->c_str(), length);
+        }
+
+        isWritten = true;
+        n++;
+      }
+
+      if (n < 9)
+      {
+        ofile.write((char*)&tmp->score, sizeof(tmp->score));
+        ofile.write((char*)&tlength, sizeof(tlength));
+        ofile.write((char*)tmp->name.c_str(), tlength);
+
+        n++;
+      }
+    }
   }
   else
   {
-    size_t length = p2->length() + 1;
-    file.write((char*)&length, sizeof(length));
-    file.write((char*)p2->c_str(), length);
+    std::cout << "creater record.bin" << std::endl;
 
-    text = text + *p2;
+    ofile.write((char*)&rec->score, sizeof(rec->score));
+    if (getFlip())
+    {
+      size_t length = p1->length() + 1;
+      ofile.write((char*)&length, sizeof(length));
+      ofile.write((char*)p1->c_str(), length);
+    }
+    else
+    {
+      size_t length = p2->length() + 1;
+      ofile.write((char*)&length, sizeof(length));
+      ofile.write((char*)p2->c_str(), length);
+    }
   }
+
+  if (getFlip())
+    text = text + *p1;
+  else
+    text = text + *p2;
   text += " победил";
 
   font->getSize(text, FONT_MEDIUM, &w, &h);
@@ -135,7 +195,9 @@ void Base::_defeat(void)
   gui->addEntity(new Button("в меню", (SCREEN_WIDTH - BUTTON_WIDTH) / 2,
                             (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2 + BUTTON_HEIGHT, event));
 
-  file.close();
+  rename("_tmp", "records.bin");
+  ofile.close();
+  ifile.close();
 }
 
 Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()

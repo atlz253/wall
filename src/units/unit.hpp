@@ -49,6 +49,8 @@ class Unit : public RotateEntity
 
   Uint32 getCount(void);
 
+  void clearCount(void);
+
   /*
       Получение урона
   */

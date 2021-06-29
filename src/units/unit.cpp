@@ -45,4 +45,6 @@ Uint16 Unit::getReward(void) { return 0; }
 
 Uint32 Unit::getCount(void) { return _unitsCount; }
 
+void Unit::clearCount(void) { _unitsCount = 0; }
+
 Unit::~Unit() {}
