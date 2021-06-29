@@ -43,11 +43,11 @@ class Unit : public RotateEntity
 
   Uint16 getHealth(void);
 
-  unsigned short int getId(void);
+  Uint32 getId(void);
 
   virtual Uint16 getReward(void);
 
-  unsigned int getCount(void);
+  Uint32 getCount(void);
 
   /*
       Получение урона

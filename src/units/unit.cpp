@@ -37,12 +37,12 @@ int Unit::getBack(void) { return 0; }
 
 int Unit::getFront(void) { return 0; }
 
-unsigned short int Unit::getHealth(void) { return _hp; }
+Uint16 Unit::getHealth(void) { return _hp; }
 
-unsigned short int Unit::getId(void) { return _id; }
+Uint32 Unit::getId(void) { return _id; }
 
 Uint16 Unit::getReward(void) { return 0; }
 
-unsigned int Unit::getCount(void) { return _unitsCount; }
+Uint32 Unit::getCount(void) { return _unitsCount; }
 
 Unit::~Unit() {}
