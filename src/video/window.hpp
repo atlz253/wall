@@ -1,21 +1,24 @@
 #ifndef SDLWINDOW
 #define SDLWINDOW
 
-class Renderer;
+typedef struct SDL_Renderer SDL_Renderer;
+
+class Entity;
+
+extern SDL_Renderer *renderer;
 
 class Window final
 {
- public:
-  Window();
+public:
+    Window();
 
-  void freeze(void);
+    void freeze(void);
 
-  /*
-      Операция содания рендера
-  */
-  void operator>>(Renderer *renderer); // TODO: remove
+    void clear(void);
 
-  ~Window();
+    void draw(void);
+
+    ~Window();
 };
 
 #endif

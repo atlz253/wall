@@ -68,14 +68,14 @@ void Main::_gameLoop(void)
 
   while (events->checkEvents())
   {
-    renderer->clear();
+    window->clear();
 
     background->renderer();
     action->renderer();
     terrain->renderer();
     gui->renderer();
 
-    renderer->draw();
+    window->draw();
   }
 
   delete background;
@@ -87,8 +87,6 @@ Main::Main()
   sdlSubSystem = new SdlSubSystem();
 
   window = new Window();
-  renderer = new Renderer();
-  *window >> renderer;
 
   p1 = new std::string;
   p2 = new std::string;
@@ -116,7 +114,6 @@ Main::~Main()
   delete action;
 
   delete window;
-  delete renderer;
 
   delete p1;
   delete p2;

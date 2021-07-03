@@ -3,7 +3,7 @@
 #include "SDL2/SDL_image.h"
 #include "globals.hpp"
 #include "print.hpp"
-#include "renderer.hpp"
+#include "window.hpp"
 
 Entity::Entity()
 {
@@ -69,7 +69,7 @@ void Entity::process(void) {}
 
 void Entity::render(void)
 {
-  if (_texture && SDL_RenderCopy(renderer->getRender(), _texture, _tile, _geometry))
+  if (_texture && SDL_RenderCopy(renderer, _texture, _tile, _geometry))
     printError("SdlWindow: ошибка рендера.", SDL_GetError());
 }
 

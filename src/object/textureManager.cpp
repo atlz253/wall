@@ -3,12 +3,12 @@
 #include "SDL2/SDL_image.h"
 #include "globals.hpp"
 #include "print.hpp"
-#include "renderer.hpp"
+#include "window.hpp"
 
 void TextureManager::_loadTexture(std::string path)
 {
   printTrace("TextureManager: загрузка текстуры", path);
-  SDL_Texture *texture = IMG_LoadTexture(renderer->getRender(), path.c_str());
+  SDL_Texture *texture = IMG_LoadTexture(renderer, path.c_str());
 
   if (!texture) printError("TextureManager: не удалось загрузить текстуру.", IMG_GetError());
 

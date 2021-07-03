@@ -3,8 +3,6 @@
 #include "entity.hpp"
 #include "globals.hpp"
 #include "print.hpp"
-#include "renderer.hpp"
-
 class Clouds : public Entity
 {
  private:

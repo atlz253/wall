@@ -4,6 +4,7 @@
 #include "SDL2/SDL_ttf.h"
 #include "globals.hpp"
 #include "print.hpp"
+#include "window.hpp"
 
 TTF_Font *Font::_getFont(FontSize size)
 {
@@ -42,7 +43,7 @@ SDL_Texture *Font::getTexture(std::string text, FontSize size, SDL_Color color)
     return nullptr;
   }
 
-  SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer->getRender(), surf);
+  SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surf);
   if (!texture)
   {
     printError("Не удалось преобразовать поверхность текста в текстуру", SDL_GetError());
