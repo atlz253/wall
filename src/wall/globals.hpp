@@ -21,7 +21,7 @@ typedef struct record
 const int SCREEN_WIDTH = 1280;  // Ширина окна
 const int SCREEN_HEIGHT = 720;  // Высота окна
 
-extern SdlWindow *window;
+extern Window *window;
 extern Gui *gui;
 extern Renderer *renderer;
 extern EventSubSystem *events;

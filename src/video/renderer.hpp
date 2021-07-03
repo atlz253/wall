@@ -33,7 +33,7 @@ class Renderer final
   */
   SDL_Renderer *getRender(void);
 
-  friend void SdlWindow::operator>>(Renderer *renderer);
+  friend void Window::operator>>(Renderer *renderer);
 
   ~Renderer();
 };

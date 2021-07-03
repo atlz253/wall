@@ -86,7 +86,7 @@ Main::Main()
 {
   sdlSubSystem = new SdlSubSystem();
 
-  window = new SdlWindow();
+  window = new Window();
   renderer = new Renderer();
   *window >> renderer;
 

@@ -1,32 +1,21 @@
 #ifndef SDLWINDOW
 #define SDLWINDOW
 
-#include "SDL2/SDL.h"
-
 class Renderer;
 
-/*
-    Объект класса содержит окно, созданное средствами SDL2
-*/
-class SdlWindow final
+class Window final
 {
- private:
-  SDL_Window *_window = nullptr;  // Основное окно игры
-
  public:
-  /*
-      Инициализация окна
-  */
-  SdlWindow();
+  Window();
 
   void freeze(void);
 
   /*
       Операция содания рендера
   */
-  void operator>>(Renderer *renderer);
+  void operator>>(Renderer *renderer); // TODO: remove
 
-  ~SdlWindow();
+  ~Window();
 };
 
 #endif

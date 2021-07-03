@@ -1,4 +1,4 @@
-class SdlWindow;
+class Window;
 class Renderer;
 
 /*

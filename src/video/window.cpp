@@ -1,39 +1,44 @@
 #include "window.hpp"
 
+#include <iostream>
+
+#include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
+
 #include "globals.hpp"
-#include "print.hpp"
 #include "renderer.hpp"
 
-SdlWindow::SdlWindow()
+SDL_Window *_window = nullptr;
+
+Window::Window()
 {
-  printTrace("SdlWindow: создание окна");
+  std::cout << "Window: creating window" << std::endl;
   _window = SDL_CreateWindow("wall", SDL_WINDOWPOS_CENTERED_MASK, SDL_WINDOWPOS_CENTERED_MASK, SCREEN_WIDTH,
                              SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
 
   if (!_window)
   {
-    printError("SdlWindow: не удалось создать окно:", SDL_GetError());
+    std::cout << "Failed to create window:" << SDL_GetError() << std::endl;
     exit(EXIT_FAILURE);
   }
 }
 
-void SdlWindow::freeze(void)
+void Window::freeze(void)
 {
-  printTrace("SdlWindow: окно свернуто");
+  std::cout << "Window: minimized" << std::endl;
   SDL_Event *event = new SDL_Event;
 
   while (SDL_WaitEvent(event))
     if (event->window.event == SDL_WINDOWEVENT_SHOWN) break;
 }
 
-void SdlWindow::operator>>(Renderer *renderer)
+void Window::operator>>(Renderer *renderer)
 {
-  printTrace("SdlWindow: создание рендера");
+  std::cout << "Window: создание рендера" << std::endl;
   renderer->_renderer =
       SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-  if (!renderer->_renderer) printError("SdlWindow: не удалось создать рендер:", SDL_GetError());
+  if (!renderer->_renderer) std::cout << "Window: не удалось создать рендер:" << SDL_GetError() << std::endl;
 }
 
-SdlWindow::~SdlWindow() { SDL_DestroyWindow(_window); }
+Window::~Window() { SDL_DestroyWindow(_window); }
