@@ -13,11 +13,11 @@ class Text;
 
 class Button final : public Entity
 {
- private:
+private:
   Text *_text;
   SDL_Event *_event;
 
- public:
+public:
   Button(std::string text, int x, int y);
 
   Button(std::string text, int x, int y, SDL_Event *event);
@@ -29,4 +29,4 @@ class Button final : public Entity
   void render(void) override;
 };
 
-#endif  // BUTTON_HPP
+#endif // BUTTON_HPP

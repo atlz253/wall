@@ -8,7 +8,7 @@
 #include "random.hpp"
 
 const int runFrames[8] = {32, 128, 224, 320, 416, 512, 608, 704},
-          attackFrames[22] = {48,   192,  336,  480,  624,  768,  912,  1056, 1200, 1328, 1488,
+          attackFrames[22] = {48, 192, 336, 480, 624, 768, 912, 1056, 1200, 1328, 1488,
                               1632, 1776, 1920, 2064, 2208, 2352, 2528, 2672, 2816, 2960, 3104},
           idleFrames[15] = {16, 80, 144, 208, 272, 336, 400, 464, 528, 592, 656, 720, 784, 848, 912},
           deathFrames[15] = {32, 128, 224, 320, 416, 512, 608, 704, 800, 896, 992, 1088, 1184, 1280, 1376};
@@ -88,7 +88,8 @@ void Knight::process(Unit *next)
     }
     else if (++_frameCount == _animationSpeed)
     {
-      if (++_frame == 15) _frame = 0;
+      if (++_frame == 15)
+        _frame = 0;
 
       _tile->x = idleFrames[_frame];
 
@@ -133,7 +134,8 @@ void Knight::process(Unit *next)
     }
     else if (++_frameCount == _animationSpeed)
     {
-      if (++_frame == 8) _frame = 0;
+      if (++_frame == 8)
+        _frame = 0;
 
       _tile->x = runFrames[_frame];
 

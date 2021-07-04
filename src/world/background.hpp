@@ -2,6 +2,6 @@
 
 class Background final : public Layer
 {
- public:
+public:
   Background();
 };

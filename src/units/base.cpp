@@ -12,12 +12,12 @@
 
 class HealthLine final : public Entity
 {
- private:
+private:
   SDL_RendererFlip _flip;
   const unsigned short int _HPpoint = BASE_HP / (111 * 3);
 
- public:
-  HealthLine(Base* base) : Entity::Entity()
+public:
+  HealthLine(Base *base) : Entity::Entity()
   {
     _flip = base->getFlip();
 
@@ -43,13 +43,13 @@ class HealthLine final : public Entity
 
 class HealthBar final : public RotateEntity
 {
- private:
-  Base* _base;
+private:
+  Base *_base;
 
-  HealthLine* _line;
+  HealthLine *_line;
 
- public:
-  HealthBar(Base* base) : RotateEntity::RotateEntity()
+public:
+  HealthBar(Base *base) : RotateEntity::RotateEntity()
   {
     _base = base;
     _flip = base->getFlip();
@@ -73,11 +73,11 @@ class HealthBar final : public RotateEntity
 
 class MoneyBar final : public Entity
 {
- private:
-  Base* _base;
+private:
+  Base *_base;
 
- public:
-  MoneyBar(Base* base) : Entity::Entity() { _base = base; }
+public:
+  MoneyBar(Base *base) : Entity::Entity() { _base = base; }
 
   void process(void) override
   {
@@ -96,7 +96,7 @@ class MoneyBar final : public Entity
 void Base::_defeat(void)
 {
   int w, h;
-  SDL_Event* event;
+  SDL_Event *event;
   std::string text = "Игрок ";
   struct record *rec = new record, *tmp = new record;
   std::ifstream ifile("records.bin", std::ios::binary);
@@ -112,11 +112,11 @@ void Base::_defeat(void)
 
     while (n < 9)
     {
-      ifile.read((char*)&tmp->score, sizeof(tmp->score));
+      ifile.read((char *)&tmp->score, sizeof(tmp->score));
 
       size_t tlength;
-      ifile.read((char*)&tlength, sizeof(tlength));
-      char* buf = new char[tlength];
+      ifile.read((char *)&tlength, sizeof(tlength));
+      char *buf = new char[tlength];
       ifile.read(buf, tlength);
       tmp->name = buf;
       delete[] buf;
@@ -129,18 +129,18 @@ void Base::_defeat(void)
       }
       else if (!isWritten && ((tmp->score < rec->score) || (ifile.eof() && n < 9)))
       {
-        ofile.write((char*)&rec->score, sizeof(rec->score));
+        ofile.write((char *)&rec->score, sizeof(rec->score));
         if (getFlip())
         {
           size_t length = p1->length() + 1;
-          ofile.write((char*)&length, sizeof(length));
-          ofile.write((char*)p1->c_str(), length);
+          ofile.write((char *)&length, sizeof(length));
+          ofile.write((char *)p1->c_str(), length);
         }
         else
         {
           size_t length = p2->length() + 1;
-          ofile.write((char*)&length, sizeof(length));
-          ofile.write((char*)p2->c_str(), length);
+          ofile.write((char *)&length, sizeof(length));
+          ofile.write((char *)p2->c_str(), length);
         }
 
         isWritten = true;
@@ -149,9 +149,9 @@ void Base::_defeat(void)
 
       if (n < 9)
       {
-        ofile.write((char*)&tmp->score, sizeof(tmp->score));
-        ofile.write((char*)&tlength, sizeof(tlength));
-        ofile.write((char*)tmp->name.c_str(), tlength);
+        ofile.write((char *)&tmp->score, sizeof(tmp->score));
+        ofile.write((char *)&tlength, sizeof(tlength));
+        ofile.write((char *)tmp->name.c_str(), tlength);
 
         n++;
       }
@@ -161,18 +161,18 @@ void Base::_defeat(void)
   {
     std::cout << "creater record.bin" << std::endl;
 
-    ofile.write((char*)&rec->score, sizeof(rec->score));
+    ofile.write((char *)&rec->score, sizeof(rec->score));
     if (getFlip())
     {
       size_t length = p1->length() + 1;
-      ofile.write((char*)&length, sizeof(length));
-      ofile.write((char*)p1->c_str(), length);
+      ofile.write((char *)&length, sizeof(length));
+      ofile.write((char *)p1->c_str(), length);
     }
     else
     {
       size_t length = p2->length() + 1;
-      ofile.write((char*)&length, sizeof(length));
-      ofile.write((char*)p2->c_str(), length);
+      ofile.write((char *)&length, sizeof(length));
+      ofile.write((char *)p2->c_str(), length);
     }
   }
 
@@ -226,9 +226,9 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
   gui->addEntity(new MoneyBar(this));
 }
 
-Unit* Base::keyCheck(void)
+Unit *Base::keyCheck(void)
 {
-  const Uint8* keysState = SDL_GetKeyboardState(nullptr);
+  const Uint8 *keysState = SDL_GetKeyboardState(nullptr);
 
   if (!_speed && _money >= KNIGHT_COST &&
       ((_flip && keysState[SDL_SCANCODE_RIGHTBRACKET]) || (!_flip && keysState[SDL_SCANCODE_Q])))
@@ -239,7 +239,8 @@ Unit* Base::keyCheck(void)
   }
   else
   {
-    if (_speed != 0) _speed--;
+    if (_speed != 0)
+      _speed--;
     return nullptr;
   }
 }
@@ -273,7 +274,7 @@ void Base::setDamage(Uint16 damage)
 
     if (_hp <= 0)
     {
-      SDL_Event* defeat = new SDL_Event;
+      SDL_Event *defeat = new SDL_Event;
       defeat->type = SDL_USEREVENT;
       defeat->user.code = DEFEAT_EVENT;
       defeat->user.data1 = this;

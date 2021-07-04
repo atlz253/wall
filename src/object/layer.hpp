@@ -12,24 +12,24 @@ class Renderer;
 */
 class Layer
 {
- protected:
-  std::queue<Entity *> *_queue;
+protected:
+    std::queue<Entity *> *_queue;
 
- public:
-  Layer();
+public:
+    Layer();
 
-  void addEntity(Entity *entity);
+    void addEntity(Entity *entity);
 
-  virtual void process(void);
+    virtual void process(void);
 
-  /*
+    /*
       Отрисовка элементов слоя
   */
-  virtual void renderer(void);
+    virtual void renderer(void);
 
-  virtual void clear(void);
+    virtual void clear(void);
 
-  ~Layer();
+    ~Layer();
 };
 
 #endif

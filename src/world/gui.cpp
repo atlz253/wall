@@ -14,7 +14,7 @@ Gui::Gui() : Layer() {}
 
 void Gui::menu(void)
 {
-  SDL_Event* event;
+  SDL_Event *event;
 
   clear();
 
@@ -41,7 +41,7 @@ void Gui::menu(void)
 void Gui::rules(void)
 {
   int w, h;
-  SDL_Event* event = new SDL_Event;
+  SDL_Event *event = new SDL_Event;
   std::string text[3] = {"Бросьте вызов своему противнику и одолейте его в честной схватке!",
                          "Вызывайте своих доблестных бойцов клавишами Q для левого игрока и ",
                          "клавишу } для правого. Победитель получит все!"};
@@ -62,9 +62,9 @@ void Gui::rules(void)
 
 void Gui::records(void)
 {
-  record* rec = new record;
+  record *rec = new record;
   std::string text;
-  SDL_Event* event = new SDL_Event;
+  SDL_Event *event = new SDL_Event;
   std::ifstream file("records.bin", std::ios::binary);
 
   clear();
@@ -75,12 +75,13 @@ void Gui::records(void)
 
     while (true)
     {
-      file.read((char*)&rec->score, sizeof(rec->score));
-      if (file.eof()) break;
+      file.read((char *)&rec->score, sizeof(rec->score));
+      if (file.eof())
+        break;
 
       size_t length;
-      file.read((char*)&length, sizeof(length));
-      char* buf = new char[length];
+      file.read((char *)&length, sizeof(length));
+      char *buf = new char[length];
       file.read(buf, length);
       rec->name = buf;
       delete[] buf;
@@ -105,7 +106,7 @@ void Gui::records(void)
 void Gui::p1_input(void)
 {
   int w, h;
-  SDL_Event* event;
+  SDL_Event *event;
 
   clear();
 
@@ -128,7 +129,7 @@ void Gui::p1_input(void)
 void Gui::p2_input(void)
 {
   int w, h;
-  SDL_Event* event;
+  SDL_Event *event;
 
   clear();
 

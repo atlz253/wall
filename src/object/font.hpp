@@ -18,13 +18,14 @@ typedef struct SDL_Texture SDL_Texture;
 
 class Font final
 {
- private:
+private:
   TTF_Font *_fontHigh;
   TTF_Font *_fontMedium;
   TTF_Font *_fontLow;
 
   TTF_Font *_getFont(FontSize size);
- public:
+
+public:
   Font();
 
   void open(std::string path);
@@ -36,4 +37,4 @@ class Font final
   ~Font();
 };
 
-#endif  // FONT_HPP
+#endif // FONT_HPP

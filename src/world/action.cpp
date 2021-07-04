@@ -108,7 +108,8 @@ void Action::_baseRenderer(void)
   {
     _leftBase->process();
     tmp = _leftBase->keyCheck();
-    if (tmp) _leftTeam->push(tmp);
+    if (tmp)
+      _leftTeam->push(tmp);
   }
   _leftBase->render();
 
@@ -116,7 +117,8 @@ void Action::_baseRenderer(void)
   {
     _rightBase->process();
     tmp = _rightBase->keyCheck();
-    if (tmp) _rightTeam->push(tmp);
+    if (tmp)
+      _rightTeam->push(tmp);
   }
   _rightBase->render();
 }
@@ -131,7 +133,8 @@ void Action::start(void)
 
 void Action::renderer(void)
 {
-  if (_leftBase) _baseRenderer();
+  if (_leftBase)
+    _baseRenderer();
   _unitsRenderer();
 }
 

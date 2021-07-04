@@ -10,7 +10,7 @@ class Base;
 
 class Action final : public Layer
 {
- private:
+private:
   std::queue<Unit *> *_leftTeam;
   std::queue<Unit *> *_rightTeam;
   std::queue<Unit *> *_deathQueue;
@@ -22,7 +22,7 @@ class Action final : public Layer
 
   void _baseRenderer(void);
 
- public:
+public:
   Action();
 
   void start(void);
@@ -34,4 +34,4 @@ class Action final : public Layer
   ~Action();
 };
 
-#endif  // ACTION
+#endif // ACTION

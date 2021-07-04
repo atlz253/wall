@@ -28,7 +28,8 @@ void Button::process(void)
   if (xRange && yRange)
   {
     _text->setColor({255, 0, 0, 255});
-    if (_event && events->leftClick()) SDL_PushEvent(_event);
+    if (_event && events->leftClick())
+      SDL_PushEvent(_event);
   }
   else
   {

@@ -5,7 +5,7 @@
 
 class Gui final : public Layer
 {
- public:
+public:
   Gui();
 
   void menu(void);
@@ -21,4 +21,4 @@ class Gui final : public Layer
   ~Gui();
 };
 
-#endif  // GUI_HPP
+#endif // GUI_HPP

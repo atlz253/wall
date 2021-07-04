@@ -5,11 +5,11 @@
 #include "print.hpp"
 class Clouds : public Entity
 {
- private:
-  int _startPosition = 0;  // Начальная позиция облака
-  int _frame = 0;          // Индикатор для отрисовки
+private:
+  int _startPosition = 0; // Начальная позиция облака
+  int _frame = 0;         // Индикатор для отрисовки
 
- public:
+public:
   Clouds(int w, int h, int x = 0, int y = 0) : Entity()
   {
     _texture = textures->key("res/Magic-Cliffs-Environment/PNG/clouds.png");
@@ -36,9 +36,11 @@ class Clouds : public Entity
 
   void render(void) override
   {
-    if (_geometry->x <= 1280) Entity::render();
+    if (_geometry->x <= 1280)
+      Entity::render();
 
-    if (_geometry->x - _startPosition == 1088) _geometry->x = _startPosition;
+    if (_geometry->x - _startPosition == 1088)
+      _geometry->x = _startPosition;
   }
 };
 
@@ -50,12 +52,14 @@ Background::Background()
   printTrace("Background: создаем небесную твердь");
   p = new Entity("res/Magic-Cliffs-Environment/PNG/sky.png", 124, 608);
   _queue->push(p);
-  for (int i = 1; i < 11; i++) _queue->push(new Entity(p, i * 124));
+  for (int i = 1; i < 11; i++)
+    _queue->push(new Entity(p, i * 124));
 
   printTrace("Background: разливаем воду");
   p = new Entity("res/Magic-Cliffs-Environment/PNG/sea.png", 124, 192, 0, 608);
   _queue->push(p);
-  for (int i = 1; i < 11; i++) _queue->push(new Entity(p, i * 124, 608));
+  for (int i = 1; i < 11; i++)
+    _queue->push(new Entity(p, i * 124, 608));
 
   printTrace("Background: сгущаем облака");
   p = new Clouds(1088, 472, 0, 136);

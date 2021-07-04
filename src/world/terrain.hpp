@@ -2,6 +2,6 @@
 
 class Terrain final : public Layer
 {
- public:
+public:
   Terrain();
 };

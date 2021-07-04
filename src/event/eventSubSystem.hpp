@@ -21,15 +21,15 @@ enum GameEvents
 */
 class EventSubSystem final
 {
- private:
+private:
   bool _action;
 
-  SDL_Event* _event;
+  SDL_Event *_event;
 
   bool _mouseCheck;
-  SDL_Point* _mousePosition;
+  SDL_Point *_mousePosition;
 
- public:
+public:
   EventSubSystem();
 
   /*
@@ -45,12 +45,12 @@ class EventSubSystem final
   /*
    * Получение текущего события
    */
-  SDL_Event* getEvent(void);
+  SDL_Event *getEvent(void);
 
   /*
    * Получение позиции мыши
    */
-  SDL_Point* getMousePosition(void);
+  SDL_Point *getMousePosition(void);
 
   /*
    * Проверка на левый клик мыши
@@ -60,4 +60,4 @@ class EventSubSystem final
   ~EventSubSystem();
 };
 
-#endif  // EVENTS_HPP
+#endif // EVENTS_HPP

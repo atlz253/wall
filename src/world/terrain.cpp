@@ -49,7 +49,8 @@ Terrain::Terrain()
   {
     Entity *t = new Entity(tmp, 480 + 32 * i, 656);
 
-    if (i == 2 || i == 6 || i == 8 || i == 9) t->setTile(400, 112, 16, 32);
+    if (i == 2 || i == 6 || i == 8 || i == 9)
+      t->setTile(400, 112, 16, 32);
 
     _queue->push(t);
   }

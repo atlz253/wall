@@ -13,31 +13,31 @@ class Renderer;
 */
 class Main final
 {
- private:
-  /*
+private:
+    /*
       Игровой цикл
 
       Обрабатывает все обновления игры
   */
-  void _gameLoop(void);
+    void _gameLoop(void);
 
- public:
-  /*
+public:
+    /*
       Инициализация игры
 
       Обрабатывает загрузку всех данных
   */
-  Main();
+    Main();
 
-  /*
+    /*
       Запуск игры
   */
-  int run(void);
+    int run(void);
 
-  /*
+    /*
       Очистка памяти
 
       Удаляет все загруженные ресурсы из ОЗУ
   */
-  ~Main();
+    ~Main();
 };

@@ -8,14 +8,14 @@
 
 class Text : public Entity
 {
- protected:
+protected:
   std::string _text;
   FontSize _size;
   SDL_Color _color;
 
   void _updateTexture(void);
 
- public:
+public:
   Text(std::string text, FontSize size, SDL_Color color, int x, int y);
 
   void setColor(SDL_Color color);
@@ -27,4 +27,4 @@ class Text : public Entity
   ~Text();
 };
 
-#endif  // TEXT_HPP
+#endif // TEXT_HPP

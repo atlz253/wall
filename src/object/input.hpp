@@ -5,11 +5,11 @@
 
 class Input final : public Text
 {
- private:
+private:
   uint32_t _time;
   std::string *_ptext;
 
- public:
+public:
   Input(std::string *text, FontSize size, SDL_Color color, int x, int y);
 
   void process(void);
@@ -17,4 +17,4 @@ class Input final : public Text
   ~Input();
 };
 
-#endif  // INPUT_HPP
+#endif // INPUT_HPP
