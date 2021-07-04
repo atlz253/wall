@@ -50,7 +50,6 @@ set(CPP_FILES
     ${SRC_DIR}/units/base.cpp
     ${SRC_DIR}/units/knight.cpp
     ${SRC_DIR}/units/unit.cpp
-    ${SRC_DIR}/video/window.cpp
     ${SRC_DIR}/wall/globals.cpp
     ${SRC_DIR}/wall/print.cpp
     ${SRC_DIR}/wall/random.cpp
@@ -74,7 +73,6 @@ set(HPP_FILES
     ${SRC_DIR}/units/base.hpp
     ${SRC_DIR}/units/knight.hpp
     ${SRC_DIR}/units/unit.hpp
-    ${SRC_DIR}/video/window.hpp
     ${SRC_DIR}/wall/globals.hpp
     ${SRC_DIR}/wall/print.hpp
     ${SRC_DIR}/wall/random.hpp

@@ -23,54 +23,58 @@ bool EventSubSystem::checkEvents(void)
   {
     switch (_event->type)
     {
-      case SDL_WINDOWEVENT:
-        switch (_event->window.event)
-        {
-          case SDL_WINDOWEVENT_HIDDEN:
-            window->freeze();
-            break;
-        }
-        break;
-      case SDL_USEREVENT:
-        switch (_event->user.code)
-        {
-          case MENU_EVENT:
-            gui->menu();
-            break;
-          case RULE_EVENT:
-            gui->rules();
-            break;
-          case CLEAR_RECORDS_EVENT:
-            remove("records.bin");
-          case RECORDS_EVENT:
-            gui->records();
-            break;
-          case P1_INPUT_EVENT:
-            gui->p1_input();
-            break;
-          case P2_INPUT_EVENT:
-            gui->p2_input();
-            break;
-          case START_EVENT:
-            gui->clear();
-            action->start();
-            break;
-          case DEFEAT_EVENT:
-            _action = false;
-            break;
-          case END_EVENT:
-            _action = true;
-            *p1 = *p2 = "";
+    case SDL_WINDOWEVENT:
+      switch (_event->window.event)
+      {
+      case SDL_WINDOWEVENT_HIDDEN:
+        std::cout << "Window minimize" << std::endl;
 
-            action->clear();
-            gui->menu();
+        while (SDL_WaitEvent(_event))
+          if (_event->window.event == SDL_WINDOWEVENT_SHOWN)
             break;
-        }
         break;
-      case SDL_QUIT:
-        printTrace("SdlWindow: SDL_Quit event");
-        return false;
+      }
+      break;
+    case SDL_USEREVENT:
+      switch (_event->user.code)
+      {
+      case MENU_EVENT:
+        gui->menu();
         break;
+      case RULE_EVENT:
+        gui->rules();
+        break;
+      case CLEAR_RECORDS_EVENT:
+        remove("records.bin");
+      case RECORDS_EVENT:
+        gui->records();
+        break;
+      case P1_INPUT_EVENT:
+        gui->p1_input();
+        break;
+      case P2_INPUT_EVENT:
+        gui->p2_input();
+        break;
+      case START_EVENT:
+        gui->clear();
+        action->start();
+        break;
+      case DEFEAT_EVENT:
+        _action = false;
+        break;
+      case END_EVENT:
+        _action = true;
+        *p1 = *p2 = "";
+
+        action->clear();
+        gui->menu();
+        break;
+      }
+      break;
+    case SDL_QUIT:
+      printTrace("SdlWindow: SDL_Quit event");
+      return false;
+      break;
     }
   }
 
@@ -79,9 +83,9 @@ bool EventSubSystem::checkEvents(void)
 
 bool EventSubSystem::getAction(void) { return _action; }
 
-SDL_Event* EventSubSystem::getEvent(void) { return _event; }
+SDL_Event *EventSubSystem::getEvent(void) { return _event; }
 
-SDL_Point* EventSubSystem::getMousePosition(void)
+SDL_Point *EventSubSystem::getMousePosition(void)
 {
   SDL_GetMouseState(&_mousePosition->x, &_mousePosition->y);
   return _mousePosition;
@@ -96,7 +100,8 @@ bool EventSubSystem::leftClick(void)
   }
   else
   {
-    if (!(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT))) _mouseCheck = false;
+    if (!(SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)))
+      _mouseCheck = false;
     return false;
   }
 }

@@ -3,7 +3,6 @@
 #include "SDL2/SDL_image.h"
 #include "globals.hpp"
 #include "print.hpp"
-#include "window.hpp"
 
 Entity::Entity()
 {
@@ -57,7 +56,8 @@ void Entity::setPosition(int x, int y)
 
 void Entity::setTile(int x, int y, int w, int h)
 {
-  if (!_tile) _tile = new SDL_Rect;
+  if (!_tile)
+    _tile = new SDL_Rect;
 
   _tile->x = x;
   _tile->y = y;
@@ -69,7 +69,7 @@ void Entity::process(void) {}
 
 void Entity::render(void)
 {
-  if (_texture && SDL_RenderCopy(renderer, _texture, _tile, _geometry))
+  if (_texture && SDL_RenderCopy(glob::renderer, _texture, _tile, _geometry))
     printError("SdlWindow: ошибка рендера.", SDL_GetError());
 }
 

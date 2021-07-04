@@ -9,7 +9,9 @@
 #include "font.hpp"
 #include "gui.hpp"
 #include "textureManager.hpp"
-#include "window.hpp"
+
+typedef struct SDL_Window SDL_Window;
+typedef struct SDL_Renderer SDL_Renderer;
 
 typedef struct record
 {
@@ -17,10 +19,14 @@ typedef struct record
   unsigned int score;
 } record;
 
-const int SCREEN_WIDTH = 1280;  // Ширина окна
-const int SCREEN_HEIGHT = 720;  // Высота окна
+const int SCREEN_WIDTH = 1280; // Ширина окна
+const int SCREEN_HEIGHT = 720; // Высота окна
+namespace glob
+{
+  extern SDL_Window *window;
+  extern SDL_Renderer *renderer;
+}
 
-extern Window *window;
 extern Gui *gui;
 extern EventSubSystem *events;
 extern TextureManager *textures;

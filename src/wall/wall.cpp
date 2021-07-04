@@ -11,7 +11,7 @@
 
 class SdlSubSystem final
 {
- public:
+public:
   SdlSubSystem()
   {
 
@@ -27,7 +27,7 @@ class SdlSubSystem final
     */
     SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
 
-    std::cout << "SdlSubSystem: инициализация SDL2_Image"  << std::endl;
+    std::cout << "SdlSubSystem: инициализация SDL2_Image" << std::endl;
     if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
     {
       std::cout << "Ошибка инициализации SDL2_Image:" << IMG_GetError() << std::endl;
@@ -68,14 +68,14 @@ void Main::_gameLoop(void)
 
   while (events->checkEvents())
   {
-    window->clear();
+    SDL_RenderClear(glob::renderer);
 
     background->renderer();
     action->renderer();
     terrain->renderer();
     gui->renderer();
 
-    window->draw();
+    SDL_RenderPresent(glob::renderer);
   }
 
   delete background;
@@ -86,7 +86,18 @@ Main::Main()
 {
   sdlSubSystem = new SdlSubSystem();
 
-  window = new Window();
+  std::cout << "Creating window" << std::endl;
+  glob::window = SDL_CreateWindow("wall", SDL_WINDOWPOS_CENTERED_MASK, SDL_WINDOWPOS_CENTERED_MASK, SCREEN_WIDTH,
+                                  SCREEN_HEIGHT, SDL_WINDOW_OPENGL);
+  if (!glob::window)
+  {
+    std::cout << "Failed to create window:" << SDL_GetError() << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  glob::renderer = SDL_CreateRenderer(glob::window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+  if (!glob::renderer)
+    std::cout << "Failed to create renderer:" << SDL_GetError() << std::endl;
 
   p1 = new std::string;
   p2 = new std::string;
@@ -113,7 +124,8 @@ Main::~Main()
   delete gui;
   delete action;
 
-  delete window;
+  SDL_DestroyWindow(glob::window);
+  SDL_DestroyRenderer(glob::renderer);
 
   delete p1;
   delete p2;

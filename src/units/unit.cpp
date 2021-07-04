@@ -2,9 +2,8 @@
 
 #include "SDL2/SDL.h"
 #include "globals.hpp"
-#include "window.hpp"
 
-#define VISION 0  // "лучи" зрения юнитов
+#define VISION 0 // "лучи" зрения юнитов
 
 unsigned int Unit::_unitsCount = 0;
 
@@ -14,10 +13,10 @@ void Unit::process()
 {
   if (VISION)
   {
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderDrawLine(renderer, _center->x, _center->y, getFront(), _center->y);
-    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    SDL_RenderDrawLine(renderer, _center->x, _center->y, getBack(), _center->y);
+    SDL_SetRenderDrawColor(glob::renderer, 255, 0, 0, 255);
+    SDL_RenderDrawLine(glob::renderer, _center->x, _center->y, getFront(), _center->y);
+    SDL_SetRenderDrawColor(glob::renderer, 0, 255, 0, 255);
+    SDL_RenderDrawLine(glob::renderer, _center->x, _center->y, getBack(), _center->y);
   }
 }
 

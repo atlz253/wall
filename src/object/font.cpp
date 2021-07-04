@@ -4,18 +4,17 @@
 #include "SDL2/SDL_ttf.h"
 #include "globals.hpp"
 #include "print.hpp"
-#include "window.hpp"
 
 TTF_Font *Font::_getFont(FontSize size)
 {
   switch (size)
   {
-    case FONT_HIGH:
-      return _fontHigh;
-    case FONT_MEDIUM:
-      return _fontMedium;
-    case FONT_SMALL:
-      return _fontLow;
+  case FONT_HIGH:
+    return _fontHigh;
+  case FONT_MEDIUM:
+    return _fontMedium;
+  case FONT_SMALL:
+    return _fontLow;
   }
 
   return nullptr;
@@ -29,7 +28,8 @@ void Font::open(std::string path)
   _fontMedium = TTF_OpenFont(path.c_str(), FONT_MEDIUM);
   _fontLow = TTF_OpenFont(path.c_str(), FONT_SMALL);
 
-  if (!_fontHigh || !_fontMedium || !_fontLow) printError("не удалось открыть шрифт", TTF_GetError());
+  if (!_fontHigh || !_fontMedium || !_fontLow)
+    printError("не удалось открыть шрифт", TTF_GetError());
 }
 
 SDL_Texture *Font::getTexture(std::string text, FontSize size, SDL_Color color)
@@ -43,7 +43,7 @@ SDL_Texture *Font::getTexture(std::string text, FontSize size, SDL_Color color)
     return nullptr;
   }
 
-  SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surf);
+  SDL_Texture *texture = SDL_CreateTextureFromSurface(glob::renderer, surf);
   if (!texture)
   {
     printError("Не удалось преобразовать поверхность текста в текстуру", SDL_GetError());
