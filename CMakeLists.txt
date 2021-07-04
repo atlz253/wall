@@ -26,6 +26,7 @@ set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 
 include_directories(
     "${SRC_DIR}/event"
+    "${SRC_DIR}/menu"
     "${SRC_DIR}/object"
     "${SRC_DIR}/units"
     "${SRC_DIR}/video"
@@ -39,10 +40,10 @@ include_directories(
 
 set(CPP_FILES 
     ${SRC_DIR}/event/eventSubSystem.cpp
-    ${SRC_DIR}/object/button.cpp
+    ${SRC_DIR}/menu/button.cpp
+    ${SRC_DIR}/menu/input.cpp
     ${SRC_DIR}/object/entity.cpp
     ${SRC_DIR}/object/font.cpp
-    ${SRC_DIR}/object/input.cpp
     ${SRC_DIR}/object/layer.cpp
     ${SRC_DIR}/object/rotateEntity.cpp
     ${SRC_DIR}/object/text.cpp
@@ -63,10 +64,10 @@ set(CPP_FILES
 
 set(HPP_FILES 
     ${SRC_DIR}/event/eventSubSystem.hpp
-    ${SRC_DIR}/object/button.hpp
+    ${SRC_DIR}/menu/button.hpp
+    ${SRC_DIR}/menu/input.hpp
     ${SRC_DIR}/object/entity.hpp
     ${SRC_DIR}/object/font.hpp
-    ${SRC_DIR}/object/input.hpp
     ${SRC_DIR}/object/layer.hpp
     ${SRC_DIR}/object/text.hpp
     ${SRC_DIR}/object/textureManager.hpp
