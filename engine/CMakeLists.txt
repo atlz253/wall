@@ -10,19 +10,31 @@ project(engine VERSION 130721)
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
 
-include_directories("${INCLUDE_DIR}")
+include_directories(
+    "${INCLUDE_DIR}"
+    "${SRC_DIR}"
+)
 
 #
 # Add files
 #
 set(
     CPP_FILES
+    ${SRC_DIR}/objects/entity.cpp
+    ${SRC_DIR}/objects/font.cpp
+    ${SRC_DIR}/objects/rotateEntity.cpp
+    ${SRC_DIR}/objects/textureManager.cpp
     ${SRC_DIR}/engine.cpp
+    ${SRC_DIR}/global.cpp
 )
 
 set(
     HPP_FILES
     ${INCLUDE_DIR}/engine.hpp
+    ${INCLUDE_DIR}/entity.hpp
+    ${INCLUDE_DIR}/font.hpp
+    ${INCLUDE_DIR}/textureManager.hpp
+    ${SRC_DIR}/global.hpp
 )
 
 #

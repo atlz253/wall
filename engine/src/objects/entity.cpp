@@ -1,12 +1,14 @@
 #include "entity.hpp"
 
+#include <iostream>
+
 #include "SDL2/SDL_image.h"
-#include "globals.hpp"
-#include "print.hpp"
+#include "global.hpp"
+#include "engine.hpp" // TODO: remove
 
 Entity::Entity()
 {
-  printTrace("Entity: создание сущности");
+  std::cout << "Entity: создание сущности" << std::endl;
   _geometry = new SDL_Rect;
 }
 
@@ -16,7 +18,7 @@ Entity::Entity(int w, int h, int x, int y) : Entity()
   setPosition(x, y);
 }
 
-Entity::Entity(std::string path, int w, int h, int x, int y) : Entity(w, h, x, y) { _texture = textures->key(path); }
+Entity::Entity(std::string path, int w, int h, int x, int y) : Entity(w, h, x, y) { _texture = engine::textures->key(path); }
 
 Entity::Entity(std::string path, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH, int tileX,
                int tileY)
@@ -69,12 +71,12 @@ void Entity::process(void) {}
 
 void Entity::render(void)
 {
-  if (_texture && SDL_RenderCopy(glob::renderer, _texture, _tile, _geometry))
-    printError("SdlWindow: ошибка рендера.", SDL_GetError());
+  if (_texture && SDL_RenderCopy(global::renderer, _texture, _tile, _geometry))
+    std::cout << "SdlWindow: ошибка рендера:" << SDL_GetError() << std::endl;
 }
 
 Entity::~Entity()
 {
-  printTrace("Entity: удаление геометрии сущности");
+  std::cout << "Entity: удаление геометрии сущности" << std::endl;
   delete _geometry;
 }

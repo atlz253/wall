@@ -1,9 +1,10 @@
 #include "font.hpp"
 
+#include <iostream>
+
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
-#include "globals.hpp"
-#include "print.hpp"
+#include "global.hpp"
 
 TTF_Font *Font::_getFont(FontSize size)
 {
@@ -20,7 +21,10 @@ TTF_Font *Font::_getFont(FontSize size)
   return nullptr;
 }
 
-Font::Font() { printTrace("Инициализация шрифтов"); }
+Font::Font()
+{
+  std::cout << "Инициализация шрифтов" << std::endl;
+}
 
 void Font::open(std::string path)
 {
@@ -29,7 +33,7 @@ void Font::open(std::string path)
   _fontLow = TTF_OpenFont(path.c_str(), FONT_SMALL);
 
   if (!_fontHigh || !_fontMedium || !_fontLow)
-    printError("не удалось открыть шрифт", TTF_GetError());
+    std::cout << "не удалось открыть шрифт" << TTF_GetError() << std::endl;
 }
 
 SDL_Texture *Font::getTexture(std::string text, FontSize size, SDL_Color color)
@@ -39,14 +43,14 @@ SDL_Texture *Font::getTexture(std::string text, FontSize size, SDL_Color color)
   SDL_Surface *surf = TTF_RenderUTF8_Blended(font, text.c_str(), color);
   if (!surf)
   {
-    printError("Не удалось преобразовать текст в поверхность", TTF_GetError());
+    std::cout << "Не удалось преобразовать текст в поверхность" << TTF_GetError() << std::endl;
     return nullptr;
   }
 
-  SDL_Texture *texture = SDL_CreateTextureFromSurface(glob::renderer, surf);
+  SDL_Texture *texture = SDL_CreateTextureFromSurface(global::renderer, surf);
   if (!texture)
   {
-    printError("Не удалось преобразовать поверхность текста в текстуру", SDL_GetError());
+    std::cout << "Не удалось преобразовать поверхность текста в текстуру" << SDL_GetError() << std::endl;
     return nullptr;
   }
 

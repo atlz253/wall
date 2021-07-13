@@ -1,4 +1,4 @@
-#ifndef TEXTUREMANAGER
+#ifndef TEXTUREMANAGER // TODO: rewrite
 #define TEXTUREMANAGER
 
 #include <map>
@@ -12,23 +12,23 @@ typedef struct SDL_Texture SDL_Texture;
 class TextureManager final
 {
 private:
-    std::map<std::string, SDL_Texture *> _dict;               // контейнер текстур
-    std::map<std::string, SDL_Texture *>::iterator _iterator; // итератор для работы с контейнером
+  std::map<std::string, SDL_Texture *> _dict;               // контейнер текстур
+  std::map<std::string, SDL_Texture *>::iterator _iterator; // итератор для работы с контейнером
 
-    /*
+  /*
       Загрузка текстуры
   */
-    void _loadTexture(std::string path);
+  void _loadTexture(std::string path);
 
 public:
-    TextureManager();
+  TextureManager();
 
-    /*
+  /*
       Получение объекта текстуры по ключу
   */
-    SDL_Texture *&key(std::string name);
+  SDL_Texture *&key(std::string name);
 
-    ~TextureManager();
+  ~TextureManager();
 };
 
 #endif

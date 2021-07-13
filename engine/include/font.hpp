@@ -1,4 +1,4 @@
-#ifndef FONT_HPP
+#ifndef FONT_HPP // TODO: rewrite
 #define FONT_HPP
 
 #include <string>

@@ -20,7 +20,7 @@ void Gui::menu(void)
 
   event = new SDL_Event;
   event->type = SDL_USEREVENT;
-  event->user.code = P1_INPUT_EVENT;
+  event->user.code = START_EVENT;
   addEntity(new Button("играть", X, Y - BUTTON_HEIGHT * 4, event));
 
   event = new SDL_Event;
@@ -105,48 +105,10 @@ void Gui::records(void)
 
 void Gui::p1_input(void)
 {
-  int w, h;
-  SDL_Event *event;
-
-  clear();
-
-  font->getSize("введите имя 1 игрока", FONT_SMALL, &w, &h);
-  addEntity(new Text("введите имя 1 игрока", FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2,
-                     (SCREEN_HEIGHT - h) / 2 - h * 3));
-  addEntity(new Input(p1, FONT_SMALL, {0, 0, 0, 255}, SCREEN_WIDTH / 2, Y - BUTTON_HEIGHT));
-
-  event = new SDL_Event;
-  event->type = SDL_USEREVENT;
-  event->user.code = MENU_EVENT;
-  addEntity(new Button("назад", X - 100, Y, event));
-
-  event = new SDL_Event;
-  event->type = SDL_USEREVENT;
-  event->user.code = P2_INPUT_EVENT;
-  addEntity(new Button("далее", X + 100, Y, event));
 }
 
 void Gui::p2_input(void)
-{
-  int w, h;
-  SDL_Event *event;
-
-  clear();
-
-  font->getSize("введите имя 2 игрока", FONT_SMALL, &w, &h);
-  addEntity(new Text("введите имя 2 игрока", FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2,
-                     (SCREEN_HEIGHT - h) / 2 - h * 3));
-  addEntity(new Input(p2, FONT_SMALL, {0, 0, 0, 255}, SCREEN_WIDTH / 2, Y - BUTTON_HEIGHT));
-
-  event = new SDL_Event;
-  event->type = SDL_USEREVENT;
-  event->user.code = P1_INPUT_EVENT;
-  addEntity(new Button("назад", X - 100, Y, event));
-
-  event = new SDL_Event;
-  event->type = SDL_USEREVENT;
-  event->user.code = START_EVENT;
-  addEntity(new Button("старт", X + 100, Y, event));
+{  
 }
 
 Gui::~Gui() {}

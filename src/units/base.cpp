@@ -9,6 +9,7 @@
 #include "knight.hpp"
 #include "print.hpp"
 #include "random.hpp"
+#include "engine.hpp" // TODO: remove
 
 class HealthLine final : public Entity
 {
@@ -21,7 +22,7 @@ public:
   {
     _flip = base->getFlip();
 
-    _texture = textures->key("res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue.png");
+    _texture = engine::textures->key("res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue.png");
     setTile(13, 68, 111, 6);
 
     setSize(111 * 3, 6 * 3);
@@ -57,7 +58,7 @@ public:
     _line = new HealthLine(_base);
     gui->addEntity(_line);
 
-    _texture = textures->key("res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue2.png");
+    _texture = engine::textures->key("res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue2.png");
     setTile(13, 47, 111, 8);
 
     setSize(111 * 3, 8 * 3);
@@ -132,15 +133,15 @@ void Base::_defeat(void)
         ofile.write((char *)&rec->score, sizeof(rec->score));
         if (getFlip())
         {
-          size_t length = p1->length() + 1;
+          size_t length = 1;
           ofile.write((char *)&length, sizeof(length));
-          ofile.write((char *)p1->c_str(), length);
+          ofile.write((char *)"", length);
         }
         else
         {
-          size_t length = p2->length() + 1;
+          size_t length = 1;
           ofile.write((char *)&length, sizeof(length));
-          ofile.write((char *)p2->c_str(), length);
+          ofile.write((char *)"", length);
         }
 
         isWritten = true;
@@ -164,22 +165,18 @@ void Base::_defeat(void)
     ofile.write((char *)&rec->score, sizeof(rec->score));
     if (getFlip())
     {
-      size_t length = p1->length() + 1;
+      size_t length = 1;
       ofile.write((char *)&length, sizeof(length));
-      ofile.write((char *)p1->c_str(), length);
+      ofile.write((char *)"", length);
     }
     else
     {
-      size_t length = p2->length() + 1;
+      size_t length = 1;
       ofile.write((char *)&length, sizeof(length));
-      ofile.write((char *)p2->c_str(), length);
+      ofile.write((char *)"", length);
     }
   }
 
-  if (getFlip())
-    text = text + *p1;
-  else
-    text = text + *p2;
   text += " победил";
 
   font->getSize(text, FONT_MEDIUM, &w, &h);
@@ -208,7 +205,7 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
   _frontRange = 30;
   _earnSpeed = 0;
 
-  _texture = textures->key("res/Taiga-Asset-Pack_v2_vnitti/PNG/Props.png");
+  _texture = engine::textures->key("res/Taiga-Asset-Pack_v2_vnitti/PNG/Props.png");
   setTile(0, 48, 144, 128);
   _flip = flip;
 
