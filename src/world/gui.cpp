@@ -6,6 +6,7 @@
 #include "globals.hpp"
 #include "input.hpp"
 #include "text.hpp"
+#include "engine.hpp" // TODO: remove
 
 static const int X = (SCREEN_WIDTH - BUTTON_WIDTH) / 2;
 static const int Y = (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2;
@@ -48,11 +49,11 @@ void Gui::rules(void)
 
   clear();
 
-  font->getSize(text[0], FONT_SMALL, &w, &h);
+  engine::font->getSize(text[0], FONT_SMALL, &w, &h);
   addEntity(new Text(text[0], FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - h * 2));
-  font->getSize(text[1], FONT_SMALL, &w, &h);
+  engine::font->getSize(text[1], FONT_SMALL, &w, &h);
   addEntity(new Text(text[1], FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - h * 1));
-  font->getSize(text[2], FONT_SMALL, &w, &h);
+  engine::font->getSize(text[2], FONT_SMALL, &w, &h);
   addEntity(new Text(text[2], FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2));
 
   event->type = SDL_USEREVENT;
@@ -87,7 +88,7 @@ void Gui::records(void)
       delete[] buf;
 
       text = rec->name + " " + std::to_string(rec->score);
-      font->getSize(text, FONT_SMALL, &w, &h);
+      engine::font->getSize(text, FONT_SMALL, &w, &h);
       addEntity(new Text(text, FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, h * n));
       n++;
     }

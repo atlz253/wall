@@ -84,8 +84,8 @@ public:
   {
     std::string text = std::to_string(_base->getMoney()) + '$';
     SDL_DestroyTexture(_texture);
-    _texture = font->getTexture(text, FONT_MEDIUM, {255, 0, 0, 255});
-    font->getSize(text, FONT_MEDIUM, &_geometry->w, &_geometry->h);
+    _texture = engine::font->getTexture(text, FONT_MEDIUM, {255, 0, 0, 255});
+    engine::font->getSize(text, FONT_MEDIUM, &_geometry->w, &_geometry->h);
 
     if (_base->getFlip())
       setPosition(SCREEN_WIDTH - _geometry->w, _geometry->h);
@@ -179,11 +179,11 @@ void Base::_defeat(void)
 
   text += " победил";
 
-  font->getSize(text, FONT_MEDIUM, &w, &h);
+  engine::font->getSize(text, FONT_MEDIUM, &w, &h);
   gui->addEntity(new Text(text, FONT_MEDIUM, {255, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 200));
 
   text = "счет: " + std::to_string(rec->score);
-  font->getSize(text, FONT_MEDIUM, &w, &h);
+  engine::font->getSize(text, FONT_MEDIUM, &w, &h);
   gui->addEntity(new Text(text, FONT_MEDIUM, {255, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 100));
 
   event = new SDL_Event;

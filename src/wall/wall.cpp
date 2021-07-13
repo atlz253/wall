@@ -39,9 +39,6 @@ Main::Main()
 {
   engine::init();
 
-  font = new Font();
-  font->open("res/joystix_monospace.ttf");
-
   events = new EventSubSystem();
 
   gui = new Gui();
@@ -60,7 +57,6 @@ Main::~Main()
   delete gui;
   delete action;
 
-  delete font;
   delete events;
 
   engine::quit();

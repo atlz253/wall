@@ -10,6 +10,7 @@
 namespace engine
 {
     TextureManager *textures = nullptr; // TODO: remove
+    Font *font = nullptr; // TODO: remove
 
     int init()
     {
@@ -53,6 +54,9 @@ namespace engine
             std::cout << "Failed to create renderer:" << SDL_GetError() << std::endl;
 
         textures = new TextureManager(); // TODO: remove
+
+        font = new Font(); // TODO: remove
+        font->open("res/joystix_monospace.ttf");
 
         return 0;
     }

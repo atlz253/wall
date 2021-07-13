@@ -8,5 +8,4 @@ namespace glob
 
 Gui *gui = nullptr;
 EventSubSystem *events = nullptr;
-Font *font = nullptr;
 Action *action = nullptr;

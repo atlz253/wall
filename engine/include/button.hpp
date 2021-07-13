@@ -4,7 +4,6 @@
 #include <string>
 
 #include "entity.hpp"
-#include "globals.hpp"
 
 const Uint8 BUTTON_WIDTH = 150;
 const Uint8 BUTTON_HEIGHT = 30;

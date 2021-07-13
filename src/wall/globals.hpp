@@ -23,7 +23,6 @@ typedef struct record
 
 extern Gui *gui;
 extern EventSubSystem *events;
-extern Font *font;
 extern Action *action;
 
 #endif

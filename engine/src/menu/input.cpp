@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "globals.hpp"
+#include "global.hpp"
 
 Input::Input(std::string *text, FontSize size, SDL_Color color, int x, int y) : Text("", size, color, x, y)
 {
@@ -13,7 +13,8 @@ Input::Input(std::string *text, FontSize size, SDL_Color color, int x, int y) : 
 
 void Input::process()
 {
-  SDL_Event *event = events->getEvent();
+  SDL_Event *event = nullptr; // FIXME: engine comparatment effect
+  // SDL_Event *event = events->getEvent();
 
   if (event->type == SDL_TEXTINPUT && _time != event->text.timestamp)
   {

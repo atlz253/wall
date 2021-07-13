@@ -1,6 +1,7 @@
 #include "text.hpp"
 
-#include "globals.hpp"
+#include "global.hpp"
+#include "engine.hpp" // TODO: remove
 
 void Text::_updateTexture(void)
 {
@@ -8,8 +9,8 @@ void Text::_updateTexture(void)
 
   if (_text.length())
   {
-    _texture = font->getTexture(_text, _size, _color);
-    font->getSize(_text, _size, &_geometry->w, &_geometry->h);
+    _texture = engine::font->getTexture(_text, _size, _color);
+    engine::font->getSize(_text, _size, &_geometry->w, &_geometry->h);
   }
   else
   {
@@ -32,7 +33,7 @@ Text::Text(std::string text, FontSize size, SDL_Color color, int x = 0, int y = 
 void Text::setColor(SDL_Color color)
 {
   SDL_DestroyTexture(_texture);
-  _texture = font->getTexture(_text, _size, color);
+  _texture = engine::font->getTexture(_text, _size, color);
 }
 
 int Text::getWidth(void) { return _geometry->w; }

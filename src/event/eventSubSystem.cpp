@@ -84,7 +84,7 @@ bool EventSubSystem::getAction(void) { return _action; }
 
 SDL_Event *EventSubSystem::getEvent(void) { return _event; }
 
-SDL_Point *EventSubSystem::getMousePosition(void)
+SDL_Point *EventSubSystem::getMousePosition(void) // TODO: remove
 {
   SDL_GetMouseState(&_mousePosition->x, &_mousePosition->y);
   return _mousePosition;
