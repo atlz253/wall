@@ -22,6 +22,7 @@ set(
     CPP_FILES
     ${SRC_DIR}/objects/entity.cpp
     ${SRC_DIR}/objects/font.cpp
+    ${SRC_DIR}/objects/layer.cpp
     ${SRC_DIR}/objects/rotateEntity.cpp
     ${SRC_DIR}/objects/textureManager.cpp
     ${SRC_DIR}/engine.cpp
@@ -33,6 +34,7 @@ set(
     ${INCLUDE_DIR}/engine.hpp
     ${INCLUDE_DIR}/entity.hpp
     ${INCLUDE_DIR}/font.hpp
+    ${INCLUDE_DIR}/layer.hpp
     ${INCLUDE_DIR}/textureManager.hpp
     ${SRC_DIR}/global.hpp
 )

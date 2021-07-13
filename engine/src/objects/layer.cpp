@@ -1,7 +1,8 @@
 #include "layer.hpp"
 
+#include <iostream>
+
 #include "entity.hpp"
-#include "print.hpp"
 
 Layer::Layer() { _queue = new std::queue<Entity *>; }
 
