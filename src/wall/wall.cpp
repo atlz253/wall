@@ -2,60 +2,13 @@
 
 #include <iostream>
 
+#include "engine.hpp"
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
 #include "action.hpp"
 #include "background.hpp"
 #include "globals.hpp"
 #include "terrain.hpp"
-
-class SdlSubSystem final
-{
-public:
-  SdlSubSystem()
-  {
-
-    std::cout << "SdlSubSystem: инициализация SDL2" << std::endl;
-    if (SDL_Init(SDL_INIT_VIDEO))
-    {
-      std::cout << "Ошибка инициализации SDL2:" << SDL_GetError() << std::endl;
-      exit(EXIT_FAILURE);
-    }
-
-    /*
-        Не отключать композитор рабочих столов на linux дистрибутивах
-    */
-    SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
-
-    std::cout << "SdlSubSystem: инициализация SDL2_Image" << std::endl;
-    if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
-    {
-      std::cout << "Ошибка инициализации SDL2_Image:" << IMG_GetError() << std::endl;
-      exit(EXIT_FAILURE);
-    }
-
-    std::cout << "SdlSubSystem: инициализация SDL2_ttf" << std::endl;
-    if (TTF_Init())
-    {
-      std::cout << "Ошибка инициализации SDL2_Image:" << TTF_GetError() << std::endl;
-      exit(EXIT_FAILURE);
-    }
-  }
-
-  ~SdlSubSystem()
-  {
-    std::cout << "SdlSubSystem: завершение работы SDL2" << std::endl;
-    SDL_Quit();
-
-    std::cout << "SdlSubSystem: завершение работы SDL2_Image" << std::endl;
-    IMG_Quit();
-
-    std::cout << "SdlSubSystem: завершение работы SDL2_ttf" << std::endl;
-    TTF_Quit();
-  }
-};
-
-SdlSubSystem *sdlSubSystem;
 
 void Main::_gameLoop(void)
 {
@@ -84,7 +37,7 @@ void Main::_gameLoop(void)
 
 Main::Main()
 {
-  sdlSubSystem = new SdlSubSystem();
+  engine::init();
 
   std::cout << "Creating window" << std::endl;
   glob::window = SDL_CreateWindow("wall", SDL_WINDOWPOS_CENTERED_MASK, SDL_WINDOWPOS_CENTERED_MASK, SCREEN_WIDTH,
@@ -134,5 +87,5 @@ Main::~Main()
   delete events;
   delete textures;
 
-  delete sdlSubSystem;
+  engine::quit();
 }

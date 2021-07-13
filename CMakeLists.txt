@@ -20,6 +20,12 @@ include_directories(
 )
 
 #
+# Include subprojects
+#
+add_subdirectory(engine)
+include_directories("${PROJECT_SOURCE_DIR}/engine/include")
+
+#
 # Include dirs
 #
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
@@ -37,8 +43,8 @@ include_directories(
 #
 # Add files
 #
-
-set(CPP_FILES 
+set(
+    CPP_FILES 
     ${SRC_DIR}/event/eventSubSystem.cpp
     ${SRC_DIR}/menu/button.cpp
     ${SRC_DIR}/menu/input.cpp
@@ -62,7 +68,8 @@ set(CPP_FILES
     ${SRC_DIR}/main.cpp
 )
 
-set(HPP_FILES 
+set(
+    HPP_FILES 
     ${SRC_DIR}/event/eventSubSystem.hpp
     ${SRC_DIR}/menu/button.hpp
     ${SRC_DIR}/menu/input.hpp
@@ -89,6 +96,10 @@ set(HPP_FILES
 #
 add_executable(wall ${HPP_FILES} ${CPP_FILES})
 
-target_link_libraries(wall ${SDL2_LIBRARY}
-                             ${SDL2_IMAGE_LIBRARIES}
-                             ${SDL2_TTF_LIBRARIES})
+target_link_libraries(
+    wall 
+    engine 
+    ${SDL2_LIBRARY}
+    ${SDL2_IMAGE_LIBRARIES}
+    ${SDL2_TTF_LIBRARIES}
+)
