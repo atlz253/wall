@@ -4,7 +4,12 @@
 
 #include "SDL2/SDL_image.h"
 #include "global.hpp"
-#include "engine.hpp" // TODO: remove
+#include "textureManager.hpp"
+
+SDL_Texture *Entity::getTexture(std::string path)
+{
+  return textures::get(path);
+}
 
 Entity::Entity()
 {
@@ -18,7 +23,7 @@ Entity::Entity(int w, int h, int x, int y) : Entity()
   setPosition(x, y);
 }
 
-Entity::Entity(std::string path, int w, int h, int x, int y) : Entity(w, h, x, y) { _texture = engine::textures->key(path); }
+Entity::Entity(std::string path, int w, int h, int x, int y) : Entity(w, h, x, y) { _texture = textures::get(path); }
 
 Entity::Entity(std::string path, int entityW, int entityH, int entityX, int entityY, int tileW, int tileH, int tileX,
                int tileY)

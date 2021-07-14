@@ -3,7 +3,6 @@
 #include "entity.hpp"
 #include "globals.hpp"
 #include "print.hpp"
-#include "engine.hpp" // TODO: remove
 
 class Clouds : public Entity
 {
@@ -14,7 +13,7 @@ private:
 public:
   Clouds(int w, int h, int x = 0, int y = 0) : Entity()
   {
-    _texture = engine::textures->key("res/Magic-Cliffs-Environment/PNG/clouds.png");
+    _texture = getTexture("res/Magic-Cliffs-Environment/PNG/clouds.png");
 
     _geometry->w = w;
     _geometry->h = h;

@@ -17,6 +17,7 @@ protected:
   SDL_Rect *_geometry = nullptr;   // Геометрия сущности
   SDL_Rect *_tile = nullptr;       // Область текстуры
 
+  SDL_Texture *getTexture(std::string path);
 public:
   Entity();
 

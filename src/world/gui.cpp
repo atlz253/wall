@@ -5,7 +5,6 @@
 #include "button.hpp"
 #include "globals.hpp"
 #include "text.hpp"
-#include "engine.hpp" // TODO: remove
 
 static const int X = (SCREEN_WIDTH - BUTTON_WIDTH) / 2;
 static const int Y = (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2;

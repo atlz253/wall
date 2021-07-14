@@ -1,9 +1,8 @@
-#include "textureManager.hpp"
+#ifndef ENGINE
+#define ENGINE
 
 namespace engine
 {
-  extern TextureManager *textures; // TODO: remove
-
   int init(); // TODO: flags?
 
   int quit();
@@ -15,3 +14,5 @@ namespace render
 
   void present();
 }
+
+#endif // ENGINE

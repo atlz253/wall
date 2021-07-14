@@ -13,6 +13,7 @@ set(INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
 include_directories(
     "${INCLUDE_DIR}"
     "${SRC_DIR}"
+    "${SRC_DIR}/objects"
 )
 
 #
@@ -37,7 +38,7 @@ set(
     ${INCLUDE_DIR}/entity.hpp
     ${INCLUDE_DIR}/layer.hpp
     ${INCLUDE_DIR}/text.hpp
-    ${INCLUDE_DIR}/textureManager.hpp
+    ${SRC_DIR}/objects/textureManager.hpp
     ${SRC_DIR}/global.hpp
 )
 

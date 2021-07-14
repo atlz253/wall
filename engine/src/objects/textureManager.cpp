@@ -1,39 +1,65 @@
 #include "textureManager.hpp"
 
+#include <map>
 #include <iostream>
 
+#include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "global.hpp"
 
-void TextureManager::_loadTexture(std::string path)
+namespace textures
 {
-  std::cout << "TextureManager: загрузка текстуры" << path << std::endl;
-  SDL_Texture *texture = IMG_LoadTexture(global::renderer, path.c_str());
+  std::map<std::string, SDL_Texture *> *dict;
 
-  if (!texture)
-    std::cout << "TextureManager: не удалось загрузить текстуру." << IMG_GetError() << std::endl;
+  int init()
+  {
+    dict = new std::map<std::string, SDL_Texture *>;
 
-  _dict[path] = texture;
-}
+    return 0;
+  }
 
-TextureManager::TextureManager()
-{
-  std::cout << "Инициализация менеджера текстур" << std::endl;
-}
+  SDL_Texture *&get(std::string path)
+  {
+    std::map<std::string, SDL_Texture *>::iterator iterator;
 
-SDL_Texture *&TextureManager::key(std::string name)
-{
-  _iterator = _dict.find(name);
+    iterator = dict->find(path);
 
-  if (_iterator->first != name)
-    _loadTexture(name);
+    if (iterator->first != path)
+    {
+      std::cout << "TextureManager: load texture " << path << std::endl;
+      SDL_Texture *texture = IMG_LoadTexture(global::renderer, path.c_str());
 
-  return _dict[name];
-}
+      if (!texture)
+        std::cout << "TextureManager: failed to load texture" << IMG_GetError() << std::endl;
 
-TextureManager::~TextureManager()
-{
-  std::cout << "TextureManager: удаление текстур из памяти" << std::endl;
-  for (_iterator = _dict.begin(); _iterator != _dict.end(); _iterator++)
-    SDL_DestroyTexture(_iterator->second);
+      (*dict)[path] = texture;
+    }
+
+    return (*dict)[path];
+  }
+
+  void clear(std::string path)
+  {
+    std::map<std::string, SDL_Texture *>::iterator iterator;
+
+    iterator = dict->find(path);
+
+    if (iterator->first != path)
+      return;
+
+    SDL_DestroyTexture(iterator->second);
+  }
+
+  int quit()
+  {
+    std::map<std::string, SDL_Texture *>::iterator iterator;
+
+    std::cout << "TextureManager: removing textures from memory" << std::endl;
+    for (iterator = dict->begin(); iterator != dict->end(); iterator++)
+      SDL_DestroyTexture(iterator->second);
+
+    delete dict;
+
+    return 0;
+  }
 }

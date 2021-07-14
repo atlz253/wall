@@ -6,7 +6,6 @@
 #include "globals.hpp"
 #include "print.hpp"
 #include "random.hpp"
-#include "engine.hpp" // TODO: remove
 
 const int runFrames[8] = {32, 128, 224, 320, 416, 512, 608, 704},
           attackFrames[22] = {48, 192, 336, 480, 624, 768, 912, 1056, 1200, 1328, 1488,
@@ -32,7 +31,7 @@ Knight::Knight(int x, SDL_RendererFlip flip) : Unit::Unit()
   _backRange = 20;
   _frontRange = 30;
 
-  _texture = engine::textures->key(knightRun);
+  _texture = getTexture(knightRun);
 
   setSize(48 * 2, 48 * 2);
 
@@ -62,12 +61,12 @@ void Knight::process(Unit *next)
 
   if (!_hp)
   {
-    if (_texture != engine::textures->key(knightDeath))
+    if (_texture !=  getTexture(knightDeath))
     {
       _isRuning = false;
       _frameCount = 0;
       _frame = 0;
-      _texture = engine::textures->key(knightDeath);
+      _texture = getTexture(knightDeath);
       _tile->x = deathFrames[0];
     }
     else if (++_frameCount == _animationSpeed && _frame < 14)
@@ -84,7 +83,7 @@ void Knight::process(Unit *next)
       _isRuning = false;
       _frameCount = 0;
       _frame = 0;
-      _texture = engine::textures->key(knightIdle);
+      _texture = getTexture(knightIdle);
       _tile->x = idleFrames[0];
     }
     else if (++_frameCount == _animationSpeed)
@@ -104,7 +103,7 @@ void Knight::process(Unit *next)
       _isRuning = false;
       _frameCount = 0;
       _frame = 0;
-      _texture = engine::textures->key(knightAttack);
+      _texture = getTexture(knightAttack);
       _tile->x = attackFrames[0];
     }
     else if (++_frameCount == _animationSpeed)
@@ -130,7 +129,7 @@ void Knight::process(Unit *next)
       _isRuning = true;
       _frameCount = 0;
       _frame = 0;
-      _texture = engine::textures->key(knightRun);
+      _texture = getTexture(knightRun);
       _tile->x = runFrames[0];
     }
     else if (++_frameCount == _animationSpeed)

@@ -6,11 +6,10 @@
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
+#include "textureManager.hpp"
 
 namespace engine
 {
-    TextureManager *textures = nullptr; // TODO: remove
-
     int init()
     {
         std::cout << "SdlSubSystem: инициализация SDL2" << std::endl;
@@ -51,8 +50,8 @@ namespace engine
         global::renderer = SDL_CreateRenderer(global::window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         if (!global::renderer)
             std::cout << "Failed to create renderer:" << SDL_GetError() << std::endl;
-
-        textures = new TextureManager(); // TODO: remove
+        
+        textures::init();
 
         return 0;
     }
