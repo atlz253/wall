@@ -5,6 +5,7 @@
 #include "button.hpp"
 #include "globals.hpp"
 #include "text.hpp"
+#include "event.hpp"
 
 static const int X = (SCREEN_WIDTH - BUTTON_WIDTH) / 2;
 static const int Y = (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2;
@@ -19,24 +20,16 @@ void Gui::menu(void)
 
   Font *fontt = font::open("res/joystix_monospace.ttf", 20);
 
-  event = new SDL_Event;
-  event->type = SDL_USEREVENT;
-  event->user.code = START_EVENT;
-  addEntity(new Button("играть", fontt, X, Y - BUTTON_HEIGHT * 4, event));
+  addEntity(new Button("играть", fontt, X, Y - BUTTON_HEIGHT * 4, []() {
+    gui->clear();
+    action->start();
+  }));
 
-  event = new SDL_Event;
-  event->type = SDL_USEREVENT;
-  event->user.code = RECORDS_EVENT;
-  addEntity(new Button("рекорды", fontt, X, Y - BUTTON_HEIGHT * 3, event));
+  addEntity(new Button("рекорды", fontt, X, Y - BUTTON_HEIGHT * 3, []() {gui->records();}));
 
-  event = new SDL_Event;
-  event->type = SDL_USEREVENT;
-  event->user.code = RULE_EVENT;
-  addEntity(new Button("правила", fontt, X, Y - BUTTON_HEIGHT * 2, event));
+  addEntity(new Button("правила", fontt, X, Y - BUTTON_HEIGHT * 2, []() {gui->rules();}));
 
-  event = new SDL_Event;
-  event->type = SDL_QUIT;
-  addEntity(new Button("выход", fontt, X, Y - BUTTON_HEIGHT, event));
+  addEntity(new Button("выход", fontt, X, Y - BUTTON_HEIGHT, []() {events::quit();}));
 }
 
 void Gui::rules(void)
@@ -69,9 +62,7 @@ void Gui::rules(void)
   textt->setColor(0, 0, 0, 255);
   addEntity(textt);
 
-  event->type = SDL_USEREVENT;
-  event->user.code = MENU_EVENT;
-  addEntity(new Button("назад", fontt, X, (SCREEN_HEIGHT - h) / 2 + BUTTON_HEIGHT, event));
+  addEntity(new Button("назад", fontt, X, (SCREEN_HEIGHT - h) / 2 + BUTTON_HEIGHT, []() {gui->menu();}));
 }
 
 void Gui::records(void)
@@ -115,22 +106,9 @@ void Gui::records(void)
 
   Font *fontt = font::open("res/joystix_monospace.ttf", 20);
 
-  event->type = SDL_USEREVENT;
-  event->user.code = MENU_EVENT;
-  addEntity(new Button("назад", fontt, X + 100, Y, event));
+  addEntity(new Button("назад", fontt, X + 100, Y, []() {gui->menu();}));
 
-  event = new SDL_Event;
-  event->type = SDL_USEREVENT;
-  event->user.code = CLEAR_RECORDS_EVENT;
-  addEntity(new Button("очистить", fontt, X - 100, Y, event));
-}
-
-void Gui::p1_input(void)
-{
-}
-
-void Gui::p2_input(void)
-{  
+  addEntity(new Button("очистить", fontt, X - 100, Y, []() {remove("records.bin");}));
 }
 
 Gui::~Gui() {}

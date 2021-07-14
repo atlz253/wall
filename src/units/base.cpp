@@ -189,11 +189,11 @@ void Base::_defeat(void)
   textt->setPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 100);
   gui->addEntity(textt);
 
-  event = new SDL_Event;
-  event->type = SDL_USEREVENT;
-  event->user.code = END_EVENT;
   gui->addEntity(new Button("в меню", fontt, (SCREEN_WIDTH - BUTTON_WIDTH) / 2,
-                            (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2 + BUTTON_HEIGHT, event));
+                            (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2 + BUTTON_HEIGHT, []() {
+                              action->clear();
+                              gui->menu();
+                              }));
 
   rename("_tmp", "records.bin");
   ofile.close();
@@ -274,11 +274,6 @@ void Base::setDamage(Uint16 damage)
 
     if (_hp <= 0)
     {
-      SDL_Event *defeat = new SDL_Event;
-      defeat->type = SDL_USEREVENT;
-      defeat->user.code = DEFEAT_EVENT;
-      defeat->user.data1 = this;
-      SDL_PushEvent(defeat);
       _defeat();
     }
   }

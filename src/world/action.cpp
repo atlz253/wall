@@ -103,22 +103,22 @@ void Action::_baseRenderer(void)
 {
   Unit *tmp = nullptr;
 
-  if (events->getAction())
-  {
+  // if (events->getAction()) // FIXME: action stop
+  // {
     _leftBase->process();
     tmp = _leftBase->keyCheck();
     if (tmp)
       _leftTeam->push(tmp);
-  }
+  // }
   _leftBase->render();
 
-  if (events->getAction())
-  {
+  // if (events->getAction())
+  // {
     _rightBase->process();
     tmp = _rightBase->keyCheck();
     if (tmp)
       _rightTeam->push(tmp);
-  }
+  // }
   _rightBase->render();
 }
 

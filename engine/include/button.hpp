@@ -15,16 +15,16 @@ class Button final : public Entity
 {
 private:
   Text *_text;
-  SDL_Event *_event;
+  void (*event)(void);
 
 public:
-  Button(std::string text, Font *font, int x, int y, SDL_Event *event);
-
-  void bindEvent(SDL_Event *event);
+  Button(std::string text, Font *font, int x, int y, void (*event)(void));
 
   void process(void) override;
 
   void render(void) override;
+
+  ~Button();
 };
 
 #endif // BUTTON_HPP

@@ -2,10 +2,12 @@
 
 #include <iostream>
 
-#include "global.hpp"
 #include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
 #include "SDL2/SDL_ttf.h"
+#include "SDL2/SDL_image.h"
+
+#include "event.hpp"
+#include "global.hpp"
 #include "textureManager.hpp"
 
 namespace engine
@@ -51,6 +53,7 @@ namespace engine
         if (!global::renderer)
             std::cout << "Failed to create renderer:" << SDL_GetError() << std::endl;
         
+        events::init();
         textures::init();
 
         return 0;

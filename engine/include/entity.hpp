@@ -5,8 +5,6 @@
 
 #include "SDL2/SDL.h"
 
-class Renderer;
-
 /*
     Базовая игровая сущность
 */

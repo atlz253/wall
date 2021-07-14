@@ -2,7 +2,9 @@
 
 #include <iostream>
 
+#include "event.hpp"
 #include "engine.hpp"
+
 #include "action.hpp"
 #include "background.hpp"
 #include "globals.hpp"
@@ -12,12 +14,9 @@ void Main::_gameLoop(void)
 {
   Layer *background = new Background(), *terrain = new Terrain();
 
-  SDL_Event *start = new SDL_Event;
-  start->type = SDL_USEREVENT;
-  start->user.code = MENU_EVENT;
-  SDL_PushEvent(start);
+  gui->menu();
 
-  while (events->checkEvents())
+  while (events::check())
   {
     render::clear();
 
@@ -37,8 +36,6 @@ Main::Main()
 {
   engine::init();
 
-  events = new EventSubSystem();
-
   gui = new Gui();
   action = new Action();
 }
@@ -54,8 +51,6 @@ Main::~Main()
 {
   delete gui;
   delete action;
-
-  delete events;
 
   engine::quit();
 }

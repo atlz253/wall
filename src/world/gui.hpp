@@ -14,10 +14,6 @@ public:
 
   void records(void);
 
-  void p1_input(void);
-
-  void p2_input(void);
-
   ~Gui();
 };
 

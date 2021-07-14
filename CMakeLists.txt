@@ -45,7 +45,6 @@ include_directories(
 #
 set(
     CPP_FILES 
-    ${SRC_DIR}/event/eventSubSystem.cpp
     ${SRC_DIR}/units/base.cpp
     ${SRC_DIR}/units/knight.cpp
     ${SRC_DIR}/units/unit.cpp
@@ -61,7 +60,6 @@ set(
 
 set(
     HPP_FILES 
-    ${SRC_DIR}/event/eventSubSystem.hpp
     ${SRC_DIR}/units/base.hpp
     ${SRC_DIR}/units/knight.hpp
     ${SRC_DIR}/units/unit.hpp
