@@ -1,6 +1,5 @@
 #include "unit.hpp"
 
-#include "SDL2/SDL.h"
 #include "globals.hpp"
 
 unsigned int Unit::_unitsCount = 0;

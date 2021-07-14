@@ -3,8 +3,6 @@
 #include <iostream>
 
 #include "engine.hpp"
-#include "SDL2/SDL_image.h"
-#include "SDL2/SDL_ttf.h"
 #include "action.hpp"
 #include "background.hpp"
 #include "globals.hpp"
