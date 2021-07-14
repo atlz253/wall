@@ -1,8 +1,9 @@
 #include "terrain.hpp"
 
+#include <iostream>
+
 #include "entity.hpp"
 #include "globals.hpp"
-#include "print.hpp"
 
 const std::string tile = "res/Magic-Cliffs-Environment/PNG/tileset.png";
 
@@ -10,17 +11,17 @@ Terrain::Terrain()
 {
   Entity *tmp = nullptr;
 
-  printTrace("Terrain: инициализация переднего плана");
+  std::cout << "Terrain: инициализация переднего плана" << std::endl;
 
-  printTrace("Terrain: создание левого острова");
+  std::cout << "Terrain: создание левого острова" << std::endl;
   _queue->push(new RotateEntity(tile, 96 * 2, 112 * 2, 0, 496, 96, 112, 32, 176, SDL_FLIP_HORIZONTAL));
 
-  printTrace("Terrain: создание правого острова");
+  std::cout << "Terrain: создание правого острова" << std::endl;
   _queue->push(new RotateEntity(tile, 48 * 2, 48 * 2, 1024, 624, 48, 48, 656, 240, SDL_FLIP_HORIZONTAL));
   _queue->push(new Entity(tile, 48 * 2, 48 * 2, 1184, 496, 48, 48, 192, 176));
   _queue->push(new RotateEntity(tile, 48 * 2, 64 * 2, 1088, 496, 48, 64, 512, 176, SDL_FLIP_HORIZONTAL));
 
-  printTrace("Terrain: строительство мостов");
+  std::cout << "Terrain: строительство мостов" << std::endl;
   /* левые части мостов */
   tmp = new Entity(tile, 48 * 2, 48 * 2, 128, 504, 48, 48, 576, 176);
   _queue->push(tmp);
@@ -38,7 +39,7 @@ Terrain::Terrain()
   _queue->push(tmp);
   _queue->push(new Entity(tmp, 1056, 505));
 
-  printTrace("Terrain: создание центрального острова");
+  std::cout << "Terrain: создание центрального острова" << std::endl;
   _queue->push(new Entity(tile, 64 * 2, 112 * 2, 320, 496, 64, 112, 320, 32));
   _queue->push(new Entity(tile, 16 * 2, 112 * 2, 448, 496, 16, 112, 400, 32));
 

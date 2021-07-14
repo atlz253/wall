@@ -50,7 +50,6 @@ set(
     ${SRC_DIR}/units/knight.cpp
     ${SRC_DIR}/units/unit.cpp
     ${SRC_DIR}/wall/globals.cpp
-    ${SRC_DIR}/wall/print.cpp
     ${SRC_DIR}/wall/random.cpp
     ${SRC_DIR}/wall/wall.cpp
     ${SRC_DIR}/world/action.cpp
@@ -67,7 +66,6 @@ set(
     ${SRC_DIR}/units/knight.hpp
     ${SRC_DIR}/units/unit.hpp
     ${SRC_DIR}/wall/globals.hpp
-    ${SRC_DIR}/wall/print.hpp
     ${SRC_DIR}/wall/random.hpp
     ${SRC_DIR}/wall/wall.hpp
     ${SRC_DIR}/world/action.hpp

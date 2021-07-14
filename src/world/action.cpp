@@ -5,7 +5,6 @@
 #include "base.hpp"
 #include "globals.hpp"
 #include "knight.hpp"
-#include "print.hpp"
 
 Action::Action()
 {
@@ -125,7 +124,7 @@ void Action::_baseRenderer(void)
 
 void Action::start(void)
 {
-  printTrace("Action: строим укрепточки");
+  std::cout << "Action: строим укрепточки" << std::endl;
 
   _leftBase = new Base(-96);
   _rightBase = new Base(1088, SDL_FLIP_HORIZONTAL);

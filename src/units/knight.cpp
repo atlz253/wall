@@ -4,7 +4,6 @@
 #include <string>
 
 #include "globals.hpp"
-#include "print.hpp"
 #include "random.hpp"
 
 const int runFrames[8] = {32, 128, 224, 320, 416, 512, 608, 704},

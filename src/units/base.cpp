@@ -6,7 +6,6 @@
 #include "button.hpp"
 #include "globals.hpp"
 #include "knight.hpp"
-#include "print.hpp"
 #include "random.hpp"
 #include "text.hpp"
 

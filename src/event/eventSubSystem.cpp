@@ -5,7 +5,6 @@
 
 #include "base.hpp"
 #include "globals.hpp"
-#include "print.hpp"
 
 EventSubSystem::EventSubSystem()
 {
@@ -71,7 +70,7 @@ bool EventSubSystem::checkEvents(void)
       }
       break;
     case SDL_QUIT:
-      printTrace("SdlWindow: SDL_Quit event");
+      std::cout << "SdlWindow: SDL_Quit event" << std::endl;
       return false;
       break;
     }
