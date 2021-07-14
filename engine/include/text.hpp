@@ -1,30 +1,42 @@
-#ifndef TEXT_HPP
-#define TEXT_HPP
+#ifndef TEXT
+#define TEXT
 
 #include <string>
 
 #include "entity.hpp"
-#include "font.hpp"
+
+typedef struct _TTF_Font Font;
+typedef struct SDL_Color Color;
+
+namespace font
+{
+  Font *open(std::string path, int size);
+
+  void close(Font *font);
+}
 
 class Text : public Entity
 {
 protected:
-  std::string _text;
-  FontSize _size;
-  SDL_Color _color;
+  Font *font;
+  Color color;
 
-  void _updateTexture(void);
+  std::string text;
+
+  void updateTexture(void);
 
 public:
-  Text(std::string text, FontSize size, SDL_Color color, int x, int y);
+  Text(std::string text, Font *font, int x = 0, int y = 0);
 
-  void setColor(SDL_Color color);
+  void setColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha);
 
   int getWidth(void);
 
   std::string getText(void);
 
+  void getSize(int *w, int *h); // TODO: rewrite
+
   ~Text();
 };
 
-#endif // TEXT_HPP
+#endif // TEXT

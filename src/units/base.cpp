@@ -4,12 +4,12 @@
 #include <iostream>
 
 #include "button.hpp"
-#include "font.hpp"
 #include "globals.hpp"
 #include "knight.hpp"
 #include "print.hpp"
 #include "random.hpp"
 #include "engine.hpp" // TODO: remove
+#include "text.hpp"
 
 class HealthLine final : public Entity
 {
@@ -72,27 +72,27 @@ public:
   void process(void) override { _line->process(_base->getHealth()); }
 };
 
-class MoneyBar final : public Entity
-{
-private:
-  Base *_base;
+// class MoneyBar final : public Entity // FIXME: Text inheritance
+// {
+// private:
+//   Base *_base;
 
-public:
-  MoneyBar(Base *base) : Entity::Entity() { _base = base; }
+// public:
+//   MoneyBar(Base *base) : Entity::Entity() { _base = base; }
 
-  void process(void) override
-  {
-    std::string text = std::to_string(_base->getMoney()) + '$';
-    SDL_DestroyTexture(_texture);
-    _texture = engine::font->getTexture(text, FONT_MEDIUM, {255, 0, 0, 255});
-    engine::font->getSize(text, FONT_MEDIUM, &_geometry->w, &_geometry->h);
+//   void process(void) override
+//   {
+//     std::string text = std::to_string(_base->getMoney()) + '$';
+//     SDL_DestroyTexture(_texture);
+//     _texture = engine::font->getTexture(text, FONT_MEDIUM, {255, 0, 0, 255});
+//     engine::font->getSize(text, FONT_MEDIUM, &_geometry->w, &_geometry->h);
 
-    if (_base->getFlip())
-      setPosition(SCREEN_WIDTH - _geometry->w, _geometry->h);
-    else
-      setPosition(0, _geometry->h);
-  }
-};
+//     if (_base->getFlip())
+//       setPosition(SCREEN_WIDTH - _geometry->w, _geometry->h);
+//     else
+//       setPosition(0, _geometry->h);
+//   }
+// };
 
 void Base::_defeat(void)
 {
@@ -179,17 +179,22 @@ void Base::_defeat(void)
 
   text += " победил";
 
-  engine::font->getSize(text, FONT_MEDIUM, &w, &h);
-  gui->addEntity(new Text(text, FONT_MEDIUM, {255, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 200));
+  Font *fontt = font::open("res/joystix_monospace.ttf", 26);
+  Text *textt = new Text(text, fontt);
+  textt->getSize(&w, &h);
+  textt->setPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 200);
+  gui->addEntity(textt);
 
   text = "счет: " + std::to_string(rec->score);
-  engine::font->getSize(text, FONT_MEDIUM, &w, &h);
-  gui->addEntity(new Text(text, FONT_MEDIUM, {255, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 100));
+  textt = new Text(text, fontt);
+  textt->getSize(&w, &h);
+  textt->setPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 100);
+  gui->addEntity(textt);
 
   event = new SDL_Event;
   event->type = SDL_USEREVENT;
   event->user.code = END_EVENT;
-  gui->addEntity(new Button("в меню", (SCREEN_WIDTH - BUTTON_WIDTH) / 2,
+  gui->addEntity(new Button("в меню", fontt, (SCREEN_WIDTH - BUTTON_WIDTH) / 2,
                             (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2 + BUTTON_HEIGHT, event));
 
   rename("_tmp", "records.bin");
@@ -220,7 +225,7 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
   _center->y = _geometry->y + _geometry->h / 2 + 45;
 
   gui->addEntity(new HealthBar(this));
-  gui->addEntity(new MoneyBar(this));
+  // gui->addEntity(new MoneyBar(this));
 }
 
 Unit *Base::keyCheck(void)

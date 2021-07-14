@@ -21,9 +21,7 @@ include_directories(
 set(
     CPP_FILES
     ${SRC_DIR}/menu/button.cpp
-    ${SRC_DIR}/menu/input.cpp
     ${SRC_DIR}/objects/entity.cpp
-    ${SRC_DIR}/objects/font.cpp
     ${SRC_DIR}/objects/layer.cpp
     ${SRC_DIR}/objects/rotateEntity.cpp
     ${SRC_DIR}/objects/text.cpp
@@ -37,8 +35,6 @@ set(
     ${INCLUDE_DIR}/button.hpp
     ${INCLUDE_DIR}/engine.hpp
     ${INCLUDE_DIR}/entity.hpp
-    ${INCLUDE_DIR}/font.hpp
-    ${INCLUDE_DIR}/input.hpp
     ${INCLUDE_DIR}/layer.hpp
     ${INCLUDE_DIR}/text.hpp
     ${INCLUDE_DIR}/textureManager.hpp

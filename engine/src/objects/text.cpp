@@ -1,43 +1,88 @@
 #include "text.hpp"
 
+#include <iostream>
+
 #include "global.hpp"
-#include "engine.hpp" // TODO: remove
+#include "SDL2/SDL_ttf.h"
 
-void Text::_updateTexture(void)
+namespace font
 {
-  SDL_DestroyTexture(_texture);
+  Font *open(std::string path, int size)
+  {
+    Font *font = TTF_OpenFont(path.c_str(), size);
 
-  if (_text.length())
-  {
-    _texture = engine::font->getTexture(_text, _size, _color);
-    engine::font->getSize(_text, _size, &_geometry->w, &_geometry->h);
+    if (!font)
+      std::cout << "could not open font" << TTF_GetError() << std::endl;
+
+    return font;
   }
-  else
+
+  void close(Font *font)
   {
-    _texture = nullptr;
+    TTF_CloseFont(font);
   }
 }
 
-Text::Text(std::string text, FontSize size, SDL_Color color, int x = 0, int y = 0) : Entity::Entity()
+void Text::updateTexture(void)
 {
-  _text = text;
-  _size = size;
-  _color = color;
+  if (_texture)
+    SDL_DestroyTexture(_texture);
 
-  _updateTexture();
+  if (!text.length())
+    return;
+
+  SDL_Surface *surf = TTF_RenderUTF8_Blended(font, text.c_str(), color);
+  if (!surf)
+  {
+    std::cout << "Failed to convert text to surface" << TTF_GetError() << std::endl;
+    return;
+  }
+
+  _texture = SDL_CreateTextureFromSurface(global::renderer, surf);
+  SDL_FreeSurface(surf);
+  if (!_texture)
+  {
+    std::cout << "Failed to convert text surface to texture" << SDL_GetError() << std::endl;
+    return;
+  }
+
+  if (TTF_SizeUTF8(font, text.c_str(), &_geometry->w, &_geometry->h))
+  {
+    std::cout << "Failed to get text size: " << TTF_GetError() << std::endl;
+    return;
+  }
+}
+
+Text::Text(std::string text, Font *font, int x, int y) : Entity::Entity()
+{
+  this->font = font;
+  this->text = text;
+  color = {255, 255, 255, 255};
+
+  updateTexture();
 
   _geometry->x = x;
   _geometry->y = y;
 }
 
-void Text::setColor(SDL_Color color)
+void Text::setColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
 {
-  SDL_DestroyTexture(_texture);
-  _texture = engine::font->getTexture(_text, _size, color);
+  Color c = this->color;
+
+  if (c.r == red && c.g == green && c.b == blue && c.a == alpha)
+    return;
+
+  this->color = {red, green, blue, alpha};
+  updateTexture();
 }
 
 int Text::getWidth(void) { return _geometry->w; }
 
-std::string Text::getText(void) { return _text; }
+std::string Text::getText(void) { return text; }
+
+void Text::getSize(int *w, int *h)
+{
+  TTF_SizeUTF8(font, text.c_str(), w, h);
+}
 
 Text::~Text() {}

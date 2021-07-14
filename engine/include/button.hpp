@@ -9,6 +9,7 @@ const Uint8 BUTTON_WIDTH = 150;
 const Uint8 BUTTON_HEIGHT = 30;
 
 class Text;
+typedef struct _TTF_Font Font;
 
 class Button final : public Entity
 {
@@ -17,9 +18,7 @@ private:
   SDL_Event *_event;
 
 public:
-  Button(std::string text, int x, int y);
-
-  Button(std::string text, int x, int y, SDL_Event *event);
+  Button(std::string text, Font *font, int x, int y, SDL_Event *event);
 
   void bindEvent(SDL_Event *event);
 

@@ -4,7 +4,6 @@
 
 #include "button.hpp"
 #include "globals.hpp"
-#include "input.hpp"
 #include "text.hpp"
 #include "engine.hpp" // TODO: remove
 
@@ -19,24 +18,26 @@ void Gui::menu(void)
 
   clear();
 
+  Font *fontt = font::open("res/joystix_monospace.ttf", 20);
+
   event = new SDL_Event;
   event->type = SDL_USEREVENT;
   event->user.code = START_EVENT;
-  addEntity(new Button("играть", X, Y - BUTTON_HEIGHT * 4, event));
+  addEntity(new Button("играть", fontt, X, Y - BUTTON_HEIGHT * 4, event));
 
   event = new SDL_Event;
   event->type = SDL_USEREVENT;
   event->user.code = RECORDS_EVENT;
-  addEntity(new Button("рекорды", X, Y - BUTTON_HEIGHT * 3, event));
+  addEntity(new Button("рекорды", fontt, X, Y - BUTTON_HEIGHT * 3, event));
 
   event = new SDL_Event;
   event->type = SDL_USEREVENT;
   event->user.code = RULE_EVENT;
-  addEntity(new Button("правила", X, Y - BUTTON_HEIGHT * 2, event));
+  addEntity(new Button("правила", fontt, X, Y - BUTTON_HEIGHT * 2, event));
 
   event = new SDL_Event;
   event->type = SDL_QUIT;
-  addEntity(new Button("выход", X, Y - BUTTON_HEIGHT, event));
+  addEntity(new Button("выход", fontt, X, Y - BUTTON_HEIGHT, event));
 }
 
 void Gui::rules(void)
@@ -49,16 +50,29 @@ void Gui::rules(void)
 
   clear();
 
-  engine::font->getSize(text[0], FONT_SMALL, &w, &h);
-  addEntity(new Text(text[0], FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - h * 2));
-  engine::font->getSize(text[1], FONT_SMALL, &w, &h);
-  addEntity(new Text(text[1], FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - h * 1));
-  engine::font->getSize(text[2], FONT_SMALL, &w, &h);
-  addEntity(new Text(text[2], FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2));
+  Font *fontt = font::open("res/joystix_monospace.ttf", 20);
+
+  Text *textt = new Text(text[0], fontt);
+  textt->getSize(&w, &h);
+  textt->setPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - h * 2);
+  textt->setColor(0, 0, 0, 255);
+  addEntity(textt);
+
+  textt = new Text(text[1], fontt);
+  textt->getSize(&w, &h);
+  textt->setPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - h * 1);
+  textt->setColor(0, 0, 0, 255);
+  addEntity(textt);
+
+  textt = new Text(text[2], fontt);
+  textt->getSize(&w, &h);
+  textt->setPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2);
+  textt->setColor(0, 0, 0, 255);
+  addEntity(textt);
 
   event->type = SDL_USEREVENT;
   event->user.code = MENU_EVENT;
-  addEntity(new Button("назад", X, (SCREEN_HEIGHT - h) / 2 + BUTTON_HEIGHT, event));
+  addEntity(new Button("назад", fontt, X, (SCREEN_HEIGHT - h) / 2 + BUTTON_HEIGHT, event));
 }
 
 void Gui::records(void)
@@ -88,20 +102,28 @@ void Gui::records(void)
       delete[] buf;
 
       text = rec->name + " " + std::to_string(rec->score);
-      engine::font->getSize(text, FONT_SMALL, &w, &h);
-      addEntity(new Text(text, FONT_SMALL, {0, 0, 0, 255}, (SCREEN_WIDTH - w) / 2, h * n));
+
+      Font *fontt = font::open("res/joystix_monospace.ttf", 20);
+
+      Text *textt = new Text(text, fontt);
+      textt->getSize(&w, &h);
+      textt->setPosition((SCREEN_WIDTH - w) / 2, h * n);
+      textt->setColor(0, 0, 0, 255);
+      addEntity(textt);
       n++;
     }
   }
 
+  Font *fontt = font::open("res/joystix_monospace.ttf", 20);
+
   event->type = SDL_USEREVENT;
   event->user.code = MENU_EVENT;
-  addEntity(new Button("назад", X + 100, Y, event));
+  addEntity(new Button("назад", fontt, X + 100, Y, event));
 
   event = new SDL_Event;
   event->type = SDL_USEREVENT;
   event->user.code = CLEAR_RECORDS_EVENT;
-  addEntity(new Button("очистить", X - 100, Y, event));
+  addEntity(new Button("очистить", fontt, X - 100, Y, event));
 }
 
 void Gui::p1_input(void)

@@ -3,8 +3,9 @@
 #include "global.hpp"
 #include "text.hpp"
 #include "engine.hpp" // TODO: remove
+#include "SDL2/SDL_ttf.h"
 
-Button::Button(std::string text, int x = 0, int y = 0, SDL_Event *event = nullptr) : Entity(0, 0, x, y)
+Button::Button(std::string text, Font *font, int x = 0, int y = 0, SDL_Event *event = nullptr) : Entity(0, 0, x, y)
 {
   int textW, textH;
 
@@ -13,8 +14,9 @@ Button::Button(std::string text, int x = 0, int y = 0, SDL_Event *event = nullpt
   _geometry->w = BUTTON_WIDTH;
   _geometry->h = BUTTON_HEIGHT;
 
-  engine::font->getSize(text, FONT_SMALL, &textW, &textH);
-  _text = new Text(text, FONT_SMALL, {255, 0, 0, 255}, x + (_geometry->w - textW) / 2, y + (_geometry->h - textH) / 2);
+  _text = new Text(text, font);
+  _text->getSize(&textW, &textH);
+  _text->setPosition(x + (_geometry->w - textW) / 2, y + (_geometry->h - textH) / 2);
 }
 
 void Button::bindEvent(SDL_Event *event) { _event = event; }
@@ -29,14 +31,14 @@ void Button::process(void)
 
   if (xRange && yRange)
   {
-    _text->setColor({255, 0, 0, 255});
+    _text->setColor(255, 0, 0, 255);
     // if (_event && events->leftClick()) // FIXME: eventSubSystem depreceated
     if (_event && (SDL_GetMouseState(nullptr, nullptr) & SDL_BUTTON(SDL_BUTTON_LEFT)))
       SDL_PushEvent(_event);
   }
   else
   {
-    _text->setColor({0, 0, 0, 255});
+    _text->setColor(0, 0, 0, 255);
   }
 }
 

@@ -3,10 +3,8 @@
 
 #include <string>
 
-#include "input.hpp"
 #include "action.hpp"
 #include "eventSubSystem.hpp"
-#include "font.hpp"
 #include "gui.hpp"
 
 const int SCREEN_WIDTH = 1280; // TODO: remove
