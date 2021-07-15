@@ -70,27 +70,30 @@ public:
   void process(void) override { _line->process(_base->getHealth()); }
 };
 
-// class MoneyBar final : public Entity // FIXME: Text inheritance
-// {
-// private:
-//   Base *_base;
+class MoneyBar final : public Text
+{
+private:
+  Base *base;
 
-// public:
-//   MoneyBar(Base *base) : Entity::Entity() { _base = base; }
+public:
+  MoneyBar(Base *base, Font *font) : Text("", font, 0, 0)
+  {
+    this->base = base;
 
-//   void process(void) override
-//   {
-//     std::string text = std::to_string(_base->getMoney()) + '$';
-//     SDL_DestroyTexture(_texture);
-//     _texture = engine::font->getTexture(text, FONT_MEDIUM, {255, 0, 0, 255});
-//     engine::font->getSize(text, FONT_MEDIUM, &_geometry->w, &_geometry->h);
+    setColor(255, 0, 0, 255);
+  }
 
-//     if (_base->getFlip())
-//       setPosition(SCREEN_WIDTH - _geometry->w, _geometry->h);
-//     else
-//       setPosition(0, _geometry->h);
-//   }
-// };
+  void process(void) override
+  {
+    text = std::to_string(base->getMoney()) + '$';
+    updateTexture();
+
+    if (base->getFlip())
+      setPosition(SCREEN_WIDTH - _geometry->w, _geometry->h);
+    else
+      setPosition(0, _geometry->h);
+  }
+};
 
 void Base::_defeat(void)
 {
@@ -225,7 +228,9 @@ Base::Base(int x, Flip flip) : Unit::Unit()
   _center->y = _geometry->y + _geometry->h / 2 + 45;
 
   gui->addEntity(new HealthBar(this));
-  // gui->addEntity(new MoneyBar(this));
+
+  Font *fontt = font::open("res/joystix_monospace.ttf", 26);
+  gui->addEntity(new MoneyBar(this, fontt));
 }
 
 Unit *Base::keyCheck(void)
