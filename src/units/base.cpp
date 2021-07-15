@@ -188,8 +188,8 @@ void Base::_defeat(void)
   textt->setPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 100);
   gui->addEntity(textt);
 
-  gui->addEntity(new Button("в меню", fontt, (SCREEN_WIDTH - BUTTON_WIDTH) / 2,
-                            (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2 + BUTTON_HEIGHT, []()
+  gui->addEntity(new Button("в меню", fontt, 150, 30, (SCREEN_WIDTH - 150) / 2,
+                            (SCREEN_HEIGHT - 30) / 2 + 30, []()
                             {
                               action->clear();
                               gui->menu();

@@ -6,9 +6,6 @@
 #include "type.hpp"
 #include "entity.hpp"
 
-const uint8_t BUTTON_WIDTH = 150; // TODO: remove
-const uint8_t BUTTON_HEIGHT = 30; // TODO: remove
-
 namespace font
 {
   Font *open(std::string path, int size);
@@ -47,7 +44,7 @@ private:
   void (*event)(void);
 
 public:
-  Button(std::string text, Font *font, int x, int y, void (*event)(void));
+  Button(std::string text, Font *font, int w, int h, int x = 0, int y = 0, void (*event)(void) = nullptr);
 
   void process(void) override;
 

@@ -9,8 +9,8 @@
 
 #include "base.hpp"
 
-static const int X = (SCREEN_WIDTH - BUTTON_WIDTH) / 2;
-static const int Y = (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2;
+static const int X = (SCREEN_WIDTH - 150) / 2;
+static const int Y = (SCREEN_HEIGHT - 30) / 2;
 
 Gui::Gui() : Layer() {}
 
@@ -20,19 +20,19 @@ void Gui::menu(void)
 
   Font *fontt = font::open("res/joystix_monospace.ttf", 20);
 
-  addEntity(new Button("играть", fontt, X, Y - BUTTON_HEIGHT * 4, []()
+  addEntity(new Button("играть", fontt, 150, 30, X, Y - 30 * 4, []()
                        {
                          gui->clear();
                          action->start();
                        }));
 
-  addEntity(new Button("рекорды", fontt, X, Y - BUTTON_HEIGHT * 3, []()
+  addEntity(new Button("рекорды", fontt, 150, 30, X, Y - 30 * 3, []()
                        { gui->records(); }));
 
-  addEntity(new Button("правила", fontt, X, Y - BUTTON_HEIGHT * 2, []()
+  addEntity(new Button("правила", fontt, 150, 30, X, Y - 30 * 2, []()
                        { gui->rules(); }));
 
-  addEntity(new Button("выход", fontt, X, Y - BUTTON_HEIGHT, []()
+  addEntity(new Button("выход", fontt, 150, 30, X, Y - 30, []()
                        { events::quit(); }));
 }
 
@@ -65,7 +65,7 @@ void Gui::rules(void)
   textt->setColor(0, 0, 0, 255);
   addEntity(textt);
 
-  addEntity(new Button("назад", fontt, X, (SCREEN_HEIGHT - h) / 2 + BUTTON_HEIGHT, []()
+  addEntity(new Button("назад", fontt, 150, 30, X, (SCREEN_HEIGHT - h) / 2 + 30, []()
                        { gui->menu(); }));
 }
 
@@ -109,10 +109,10 @@ void Gui::records(void)
 
   Font *fontt = font::open("res/joystix_monospace.ttf", 20);
 
-  addEntity(new Button("назад", fontt, X + 100, Y, []()
+  addEntity(new Button("назад", fontt, 150, 30, X + 100, Y, []()
                        { gui->menu(); }));
 
-  addEntity(new Button("очистить", fontt, X - 100, Y, []()
+  addEntity(new Button("очистить", fontt, 150, 30, X - 100, Y, []()
                        { remove("records.bin"); }));
 }
 

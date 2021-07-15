@@ -6,15 +6,12 @@
 #include "engine.hpp" // TODO: remove
 #include "SDL2/SDL_ttf.h"
 
-Button::Button(std::string text, Font *font, int x = 0, int y = 0, void (*event)(void) = nullptr) : Entity(0, 0, x, y)
+Button::Button(std::string text, Font *font, int w, int h, int x, int y, void (*event)(void)) : Entity(w, h, x, y)
 {
   std::cout << "new button" << std::endl;
   int textW, textH;
 
   this->event = event;
-
-  _geometry->w = BUTTON_WIDTH;
-  _geometry->h = BUTTON_HEIGHT;
 
   _text = new Text(text, font);
   _text->getSize(&textW, &textH);
@@ -26,8 +23,8 @@ void Button::process(void)
   SDL_Point *mousePos = new SDL_Point;
   SDL_GetMouseState(&mousePos->x, &mousePos->y);
   bool xRange = mousePos->x > _geometry->x &&
-                mousePos->x<_geometry->x + BUTTON_WIDTH, yRange = mousePos->y> _geometry->y &&
-                mousePos->y < _geometry->y + BUTTON_HEIGHT;
+                mousePos->x<_geometry->x + _geometry->w, yRange = mousePos->y> _geometry->y &&
+                mousePos->y < _geometry->y + _geometry->h;
 
   if (xRange && yRange)
   {
