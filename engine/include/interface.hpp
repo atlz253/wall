@@ -32,7 +32,7 @@ public:
 
   std::string getText(void);
 
-  void getSize(int *w, int *h); // TODO: rewrite
+  void getSize(int *w, int *h);
 
   ~Text();
 };
