@@ -3,10 +3,8 @@
 
 #include <string>
 
+#include "type.hpp"
 #include "entity.hpp"
-
-typedef struct _TTF_Font Font;
-typedef struct SDL_Color Color;
 
 namespace font
 {
@@ -19,7 +17,7 @@ class Text : public Entity
 {
 protected:
   Font *font;
-  Color color;
+  Color *color;
 
   std::string text;
 

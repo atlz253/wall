@@ -8,11 +8,12 @@
 #include "knight.hpp"
 #include "random.hpp"
 #include "text.hpp"
+#include "keyboard.hpp"
 
 class HealthLine final : public Entity
 {
 private:
-  SDL_RendererFlip _flip;
+  Flip _flip;
   const unsigned short int _HPpoint = BASE_HP / (111 * 3);
 
 public:
@@ -95,7 +96,6 @@ public:
 void Base::_defeat(void)
 {
   int w, h;
-  SDL_Event *event;
   std::string text = "Игрок ";
   struct record *rec = new record, *tmp = new record;
   std::ifstream ifile("records.bin", std::ios::binary);
@@ -190,17 +190,18 @@ void Base::_defeat(void)
   gui->addEntity(textt);
 
   gui->addEntity(new Button("в меню", fontt, (SCREEN_WIDTH - BUTTON_WIDTH) / 2,
-                            (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2 + BUTTON_HEIGHT, []() {
+                            (SCREEN_HEIGHT - BUTTON_HEIGHT) / 2 + BUTTON_HEIGHT, []()
+                            {
                               action->clear();
                               gui->menu();
-                              }));
+                            }));
 
   rename("_tmp", "records.bin");
   ofile.close();
   ifile.close();
 }
 
-Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
+Base::Base(int x, Flip flip) : Unit::Unit()
 {
   _money = 300;
   _speed = 0;
@@ -215,7 +216,7 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
   setSize(144 * 2, 128 * 2);
   setPosition(x, 270);
 
-  _center = new SDL_Point;
+  _center = new Point;
   if (_flip)
     _center->x = _geometry->x + _geometry->w / 2 - 60;
   else
@@ -228,10 +229,10 @@ Base::Base(int x, SDL_RendererFlip flip) : Unit::Unit()
 
 Unit *Base::keyCheck(void)
 {
-  const Uint8 *keysState = SDL_GetKeyboardState(nullptr);
+  keys state = keyboard::state(nullptr);
 
   if (!_speed && _money >= KNIGHT_COST &&
-      ((_flip && keysState[SDL_SCANCODE_RIGHTBRACKET]) || (!_flip && keysState[SDL_SCANCODE_Q])))
+      ((_flip && state[SCANCODE_RIGHTBRACKET]) || (!_flip && state[SCANCODE_Q])))
   {
     _speed = 100;
     _money -= 100;
@@ -255,11 +256,11 @@ int Base::getFront(void)
     return _center->x + _frontRange;
 }
 
-Uint16 Base::getMoney(void) { return _money; }
+uint16_t Base::getMoney(void) { return _money; }
 
-void Base::addMoney(Uint16 money) { _money += money; }
+void Base::addMoney(uint16_t money) { _money += money; }
 
-void Base::setDamage(Uint16 damage)
+void Base::setDamage(uint16_t damage)
 {
   if (!_hp)
   {

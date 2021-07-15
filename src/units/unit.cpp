@@ -8,7 +8,6 @@ Unit::Unit() : RotateEntity::RotateEntity() { _id = ++_unitsCount; }
 
 void Unit::process()
 {
-
 }
 
 void Unit::process(Unit *next) { Unit::process(); }
@@ -27,13 +26,13 @@ int Unit::getBack(void) { return 0; }
 
 int Unit::getFront(void) { return 0; }
 
-Uint16 Unit::getHealth(void) { return _hp; }
+uint16_t Unit::getHealth(void) { return _hp; }
 
-Uint32 Unit::getId(void) { return _id; }
+uint32_t Unit::getId(void) { return _id; }
 
-Uint16 Unit::getReward(void) { return 0; }
+uint16_t Unit::getReward(void) { return 0; }
 
-Uint32 Unit::getCount(void) { return _unitsCount; }
+uint32_t Unit::getCount(void) { return _unitsCount; }
 
 void Unit::clearCount(void) { _unitsCount = 0; }
 

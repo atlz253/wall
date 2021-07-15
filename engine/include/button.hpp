@@ -3,13 +3,13 @@
 
 #include <string>
 
+#include "type.hpp"
 #include "entity.hpp"
 
-const Uint8 BUTTON_WIDTH = 150;
-const Uint8 BUTTON_HEIGHT = 30;
+const uint8_t BUTTON_WIDTH = 150;
+const uint8_t BUTTON_HEIGHT = 30;
 
 class Text;
-typedef struct _TTF_Font Font;
 
 class Button final : public Entity
 {

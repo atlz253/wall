@@ -1,7 +1,6 @@
 #ifndef LAYER
 #define LAYER
 
-#include <list>
 #include <queue>
 
 class Entity;

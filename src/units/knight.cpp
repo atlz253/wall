@@ -17,7 +17,7 @@ const std::string knightRun = "res/Knight/noBKG_KnightRun_strip.png",
                   knightIdle = "res/Knight/noBKG_KnightIdle_strip.png",
                   knightDeath = "res/Knight/noBKG_KnightDeath_strip.png";
 
-Knight::Knight(int x, SDL_RendererFlip flip) : Unit::Unit()
+Knight::Knight(int x, Flip flip) : Unit::Unit()
 {
   _frame = 0;
   _frameCount = 0;
@@ -39,14 +39,14 @@ Knight::Knight(int x, SDL_RendererFlip flip) : Unit::Unit()
   else
     setPosition(x - 48, 441);
 
-  _tile = new SDL_Rect;
+  _tile = new Rect;
   _tile->w = 48;
   _tile->h = 48;
   _tile->x = runFrames[0];
   _tile->y = 0;
 
   _flip = flip;
-  _center = new SDL_Point;
+  _center = new Point;
   _center->y = _geometry->y + _geometry->h / 2 - 10;
   if (_flip)
     _center->x = _geometry->x + _geometry->w / 2 + 5;
@@ -60,7 +60,7 @@ void Knight::process(Unit *next)
 
   if (!_hp)
   {
-    if (_texture !=  getTexture(knightDeath))
+    if (_texture != getTexture(knightDeath))
     {
       _isRuning = false;
       _frameCount = 0;
@@ -170,4 +170,4 @@ int Knight::getFront(void)
     return _center->x + _frontRange;
 }
 
-Uint16 Knight::getReward(void) { return random(0, KNIGHT_COST + 25); }
+uint16_t Knight::getReward(void) { return random(0, KNIGHT_COST + 25); }

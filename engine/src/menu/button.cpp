@@ -43,7 +43,10 @@ void Button::process(void)
   }
 }
 
-void Button::render(void) { _text->render(); }
+void Button::render(void)
+{
+  _text->render();
+}
 
 Button::~Button()
 {

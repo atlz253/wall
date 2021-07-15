@@ -105,19 +105,19 @@ void Action::_baseRenderer(void)
 
   // if (events->getAction()) // FIXME: action stop
   // {
-    _leftBase->process();
-    tmp = _leftBase->keyCheck();
-    if (tmp)
-      _leftTeam->push(tmp);
+  _leftBase->process();
+  tmp = _leftBase->keyCheck();
+  if (tmp)
+    _leftTeam->push(tmp);
   // }
   _leftBase->render();
 
   // if (events->getAction())
   // {
-    _rightBase->process();
-    tmp = _rightBase->keyCheck();
-    if (tmp)
-      _rightTeam->push(tmp);
+  _rightBase->process();
+  tmp = _rightBase->keyCheck();
+  if (tmp)
+    _rightTeam->push(tmp);
   // }
   _rightBase->render();
 }
@@ -127,7 +127,7 @@ void Action::start(void)
   std::cout << "Action: строим укрепточки" << std::endl;
 
   _leftBase = new Base(-96);
-  _rightBase = new Base(1088, SDL_FLIP_HORIZONTAL);
+  _rightBase = new Base(1088, FLIP_HORIZONTAL);
 }
 
 void Action::renderer(void)

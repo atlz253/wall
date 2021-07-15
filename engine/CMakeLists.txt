@@ -42,6 +42,7 @@ set(
     ${INCLUDE_DIR}/event.hpp
     ${INCLUDE_DIR}/layer.hpp
     ${INCLUDE_DIR}/text.hpp
+    ${INCLUDE_DIR}/type.hpp
     ${SRC_DIR}/objects/textureManager.hpp
     ${SRC_DIR}/global.hpp
 )

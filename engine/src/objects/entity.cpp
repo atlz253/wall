@@ -14,7 +14,9 @@ SDL_Texture *Entity::getTexture(std::string path)
 Entity::Entity()
 {
   std::cout << "Entity: создание сущности" << std::endl;
-  _geometry = new SDL_Rect;
+
+  _tile = nullptr;
+  _geometry = new Rect;
 }
 
 Entity::Entity(int w, int h, int x, int y) : Entity()
@@ -41,7 +43,7 @@ Entity::Entity(Entity *&entity, int x, int y) : Entity::Entity()
 
   if (entity->_tile)
   {
-    _tile = new SDL_Rect;
+    _tile = new Rect;
     _tile->h = entity->_tile->h;
     _tile->w = entity->_tile->w;
     _tile->x = entity->_tile->x;
@@ -64,7 +66,7 @@ void Entity::setPosition(int x, int y)
 void Entity::setTile(int x, int y, int w, int h)
 {
   if (!_tile)
-    _tile = new SDL_Rect;
+    _tile = new Rect;
 
   _tile->x = x;
   _tile->y = y;
@@ -76,8 +78,26 @@ void Entity::process(void) {}
 
 void Entity::render(void)
 {
-  if (_texture && SDL_RenderCopy(global::renderer, _texture, _tile, _geometry))
+  SDL_Rect *geometry = new SDL_Rect, *tile = nullptr;
+  geometry->h = _geometry->h;
+  geometry->w = _geometry->w;
+  geometry->x = _geometry->x;
+  geometry->y = _geometry->y;
+
+  if (_tile)
+  {
+    tile = new SDL_Rect;
+    tile->h = _tile->h;
+    tile->w = _tile->w;
+    tile->x = _tile->x;
+    tile->y = _tile->y;
+  }
+
+  if (_texture && SDL_RenderCopy(global::renderer, _texture, tile, geometry))
     std::cout << "SdlWindow: ошибка рендера:" << SDL_GetError() << std::endl;
+
+  delete tile;
+  delete geometry;
 }
 
 Entity::~Entity()

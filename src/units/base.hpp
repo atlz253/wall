@@ -10,32 +10,32 @@
 class Base final : public Unit
 {
 private:
-    Uint16 _money;
-    Uint8 _earnSpeed;
-    std::string name;
+  uint16_t _money;
+  uint8_t _earnSpeed;
+  std::string name;
 
-    void _defeat(void);
+  void _defeat(void);
 
 public:
-    Base(int x = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
+  Base(int x = 0, Flip flip = FLIP_NONE);
 
-    Unit *keyCheck(void);
+  Unit *keyCheck(void);
 
-    /*
+  /*
       Получение точки затылка юнита
   */
-    int getBack(void) override;
+  int getBack(void) override;
 
-    /*
+  /*
       Получение лицевой точки юнита
   */
-    int getFront(void) override;
+  int getFront(void) override;
 
-    Uint16 getMoney(void);
+  uint16_t getMoney(void);
 
-    void addMoney(Uint16 money);
+  void addMoney(uint16_t money);
 
-    void setDamage(Uint16 damage) override;
+  void setDamage(uint16_t damage) override;
 
-    void process(void) override;
+  void process(void) override;
 };

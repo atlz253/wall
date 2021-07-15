@@ -31,7 +31,7 @@ void Text::updateTexture(void)
   if (!text.length())
     return;
 
-  SDL_Surface *surf = TTF_RenderUTF8_Blended(font, text.c_str(), color);
+  SDL_Surface *surf = TTF_RenderUTF8_Blended(font, text.c_str(), *color);
   if (!surf)
   {
     std::cout << "Failed to convert text to surface" << TTF_GetError() << std::endl;
@@ -46,18 +46,24 @@ void Text::updateTexture(void)
     return;
   }
 
-  if (TTF_SizeUTF8(font, text.c_str(), &_geometry->w, &_geometry->h))
+  int w, h;
+  if (TTF_SizeUTF8(font, text.c_str(), &w, &h))
   {
     std::cout << "Failed to get text size: " << TTF_GetError() << std::endl;
     return;
   }
+
+  _geometry->w = w;
+  _geometry->h = h;
 }
 
 Text::Text(std::string text, Font *font, int x, int y) : Entity::Entity()
 {
   this->font = font;
   this->text = text;
-  color = {255, 255, 255, 255};
+
+  color = new SDL_Color;
+  setColor(255, 255, 255, 255);
 
   updateTexture();
 
@@ -67,12 +73,12 @@ Text::Text(std::string text, Font *font, int x, int y) : Entity::Entity()
 
 void Text::setColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
 {
-  Color c = this->color;
+  Color *c = this->color;
 
-  if (c.r == red && c.g == green && c.b == blue && c.a == alpha)
+  if (c->r == red && c->g == green && c->b == blue && c->a == alpha)
     return;
 
-  this->color = {red, green, blue, alpha};
+  *this->color = {red, green, blue, alpha};
   updateTexture();
 }
 
@@ -85,4 +91,7 @@ void Text::getSize(int *w, int *h)
   TTF_SizeUTF8(font, text.c_str(), w, h);
 }
 
-Text::~Text() {}
+Text::~Text()
+{
+  delete color;
+}

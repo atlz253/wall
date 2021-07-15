@@ -12,51 +12,51 @@
 class Unit : public RotateEntity
 {
 protected:
-    Uint32 _id;                // уникальный номер юнита
-    Uint16 _hp;                // количество жизней юнита
-    Uint16 _speed;             // скорость юнита
-    Uint16 _damage;            // урон юнита
-    Uint16 _backRange;         // радиус действия сзади
-    Uint16 _frontRange;        // радиус действия спереди
-    static Uint32 _unitsCount; // количество юнитов за всю игру
+  uint32_t _id;                // уникальный номер юнита
+  uint16_t _hp;                // количество жизней юнита
+  uint16_t _speed;             // скорость юнита
+  uint16_t _damage;            // урон юнита
+  uint16_t _backRange;         // радиус действия сзади
+  uint16_t _frontRange;        // радиус действия спереди
+  static uint32_t _unitsCount; // количество юнитов за всю игру
 
 public:
-    Unit();
+  Unit();
 
-    /*
+  /*
       Метод вызывается при каждой перерисовке кадра перед отрисовкой на экран.
       Здесь происходит изменение состояния и параметров сущности.
   */
-    void process() override;
+  void process(void) override;
 
-    virtual void process(Unit *next);
+  virtual void process(Unit *next);
 
-    /*
+  /*
       Получение точки затылка юнита
   */
-    virtual int getBack(void);
+  virtual int getBack(void);
 
-    /*
+  /*
       Получение лицевой точки юнита
   */
-    virtual int getFront(void);
+  virtual int getFront(void);
 
-    Uint16 getHealth(void);
+  uint16_t getHealth(void);
 
-    Uint32 getId(void);
+  uint32_t getId(void);
 
-    virtual Uint16 getReward(void);
+  virtual uint16_t getReward(void);
 
-    Uint32 getCount(void);
+  uint32_t getCount(void);
 
-    void clearCount(void);
+  void clearCount(void);
 
-    /*
+  /*
       Получение урона
   */
-    virtual void setDamage(Uint16 damage);
+  virtual void setDamage(uint16_t damage);
 
-    ~Unit();
+  ~Unit();
 };
 
 #endif
