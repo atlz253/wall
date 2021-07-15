@@ -1,9 +1,8 @@
-#include "button.hpp"
+#include "interface.hpp"
 
 #include <iostream>
 
 #include "global.hpp"
-#include "text.hpp"
 #include "engine.hpp" // TODO: remove
 #include "SDL2/SDL_ttf.h"
 

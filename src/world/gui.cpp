@@ -3,9 +3,8 @@
 #include <fstream>
 #include <iostream>
 
-#include "button.hpp"
 #include "globals.hpp"
-#include "text.hpp"
+#include "interface.hpp"
 #include "event.hpp"
 
 #include "base.hpp"

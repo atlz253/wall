@@ -50,12 +50,11 @@ set(
 
 set(
     HPP_FILES
-    ${INCLUDE_DIR}/button.hpp
     ${INCLUDE_DIR}/engine.hpp
     ${INCLUDE_DIR}/entity.hpp
     ${INCLUDE_DIR}/event.hpp
+    ${INCLUDE_DIR}/interface.hpp
     ${INCLUDE_DIR}/layer.hpp
-    ${INCLUDE_DIR}/text.hpp
     ${INCLUDE_DIR}/type.hpp
     ${SRC_DIR}/objects/textureManager.hpp
     ${SRC_DIR}/global.hpp

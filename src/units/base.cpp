@@ -3,11 +3,10 @@
 #include <fstream>
 #include <iostream>
 
-#include "button.hpp"
 #include "globals.hpp"
 #include "knight.hpp"
 #include "random.hpp"
-#include "text.hpp"
+#include "interface.hpp"
 #include "keyboard.hpp"
 
 class HealthLine final : public Entity
