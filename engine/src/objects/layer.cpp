@@ -4,6 +4,8 @@
 
 #include "entity.hpp"
 
+std::queue<Entity *> *tmpq = nullptr;
+
 Layer::Layer() { _queue = new std::queue<Entity *>; }
 
 void Layer::addEntity(Entity *entity) { _queue->push(entity); }
@@ -12,18 +14,23 @@ void Layer::process(void) {}
 
 void Layer::renderer(void)
 {
-  std::queue<Entity *> *_tmp = new std::queue<Entity *>;
+  tmpq = new std::queue<Entity *>;
 
   while (!_queue->empty())
   {
     _queue->front()->process();
-    _queue->front()->render();
-    _tmp->push(_queue->front());
-    _queue->pop();
+
+    if (!_queue->empty())
+    {
+      _queue->front()->render();
+      tmpq->push(_queue->front());
+      _queue->pop();
+    }
   }
 
   delete _queue;
-  _queue = _tmp;
+  _queue = tmpq;
+  tmpq = nullptr;
 }
 
 void Layer::clear(void)
@@ -32,6 +39,12 @@ void Layer::clear(void)
   {
     delete _queue->front();
     _queue->pop();
+  }
+
+  while (tmpq && !tmpq->empty())
+  {
+    delete tmpq->front();
+    tmpq->pop();
   }
 }
 
