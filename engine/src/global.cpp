@@ -4,6 +4,6 @@
 
 namespace global
 {
-    SDL_Window *window = nullptr; // TODO: try initialization in engine::init()
+    SDL_Window *window = nullptr;
     SDL_Renderer *renderer = nullptr;
 }
