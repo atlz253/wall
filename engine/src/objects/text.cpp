@@ -59,7 +59,6 @@ void Text::updateTexture(void)
 
 Text::Text(std::string text, Font *font, int x, int y) : Entity()
 {
-  std::cout << "text" << std::endl;
   this->font = font;
   this->text = text;
 
@@ -68,7 +67,6 @@ Text::Text(std::string text, Font *font, int x, int y) : Entity()
 
   _geometry->x = x;
   _geometry->y = y;
-  std::cout << "created" << std::endl;
 }
 
 void Text::setColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
