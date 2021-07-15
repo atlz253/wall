@@ -41,7 +41,6 @@ set(
     ${SRC_DIR}/menu/button.cpp
     ${SRC_DIR}/objects/entity.cpp
     ${SRC_DIR}/objects/layer.cpp
-    ${SRC_DIR}/objects/rotateEntity.cpp
     ${SRC_DIR}/objects/text.cpp
     ${SRC_DIR}/objects/textureManager.cpp
     ${SRC_DIR}/engine.cpp

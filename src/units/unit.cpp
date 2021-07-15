@@ -4,7 +4,7 @@
 
 unsigned int Unit::_unitsCount = 0;
 
-Unit::Unit() : RotateEntity::RotateEntity() { _id = ++_unitsCount; }
+Unit::Unit() : Entity() { _id = ++_unitsCount; }
 
 void Unit::process()
 {

@@ -9,7 +9,7 @@
 /*
     Базовый класс игрового юнита
 */
-class Unit : public RotateEntity
+class Unit : public Entity
 {
 protected:
   uint32_t _id;                // уникальный номер юнита

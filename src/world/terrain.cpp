@@ -14,12 +14,17 @@ Terrain::Terrain()
   std::cout << "Terrain: инициализация переднего плана" << std::endl;
 
   std::cout << "Terrain: создание левого острова" << std::endl;
-  _queue->push(new RotateEntity(tile, 96 * 2, 112 * 2, 0, 496, 96, 112, 32, 176, FLIP_HORIZONTAL));
+  tmp = new Entity(tile, 96 * 2, 112 * 2, 0, 496, 96, 112, 32, 176);
+  tmp->setFlip(FLIP_HORIZONTAL);
+  _queue->push(tmp);
 
   std::cout << "Terrain: создание правого острова" << std::endl;
-  _queue->push(new RotateEntity(tile, 48 * 2, 48 * 2, 1024, 624, 48, 48, 656, 240, FLIP_HORIZONTAL));
+  tmp = new Entity(tile, 48 * 2, 48 * 2, 1024, 624, 48, 48, 656, 240);
+  tmp->setFlip(FLIP_HORIZONTAL);
   _queue->push(new Entity(tile, 48 * 2, 48 * 2, 1184, 496, 48, 48, 192, 176));
-  _queue->push(new RotateEntity(tile, 48 * 2, 64 * 2, 1088, 496, 48, 64, 512, 176, FLIP_HORIZONTAL));
+  tmp = new Entity(tile, 48 * 2, 64 * 2, 1088, 496, 48, 64, 512, 176);
+  tmp->setFlip(FLIP_HORIZONTAL);
+  _queue->push(tmp);
 
   std::cout << "Terrain: строительство мостов" << std::endl;
   /* левые части мостов */

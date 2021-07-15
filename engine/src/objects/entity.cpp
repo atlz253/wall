@@ -16,7 +16,12 @@ Entity::Entity()
   std::cout << "Entity: создание сущности" << std::endl;
 
   _tile = nullptr;
+  _texture = nullptr;
   _geometry = new Rect;
+
+  _angle = 0;
+  _flip = FLIP_NONE;
+  _center = nullptr;
 }
 
 Entity::Entity(int w, int h, int x, int y) : Entity()
@@ -49,6 +54,16 @@ Entity::Entity(Entity *&entity, int x, int y) : Entity::Entity()
     _tile->x = entity->_tile->x;
     _tile->y = entity->_tile->y;
   }
+
+  setFlip(entity->_flip);
+  setAngle(entity->_angle);
+
+  if (entity->_center)
+  {
+    _center = new Point;
+    _center->x = entity->_center->x;
+    _center->y = entity->_center->y;
+  }
 }
 
 void Entity::setSize(int w, int h)
@@ -74,10 +89,37 @@ void Entity::setTile(int x, int y, int w, int h)
   _tile->h = h;
 }
 
+void Entity::setAngle(const double angle)
+{
+  _angle = angle;
+}
+
+void Entity::setCenter(const int x, const int y)
+{
+  if (!_center)
+    _center = new Point;
+
+  _center->x = _geometry->x + x;
+  _center->y = _geometry->y + y;
+}
+
+void Entity::setFlip(const Flip flip)
+{
+  _flip = flip;
+}
+
+Flip Entity::getFlip(void)
+{
+  return _flip;
+}
+
 void Entity::process(void) {}
 
 void Entity::render(void)
 {
+  if (!_texture)
+    return;
+
   SDL_Rect *geometry = new SDL_Rect, *tile = nullptr;
   geometry->h = _geometry->h;
   geometry->w = _geometry->w;
@@ -93,9 +135,41 @@ void Entity::render(void)
     tile->y = _tile->y;
   }
 
-  if (_texture && SDL_RenderCopy(global::renderer, _texture, tile, geometry))
-    std::cout << "SdlWindow: ошибка рендера:" << SDL_GetError() << std::endl;
+  if (_flip || _angle)
+  {
+    SDL_RendererFlip flip;
 
+    switch (_flip)
+    {
+    case FLIP_NONE:
+      flip = SDL_FLIP_NONE;
+      break;
+    case FLIP_HORIZONTAL:
+      flip = SDL_FLIP_HORIZONTAL;
+      break;
+    case FLIP_VERTICAL:
+      flip = SDL_FLIP_VERTICAL;
+      break;
+    }
+
+    SDL_Point *center = nullptr;
+    if (_center)
+    {
+      center = new SDL_Point;
+      center->x = _center->x;
+      center->y = _center->y;
+    }
+
+    if (SDL_RenderCopyEx(global::renderer, _texture, tile, geometry, _angle, center, flip))
+      std::cout << "SdlWindow: ошибка рендера:" << SDL_GetError() << std::endl;
+    
+    delete center;
+  }
+  else if (SDL_RenderCopy(global::renderer, _texture, tile, geometry))
+  {
+    std::cout << "SdlWindow: ошибка рендера:" << SDL_GetError() << std::endl;
+  }
+  
   delete tile;
   delete geometry;
 }
@@ -103,5 +177,6 @@ void Entity::render(void)
 Entity::~Entity()
 {
   std::cout << "Entity: удаление геометрии сущности" << std::endl;
+  delete _center;
   delete _geometry;
 }

@@ -41,7 +41,7 @@ public:
   }
 };
 
-class HealthBar final : public RotateEntity
+class HealthBar final : public Entity
 {
 private:
   Base *_base;
@@ -49,7 +49,7 @@ private:
   HealthLine *_line;
 
 public:
-  HealthBar(Base *base) : RotateEntity::RotateEntity()
+  HealthBar(Base *base) : Entity()
   {
     _base = base;
     _flip = base->getFlip();

@@ -57,18 +57,18 @@ void Text::updateTexture(void)
   _geometry->h = h;
 }
 
-Text::Text(std::string text, Font *font, int x, int y) : Entity::Entity()
+Text::Text(std::string text, Font *font, int x, int y) : Entity()
 {
+  std::cout << "text" << std::endl;
   this->font = font;
   this->text = text;
 
-  color = new SDL_Color;
+  color = new Color;
   setColor(255, 255, 255, 255);
-
-  updateTexture();
 
   _geometry->x = x;
   _geometry->y = y;
+  std::cout << "created" << std::endl;
 }
 
 void Text::setColor(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha)
