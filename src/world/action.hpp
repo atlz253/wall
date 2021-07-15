@@ -15,6 +15,8 @@ private:
   std::queue<Unit *> *_rightTeam;
   std::queue<Unit *> *_deathQueue;
 
+  bool action;
+
   Base *_leftBase;
   Base *_rightBase;
 
@@ -26,6 +28,8 @@ public:
   Action();
 
   void start(void);
+
+  void stop(void);
 
   void renderer(void) override;
 

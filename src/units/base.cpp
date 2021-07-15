@@ -195,6 +195,8 @@ void Base::_defeat(void)
                               gui->menu();
                             }));
 
+  action->stop();
+
   rename("_tmp", "records.bin");
   ofile.close();
   ifile.close();

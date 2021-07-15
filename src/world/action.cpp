@@ -12,6 +12,8 @@ Action::Action()
   _rightTeam = new std::queue<Unit *>;
   _deathQueue = new std::queue<Unit *>;
 
+  action = false;
+
   _leftBase = nullptr;
   _rightBase = nullptr;
 }
@@ -103,22 +105,22 @@ void Action::_baseRenderer(void)
 {
   Unit *tmp = nullptr;
 
-  // if (events->getAction()) // FIXME: action stop
-  // {
-  _leftBase->process();
-  tmp = _leftBase->keyCheck();
-  if (tmp)
-    _leftTeam->push(tmp);
-  // }
+  if (action)
+  {
+    _leftBase->process();
+    tmp = _leftBase->keyCheck();
+    if (tmp)
+      _leftTeam->push(tmp);
+  }
   _leftBase->render();
 
-  // if (events->getAction())
-  // {
-  _rightBase->process();
-  tmp = _rightBase->keyCheck();
-  if (tmp)
-    _rightTeam->push(tmp);
-  // }
+  if (action)
+  {
+    _rightBase->process();
+    tmp = _rightBase->keyCheck();
+    if (tmp)
+      _rightTeam->push(tmp);
+  }
   _rightBase->render();
 }
 
@@ -126,8 +128,15 @@ void Action::start(void)
 {
   std::cout << "Action: строим укрепточки" << std::endl;
 
+  action = true;
+
   _leftBase = new Base(-96);
   _rightBase = new Base(1088, FLIP_HORIZONTAL);
+}
+
+void Action::stop(void)
+{
+  action = false;
 }
 
 void Action::renderer(void)
