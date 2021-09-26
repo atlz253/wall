@@ -4,7 +4,7 @@
 
 #include "global.hpp"
 #include "engine.hpp" // TODO: remove
-#include "SDL2/SDL_ttf.h"
+#include "SDL_ttf.h"
 
 Button::Button(std::string text, Font *font, int w, int h, int x, int y, void (*event)(void)) : Entity(w, h, x, y)
 {
