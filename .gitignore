@@ -77,6 +77,12 @@ CMakeUserPresets.json
 
 # End of https://www.toptal.com/developers/gitignore/api/c++,cmake,linux
 
+### Visual studio ###
+engine/packages
+CMakeSettings.json
+.vs
+
+### Visual studio code###
 build
 .vscode/c_cpp_properties.json
 .vscode/settings.json

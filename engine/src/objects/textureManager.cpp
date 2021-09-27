@@ -3,8 +3,8 @@
 #include <map>
 #include <iostream>
 
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
+#include "SDL.h"
+#include "SDL_image.h"
 #include "global.hpp"
 
 namespace textures
@@ -20,11 +20,7 @@ namespace textures
 
   SDL_Texture *&get(std::string path)
   {
-    std::map<std::string, SDL_Texture *>::iterator iterator;
-
-    iterator = dict->find(path);
-
-    if (iterator->first != path)
+    if (dict->count(path) == 0)
     {
       std::cout << "TextureManager: load texture " << path << std::endl;
       SDL_Texture *texture = IMG_LoadTexture(global::renderer, path.c_str());

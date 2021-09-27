@@ -29,7 +29,12 @@ void Action::_unitsRenderer(void)
     Base *enemiesBase;
     std::queue<Unit *> *friends, *friendsTmp, *enemies, *enemiesTmp;
     bool leftTeamFilled = !_leftTeam->empty(), rightTeamFilled = !_rightTeam->empty();
-    Unit *cur = nullptr, *leftFront = _leftTeam->front(), *rightFront = _rightTeam->front();
+    Unit *cur = nullptr, *leftFront = nullptr, *rightFront = nullptr;
+    if (leftTeamFilled)
+        leftFront = _leftTeam->front();
+    if (rightTeamFilled)
+        rightFront = _rightTeam->front();
+
 
     if ((leftTeamFilled && !rightTeamFilled) ||
         (leftTeamFilled && rightTeamFilled && leftFront->getId() < rightFront->getId()))
