@@ -77,6 +77,6 @@ Background::Background()
   p->setTile(112, 272, 16, 16);
   _queue->push(p);
   p = new Entity(p, 1120, 592);
-  p->setSize(16 * 10, 16 * 8);
+  p->SetSize(16 * 10, 16 * 8);
   _queue->push(p);
 }

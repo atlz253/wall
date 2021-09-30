@@ -23,20 +23,20 @@ public:
     _texture = getTexture("res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue.png");
     setTile(13, 68, 111, 6);
 
-    setSize(111 * 3, 6 * 3);
+    SetSize(111 * 3, 6 * 3);
 
     if (_flip)
-      setPosition(SCREEN_WIDTH - 111 * 3, 1 * 3);
+      SetPosition(SCREEN_WIDTH - 111 * 3, 1 * 3);
     else
-      setPosition(0, 1 * 3);
+      SetPosition(0, 1 * 3);
   }
 
   void process(unsigned short int health)
   {
     if (_flip)
-      setPosition(SCREEN_WIDTH - health / _HPpoint, 1 * 3);
+      SetPosition(SCREEN_WIDTH - health / _HPpoint, 1 * 3);
     else
-      setPosition(health / _HPpoint - 111 * 3, 1 * 3);
+      SetPosition(health / _HPpoint - 111 * 3, 1 * 3);
   }
 };
 
@@ -59,12 +59,12 @@ public:
     _texture = getTexture("res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue2.png");
     setTile(13, 47, 111, 8);
 
-    setSize(111 * 3, 8 * 3);
+    SetSize(111 * 3, 8 * 3);
 
     if (_flip)
-      setPosition(SCREEN_WIDTH - 111 * 3, 0);
+      SetPosition(SCREEN_WIDTH - 111 * 3, 0);
     else
-      setPosition(0, 0);
+      SetPosition(0, 0);
   }
 
   void process(void) override { _line->process(_base->getHealth()); }
@@ -89,9 +89,9 @@ public:
     updateTexture();
 
     if (base->getFlip())
-      setPosition(SCREEN_WIDTH - _geometry->w, _geometry->h);
+      SetPosition(SCREEN_WIDTH - _geometry->w, _geometry->h);
     else
-      setPosition(0, _geometry->h);
+      SetPosition(0, _geometry->h);
   }
 };
 
@@ -182,13 +182,13 @@ void Base::_defeat(void)
   Font *fontt = font::open("res/joystix_monospace.ttf", 26);
   Text *textt = new Text(text, fontt);
   textt->getSize(&w, &h);
-  textt->setPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 200);
+  textt->SetPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 200);
   gui->addEntity(textt);
 
   text = "счет: " + std::to_string(rec->score);
   textt = new Text(text, fontt);
   textt->getSize(&w, &h);
-  textt->setPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 100);
+  textt->SetPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - 100);
   gui->addEntity(textt);
 
   gui->addEntity(new Button("в меню", fontt, 150, 30, (SCREEN_WIDTH - 150) / 2,
@@ -217,8 +217,8 @@ Base::Base(int x, Flip flip) : Unit::Unit()
   setTile(0, 48, 144, 128);
   _flip = flip;
 
-  setSize(144 * 2, 128 * 2);
-  setPosition(x, 270);
+  SetSize(144 * 2, 128 * 2);
+  SetPosition(x, 270);
 
   _center = new Point;
   if (_flip)

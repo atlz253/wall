@@ -32,12 +32,12 @@ Knight::Knight(int x, Flip flip) : Unit::Unit()
 
   _texture = getTexture(knightRun);
 
-  setSize(48 * 2, 48 * 2);
+  SetSize(48 * 2, 48 * 2);
 
   if (_flip)
-    setPosition(x + 48, 441);
+    SetPosition(x + 48, 441);
   else
-    setPosition(x - 48, 441);
+    SetPosition(x - 48, 441);
 
   _tile = new Rect;
   _tile->w = 48;

@@ -49,19 +49,19 @@ void Gui::rules(void)
 
   Text *textt = new Text(text[0], fontt);
   textt->getSize(&w, &h);
-  textt->setPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - h * 2);
+  textt->SetPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - h * 2);
   textt->setColor(0, 0, 0, 255);
   addEntity(textt);
 
   textt = new Text(text[1], fontt);
   textt->getSize(&w, &h);
-  textt->setPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - h * 1);
+  textt->SetPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2 - h * 1);
   textt->setColor(0, 0, 0, 255);
   addEntity(textt);
 
   textt = new Text(text[2], fontt);
   textt->getSize(&w, &h);
-  textt->setPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2);
+  textt->SetPosition((SCREEN_WIDTH - w) / 2, (SCREEN_HEIGHT - h) / 2);
   textt->setColor(0, 0, 0, 255);
   addEntity(textt);
 
@@ -100,7 +100,7 @@ void Gui::records(void)
 
       Text *textt = new Text(text, fontt);
       textt->getSize(&w, &h);
-      textt->setPosition((SCREEN_WIDTH - w) / 2, h * n);
+      textt->SetPosition((SCREEN_WIDTH - w) / 2, h * n);
       textt->setColor(0, 0, 0, 255);
       addEntity(textt);
       n++;
