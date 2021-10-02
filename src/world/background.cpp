@@ -74,7 +74,7 @@ Background::Background()
 
   std::cout << "Terrain: распыляем темноту" << std::endl;
   p = new Entity("res/Magic-Cliffs-Environment/PNG/tileset.png", 16 * 22, 16 * 6, 480, 560);
-  p->setTile(112, 272, 16, 16);
+  p->SetTile({112, 272, 16, 16});
   _queue->push(p);
   p = new Entity(p, 1120, 592);
   p->SetSize(16 * 10, 16 * 8);

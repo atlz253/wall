@@ -34,13 +34,13 @@ Terrain::Terrain()
 
   /* центральные части мостов */
   tmp = new Entity(tmp, 224, 504);
-  tmp->setTile(640, 176, 48, 48);
+  tmp->SetTile({640, 176, 48, 48});
   _queue->push(tmp);
   _queue->push(new Entity(tmp, 992, 505));
 
   /* правые части мостов */
   tmp = new Entity(tmp, 288, 504);
-  tmp->setTile(688, 176, 48, 48);
+  tmp->SetTile({688, 176, 48, 48});
   _queue->push(tmp);
   _queue->push(new Entity(tmp, 1056, 505));
 
@@ -56,7 +56,7 @@ Terrain::Terrain()
     Entity *t = new Entity(tmp, 480 + 32 * i, 656);
 
     if (i == 2 || i == 6 || i == 8 || i == 9)
-      t->setTile(400, 112, 16, 32);
+      t->SetTile({400, 112, 16, 32});
 
     _queue->push(t);
   }

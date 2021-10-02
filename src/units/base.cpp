@@ -21,7 +21,7 @@ public:
     _flip = base->getFlip();
 
     _texture = getTexture("res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue.png");
-    setTile(13, 68, 111, 6);
+    SetTile({13, 68, 111, 6});
 
     SetSize(111 * 3, 6 * 3);
 
@@ -57,7 +57,7 @@ public:
     gui->addEntity(_line);
 
     _texture = getTexture("res/Health-Bar-Asset-Pack-2-by-Adwit-Rahman/redblue2.png");
-    setTile(13, 47, 111, 8);
+    SetTile({13, 47, 111, 8});
 
     SetSize(111 * 3, 8 * 3);
 
@@ -214,7 +214,7 @@ Base::Base(int x, Flip flip) : Unit::Unit()
   _earnSpeed = 0;
 
   _texture = getTexture("res/Taiga-Asset-Pack_v2_vnitti/PNG/Props.png");
-  setTile(0, 48, 144, 128);
+  SetTile({0, 48, 144, 128});
   _flip = flip;
 
   SetSize(144 * 2, 128 * 2);
