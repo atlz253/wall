@@ -1,0 +1,6 @@
+.git
+build
+dist
+engine/.git
+engine/build
+*.zip

@@ -84,5 +84,6 @@ CMakeSettings.json
 
 ### Visual studio code###
 build
+dist
 .vscode/c_cpp_properties.json
 .vscode/settings.json
