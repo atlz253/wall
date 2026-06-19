@@ -3,6 +3,8 @@
 #include <fstream>
 #include <iostream>
 
+#include "SDL.h"
+
 #include "globals.hpp"
 #include "knight.hpp"
 #include "random.hpp"
@@ -94,6 +96,32 @@ public:
       SetPosition(0, _geometry->h);
   }
 };
+
+namespace
+{
+const int BASE_Y = 270;
+const int KNIGHT_SPAWN_Y = 441;
+SDL_GameController *controller = nullptr;
+
+SDL_GameController *getController()
+{
+  if (controller)
+    return controller;
+
+  for (int i = 0; i < SDL_NumJoysticks(); ++i)
+  {
+    if (SDL_IsGameController(i))
+    {
+      controller = SDL_GameControllerOpen(i);
+      if (controller)
+        std::cout << "Controller opened: " << SDL_GameControllerName(controller) << std::endl;
+      break;
+    }
+  }
+
+  return controller;
+}
+}
 
 void Base::_defeat(void)
 {
@@ -218,7 +246,7 @@ Base::Base(int x, Flip flip) : Unit::Unit()
   _flip = flip;
 
   SetSize(144 * 2, 128 * 2);
-  SetPosition(x, 270);
+  SetPosition(x, BASE_Y);
 
   _center = new Point;
   if (_flip)
@@ -236,9 +264,18 @@ Base::Base(int x, Flip flip) : Unit::Unit()
 Unit *Base::keyCheck(void)
 {
   keys state = keyboard::state(nullptr);
+  SDL_GameController *pad = getController();
+  bool leftSpawn = state[SCANCODE_Q];
+  bool rightSpawn = state[SCANCODE_RIGHTBRACKET];
+
+  if (pad)
+  {
+    leftSpawn = leftSpawn || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
+    rightSpawn = rightSpawn || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER);
+  }
 
   if (!_speed && _money >= KNIGHT_COST &&
-      ((_flip && state[SCANCODE_RIGHTBRACKET]) || (!_flip && state[SCANCODE_Q])))
+      ((_flip && rightSpawn) || (!_flip && leftSpawn)))
   {
     _speed = 100;
     _money -= 100;

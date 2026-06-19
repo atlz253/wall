@@ -7,6 +7,10 @@ project(wall VERSION 150721)
 #
 # Include subprojects
 #
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/engine/.cmake/FindSDL2")
+
+find_package(SDL2 REQUIRED)
+
 add_subdirectory(engine)
 include_directories("${PROJECT_SOURCE_DIR}/engine/include")
 
@@ -16,6 +20,7 @@ include_directories("${PROJECT_SOURCE_DIR}/engine/include")
 set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 
 include_directories(
+    ${SDL2_INCLUDE_DIR}
     "${SRC_DIR}/event"
     "${SRC_DIR}/menu"
     "${SRC_DIR}/object"
@@ -65,4 +70,5 @@ add_executable(wall ${HPP_FILES} ${CPP_FILES})
 target_link_libraries(
     wall 
     engine
+    ${SDL2_LIBRARY}
 )

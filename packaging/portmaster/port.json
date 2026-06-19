@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "name": "wall.zip",
+  "items": [
+    "Wall.sh",
+    "wall"
+  ],
+  "items_opt": null,
+  "attr": {
+    "title": "Wall",
+    "desc": "Two players build units and try to defeat the opposing base.",
+    "inst": "Ready to run.",
+    "genres": [
+      "strategy"
+    ],
+    "porter": [
+      "atlz253"
+    ],
+    "image": {},
+    "rtr": true,
+    "runtime": null,
+    "reqs": [],
+    "arch": [
+      "aarch64"
+    ]
+  }
+}

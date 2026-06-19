@@ -1,0 +1,41 @@
+FROM ubuntu:24.04
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN sed -i '/^Components:/a Architectures: amd64' /etc/apt/sources.list.d/ubuntu.sources \
+    && printf '%s\n' \
+        'Types: deb' \
+        'URIs: http://ports.ubuntu.com/ubuntu-ports' \
+        'Suites: noble noble-updates noble-backports noble-security' \
+        'Components: main restricted universe multiverse' \
+        'Architectures: arm64' \
+        'Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg' \
+        > /etc/apt/sources.list.d/ubuntu-ports.sources \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        binfmt-support \
+        binutils-aarch64-linux-gnu \
+        build-essential \
+        ca-certificates \
+        cmake \
+        file \
+        g++-aarch64-linux-gnu \
+        gcc-aarch64-linux-gnu \
+        ninja-build \
+        pkg-config \
+        qemu-user-static \
+        zip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN dpkg --add-architecture arm64 \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        zlib1g-dev:arm64 \
+        libsdl2-dev:arm64 \
+        libsdl2-image-dev:arm64 \
+        libsdl2-ttf-dev:arm64 \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+
+ENTRYPOINT ["bash", "/src/scripts/build-portmaster.sh"]

@@ -21,8 +21,8 @@ void Main::_gameLoop(void)
     render::clear();
 
     background->renderer();
-    action->renderer();
     terrain->renderer();
+    action->renderer();
     gui->renderer();
 
     render::present();

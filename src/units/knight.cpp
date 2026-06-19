@@ -17,6 +17,8 @@ const std::string knightRun = "res/Knight/noBKG_KnightRun_strip.png",
                   knightIdle = "res/Knight/noBKG_KnightIdle_strip.png",
                   knightDeath = "res/Knight/noBKG_KnightDeath_strip.png";
 
+const int KNIGHT_SPAWN_Y = 441;
+
 Knight::Knight(int x, Flip flip) : Unit::Unit()
 {
   _frame = 0;
@@ -35,9 +37,9 @@ Knight::Knight(int x, Flip flip) : Unit::Unit()
   SetSize(48 * 2, 48 * 2);
 
   if (_flip)
-    SetPosition(x + 48, 441);
+    SetPosition(x + 48, KNIGHT_SPAWN_Y);
   else
-    SetPosition(x - 48, 441);
+    SetPosition(x - 48, KNIGHT_SPAWN_Y);
 
   _tile = new Rect;
   _tile->w = 48;
