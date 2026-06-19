@@ -10,6 +10,7 @@
 #include "globals.hpp"
 #include "interface.hpp"
 #include "keyboard.hpp"
+#include "storage.hpp"
 
 static const int X = (SCREEN_WIDTH - 150) / 2;
 static const int Y = (SCREEN_HEIGHT - 30) / 2;
@@ -46,6 +47,15 @@ bool pressed(bool value, bool &previous)
   bool result = value && !previous;
   previous = value;
   return result;
+}
+
+void exitGame()
+{
+#ifdef __EMSCRIPTEN__
+  gui->menu();
+#else
+  events::quit();
+#endif
 }
 }
 
@@ -105,6 +115,7 @@ void Gui::renderer(void)
 {
   processInput();
   Layer::renderer();
+  button::runPendingEvents();
 }
 
 void Gui::menu(void)
@@ -128,7 +139,7 @@ void Gui::menu(void)
                        { gui->rules(); }));
 
   addButton(new Button("exit", fontt, 150, 30, X, Y - 30, []()
-                       { events::quit(); }));
+                       { exitGame(); }));
 }
 
 void Gui::rules(void)
@@ -170,7 +181,7 @@ void Gui::records(void)
 {
   record *rec = new record;
   std::string text;
-  std::ifstream file("records.bin", std::ios::binary);
+  std::ifstream file(storage::recordsPath(), std::ios::binary);
 
   clear();
   _buttonsCount = 0;
@@ -212,7 +223,10 @@ void Gui::records(void)
                        { gui->menu(); }));
 
   addButton(new Button("clear", fontt, 150, 30, X - 100, Y, []()
-                       { remove("records.bin"); }));
+                       {
+                         remove(storage::recordsPath());
+                         storage::sync();
+                       }));
 
   delete rec;
 }

@@ -9,7 +9,9 @@ project(wall VERSION 150721)
 #
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/engine/.cmake/FindSDL2")
 
-find_package(SDL2 REQUIRED)
+if(NOT EMSCRIPTEN)
+    find_package(SDL2 REQUIRED)
+endif()
 
 add_subdirectory(engine)
 include_directories("${PROJECT_SOURCE_DIR}/engine/include")
@@ -40,6 +42,7 @@ set(
     ${SRC_DIR}/units/unit.cpp
     ${SRC_DIR}/wall/globals.cpp
     ${SRC_DIR}/wall/random.cpp
+    ${SRC_DIR}/wall/storage.cpp
     ${SRC_DIR}/wall/wall.cpp
     ${SRC_DIR}/world/action.cpp
     ${SRC_DIR}/world/background.cpp
@@ -55,6 +58,7 @@ set(
     ${SRC_DIR}/units/unit.hpp
     ${SRC_DIR}/wall/globals.hpp
     ${SRC_DIR}/wall/random.hpp
+    ${SRC_DIR}/wall/storage.hpp
     ${SRC_DIR}/wall/wall.hpp
     ${SRC_DIR}/world/action.hpp
     ${SRC_DIR}/world/background.hpp
@@ -67,8 +71,28 @@ set(
 #
 add_executable(wall ${HPP_FILES} ${CPP_FILES})
 
-target_link_libraries(
-    wall 
-    engine
-    ${SDL2_LIBRARY}
-)
+target_link_libraries(wall engine)
+
+if(EMSCRIPTEN)
+    set_target_properties(wall PROPERTIES OUTPUT_NAME "index" SUFFIX ".html")
+    target_compile_options(wall PRIVATE
+        "-sUSE_SDL=2"
+        "-sUSE_SDL_IMAGE=2"
+        "-sUSE_SDL_TTF=2"
+    )
+    target_link_options(wall PRIVATE
+        "-sUSE_SDL=2"
+        "-sUSE_SDL_IMAGE=2"
+        "-sSDL2_IMAGE_FORMATS=[\"png\"]"
+        "-sUSE_SDL_TTF=2"
+        "-sALLOW_MEMORY_GROWTH=1"
+        "-sFORCE_FILESYSTEM=1"
+        "-sNO_EXIT_RUNTIME=1"
+        "-lidbfs.js"
+        "--pre-js=${PROJECT_SOURCE_DIR}/packaging/web/pre.js"
+        "--shell-file=${PROJECT_SOURCE_DIR}/packaging/web/shell.html"
+        "--preload-file=${PROJECT_SOURCE_DIR}/res@/res"
+    )
+else()
+    target_link_libraries(wall ${SDL2_LIBRARY})
+endif()

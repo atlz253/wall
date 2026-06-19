@@ -9,9 +9,11 @@ project(engine VERSION 150721)
 #
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/.cmake/FindSDL2")
 
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-find_package(SDL2_ttf REQUIRED)
+if(NOT EMSCRIPTEN)
+    find_package(SDL2 REQUIRED)
+    find_package(SDL2_image REQUIRED)
+    find_package(SDL2_ttf REQUIRED)
+endif()
 
 include_directories(
     ${SDL2_INCLUDE_DIR}
@@ -73,16 +75,30 @@ set(
 #
 # Create library
 #
-add_library(
-    engine 
-    SHARED
-    ${HPP_FILES} 
-    ${CPP_FILES}
-)
+if(EMSCRIPTEN)
+    add_library(
+        engine
+        STATIC
+        ${HPP_FILES}
+        ${CPP_FILES}
+    )
+    target_compile_options(engine PRIVATE
+        "-sUSE_SDL=2"
+        "-sUSE_SDL_IMAGE=2"
+        "-sUSE_SDL_TTF=2"
+    )
+else()
+    add_library(
+        engine
+        SHARED
+        ${HPP_FILES}
+        ${CPP_FILES}
+    )
 
-target_link_libraries(
-    engine 
-    ${SDL2_LIBRARY}
-    ${SDL2_IMAGE_LIBRARIES}
-    ${SDL2_TTF_LIBRARIES}
-)
+    target_link_libraries(
+        engine
+        ${SDL2_LIBRARY}
+        ${SDL2_IMAGE_LIBRARIES}
+        ${SDL2_TTF_LIBRARIES}
+    )
+endif()

@@ -23,6 +23,25 @@ docker run --rm -v "%cd%:/src" wall-win-builder
 The output is written to `dist/wall-windows-x64/` and `dist/wall-windows-x64.zip`.
 The folder contains `wall.exe`, `engine.dll`, required SDL/MinGW DLLs, and `res/`, so SDL2 does not need to be installed on the target Windows machine.
 
+## Web build
+
+Build the Docker image:
+
+```sh
+docker build -f Dockerfile.web -t wall-web-builder .
+```
+
+Build the static web package from this repository:
+
+```sh
+docker run --rm -v "%cd%:/src" wall-web-builder
+```
+
+On Linux/macOS shells, use `-v "$PWD:/src"` instead of `-v "%cd%:/src"`.
+
+The output is written to `dist/wall-web/` and `dist/wall-web.zip`.
+Serve `dist/wall-web/` with a local HTTP server or static hosting provider; opening `index.html` directly from the filesystem is not enough for the WASM and data files.
+
 ## PortMaster aarch64 build
 
 Build the PortMaster builder image:

@@ -22,6 +22,7 @@ namespace events
             switch (event->type)
             {
             case SDL_WINDOWEVENT:
+#ifndef __EMSCRIPTEN__
                 switch (event->window.event)
                 {
                 case SDL_WINDOWEVENT_HIDDEN:
@@ -32,6 +33,7 @@ namespace events
                             break;
                     break;
                 }
+#endif
                 break;
             case SDL_QUIT:
                 std::cout << "SdlWindow: SDL_Quit event" << std::endl;

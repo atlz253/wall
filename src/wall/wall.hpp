@@ -8,15 +8,22 @@
     4. Отрисовка сцен.
     5. Очистка памяти.
 */
+class Layer;
+
 class Main final
 {
 private:
+    Layer *_background;
+    Layer *_terrain;
+
     /*
       Игровой цикл
 
       Обрабатывает все обновления игры
   */
     void _gameLoop(void);
+
+    bool _frame(void);
 
 public:
     /*

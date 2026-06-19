@@ -10,6 +10,7 @@
 #include "random.hpp"
 #include "interface.hpp"
 #include "keyboard.hpp"
+#include "storage.hpp"
 
 class HealthLine final : public Entity
 {
@@ -128,8 +129,8 @@ void Base::_defeat(void)
   int w, h;
   std::string text = "Игрок ";
   struct record *rec = new record, *tmp = new record;
-  std::ifstream ifile("records.bin", std::ios::binary);
-  std::ofstream ofile("_tmp", std::ios::binary | std::ios::app);
+  std::ifstream ifile(storage::recordsPath(), std::ios::binary);
+  std::ofstream ofile(storage::recordsTempPath(), std::ios::binary | std::ios::app);
 
   rec->score = getCount() * 50 + _money;
   clearCount();
@@ -228,9 +229,10 @@ void Base::_defeat(void)
 
   action->stop();
 
-  rename("_tmp", "records.bin");
   ofile.close();
   ifile.close();
+  rename(storage::recordsTempPath(), storage::recordsPath());
+  storage::sync();
 }
 
 Base::Base(int x, Flip flip) : Unit::Unit()

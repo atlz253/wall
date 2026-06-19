@@ -58,19 +58,27 @@ namespace engine
         std::cout << "SDL video driver: " << SDL_GetCurrentVideoDriver() << std::endl;
         logRenderDrivers();
 
-        SDL_DisplayMode displayMode;
         int windowW = w;
         int windowH = h;
+#ifndef __EMSCRIPTEN__
+        SDL_DisplayMode displayMode;
         if (SDL_GetCurrentDisplayMode(0, &displayMode) == 0 && displayMode.w > 0 && displayMode.h > 0)
         {
             windowW = displayMode.w;
             windowH = displayMode.h;
             std::cout << "SDL display mode: " << windowW << "x" << windowH << std::endl;
         }
+#endif
 
         std::cout << "Creating window" << std::endl;
+        Uint32 windowFlags = SDL_WINDOW_SHOWN;
+#ifdef __EMSCRIPTEN__
+        windowFlags |= SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI;
+#else
+        windowFlags |= SDL_WINDOW_FULLSCREEN;
+#endif
         global::window = SDL_CreateWindow("engine", SDL_WINDOWPOS_CENTERED_MASK, SDL_WINDOWPOS_CENTERED_MASK, windowW,
-                                          windowH, SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN);
+                                          windowH, windowFlags);
         if (!global::window)
         {
             std::cout << "Failed to create window:" << SDL_GetError() << std::endl;
@@ -99,7 +107,11 @@ namespace engine
         SDL_SetHint(SDL_HINT_RENDER_LOGICAL_SIZE_MODE, "letterbox");
         if (SDL_RenderSetLogicalSize(global::renderer, w, h))
             std::cout << "Failed to set logical size:" << SDL_GetError() << std::endl;
+#ifdef __EMSCRIPTEN__
+        SDL_ShowCursor(SDL_ENABLE);
+#else
         SDL_ShowCursor(SDL_DISABLE);
+#endif
         SDL_SetRenderDrawBlendMode(global::renderer, SDL_BLENDMODE_BLEND); // TODO: read docs about this
 
         events::init();

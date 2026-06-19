@@ -13,6 +13,11 @@ namespace font
   void close(Font *font);
 }
 
+namespace button
+{
+  void runPendingEvents(void);
+}
+
 class Text : public Entity
 {
 protected:
