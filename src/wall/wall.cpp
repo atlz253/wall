@@ -6,6 +6,8 @@
 #include <emscripten.h>
 #endif
 
+#include "SDL.h"
+
 #include "event.hpp"
 #include "engine.hpp"
 
@@ -36,6 +38,10 @@ Main::Main()
 
 bool Main::_frame(void)
 {
+#ifndef __EMSCRIPTEN__
+  const Uint32 frameStart = SDL_GetTicks();
+#endif
+
   if (!events::check())
   {
 #ifdef __EMSCRIPTEN__
@@ -47,11 +53,17 @@ bool Main::_frame(void)
   render::clear();
 
   _background->renderer();
-  _terrain->renderer();
   action->renderer();
+  _terrain->renderer();
   gui->renderer();
 
   render::present();
+
+#ifndef __EMSCRIPTEN__
+  const Uint32 frameTime = SDL_GetTicks() - frameStart;
+  if (frameTime < 16)
+    SDL_Delay(16 - frameTime);
+#endif
 
   return true;
 }

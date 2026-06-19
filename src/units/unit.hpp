@@ -56,7 +56,7 @@ public:
   */
   virtual void setDamage(uint16_t damage);
 
-  ~Unit();
+  virtual ~Unit();
 };
 
 #endif

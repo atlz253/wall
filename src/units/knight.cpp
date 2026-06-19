@@ -19,12 +19,87 @@ const std::string knightRun = "res/Knight/noBKG_KnightRun_strip.png",
 
 const int KNIGHT_SPAWN_Y = 441;
 
+const char *Knight::animationName(Animation animation) const
+{
+  switch (animation)
+  {
+  case RUN:
+    return "run";
+  case IDLE:
+    return "idle";
+  case ATTACK:
+    return "attack";
+  case DEATH:
+    return "death";
+  }
+
+  return "unknown";
+}
+
+void Knight::logState(Animation animation, Unit *target)
+{
+  uint32_t targetId = target ? target->getId() : 0;
+  if (_lastLoggedAnimation == animation && _lastLoggedTargetId == targetId)
+    return;
+
+  _lastLoggedAnimation = animation;
+  _lastLoggedTargetId = targetId;
+}
+
+void Knight::setAnimation(Animation animation)
+{
+  if (_animation == animation)
+    return;
+
+  _animation = animation;
+  _frame = 0;
+
+  switch (_animation)
+  {
+  case RUN:
+    _texture = getTexture(knightRun);
+    _tile->x = runFrames[0];
+    break;
+  case IDLE:
+    _texture = getTexture(knightIdle);
+    _tile->x = idleFrames[0];
+    break;
+  case ATTACK:
+    _texture = getTexture(knightAttack);
+    _tile->x = attackFrames[0];
+    break;
+  case DEATH:
+    _texture = getTexture(knightDeath);
+    _tile->x = deathFrames[0];
+    break;
+  }
+}
+
+bool Knight::advanceAnimation(int frameTotal, const int frames[])
+{
+  if (++_frameCount < _animationSpeed)
+    return false;
+
+  _frameCount = 0;
+  if (++_frame == frameTotal)
+  {
+    _frame = 0;
+    _tile->x = frames[_frame];
+    return true;
+  }
+
+  _tile->x = frames[_frame];
+  return true;
+}
+
 Knight::Knight(int x, Flip flip) : Unit::Unit()
 {
   _frame = 0;
   _frameCount = 0;
   _animationSpeed = 5;
-  _isRuning = true;
+  _lastLoggedAnimation = -1;
+  _lastLoggedTargetId = 0;
+  _animation = RUN;
 
   _hp = 100;
   _speed = 4;
@@ -33,13 +108,14 @@ Knight::Knight(int x, Flip flip) : Unit::Unit()
   _frontRange = 30;
 
   _texture = getTexture(knightRun);
+  _flip = flip;
 
   SetSize(48 * 2, 48 * 2);
 
   if (_flip)
-    SetPosition(x + 48, KNIGHT_SPAWN_Y);
+    SetPosition(x - _geometry->w / 2 - 5 - _backRange, KNIGHT_SPAWN_Y);
   else
-    SetPosition(x - 48, KNIGHT_SPAWN_Y);
+    SetPosition(x - _geometry->w / 2 + 5 + _backRange, KNIGHT_SPAWN_Y);
 
   _tile = new Rect;
   _tile->w = 48;
@@ -47,7 +123,6 @@ Knight::Knight(int x, Flip flip) : Unit::Unit()
   _tile->x = runFrames[0];
   _tile->y = 0;
 
-  _flip = flip;
   _center = new Point;
   _center->y = _geometry->y + _geometry->h / 2 - 10;
   if (_flip)
@@ -62,86 +137,36 @@ void Knight::process(Unit *next)
 
   if (!_hp)
   {
-    if (_texture != getTexture(knightDeath))
-    {
-      _isRuning = false;
-      _frameCount = 0;
-      _frame = 0;
-      _texture = getTexture(knightDeath);
-      _tile->x = deathFrames[0];
-    }
-    else if (++_frameCount == _animationSpeed && _frame < 14)
-    {
-      _tile->x = deathFrames[++_frame];
-      _frameCount = 0;
-    }
+    logState(DEATH, next);
+    setAnimation(DEATH);
+    if (_frame < 14)
+      advanceAnimation(15, deathFrames);
   }
   else if (_flip == next->getFlip() &&
            ((!_flip && next->getBack() <= getFront()) || (_flip && next->getBack() >= getFront())))
   {
-    if (_isRuning)
-    {
-      _isRuning = false;
-      _frameCount = 0;
-      _frame = 0;
-      _texture = getTexture(knightIdle);
-      _tile->x = idleFrames[0];
-    }
-    else if (++_frameCount == _animationSpeed)
-    {
-      if (++_frame == 15)
-        _frame = 0;
-
-      _tile->x = idleFrames[_frame];
-
-      _frameCount = 0;
-    }
+    logState(IDLE, next);
+    setAnimation(IDLE);
+    advanceAnimation(15, idleFrames);
   }
   else if ((!_flip && next->getFront() <= getFront()) || (_flip && next->getFront() >= getFront()))
   {
-    if (_isRuning)
+    logState(ATTACK, next);
+    setAnimation(ATTACK);
+    if (advanceAnimation(22, attackFrames) && _frame == 0)
     {
-      _isRuning = false;
-      _frameCount = 0;
-      _frame = 0;
-      _texture = getTexture(knightAttack);
-      _tile->x = attackFrames[0];
-    }
-    else if (++_frameCount == _animationSpeed)
-    {
-      if (++_frame == 22)
-      {
-        _frame = 0;
-        if (_hp > _damage)
-          next->setDamage(random(_damage, _hp));
-        else
-          next->setDamage(_damage);
-      }
-
-      _tile->x = attackFrames[_frame];
-
-      _frameCount = 0;
+      if (_hp > _damage)
+        next->setDamage(random(_damage, _hp));
+      else
+        next->setDamage(_damage);
     }
   }
   else
   {
-    if (!_isRuning)
+    logState(RUN, next);
+    setAnimation(RUN);
+    if (advanceAnimation(8, runFrames))
     {
-      _isRuning = true;
-      _frameCount = 0;
-      _frame = 0;
-      _texture = getTexture(knightRun);
-      _tile->x = runFrames[0];
-    }
-    else if (++_frameCount == _animationSpeed)
-    {
-      if (++_frame == 8)
-        _frame = 0;
-
-      _tile->x = runFrames[_frame];
-
-      _frameCount = 0;
-
       if (_flip)
       {
         _geometry->x = _geometry->x - _speed;
@@ -173,3 +198,5 @@ int Knight::getFront(void)
 }
 
 uint16_t Knight::getReward(void) { return random(0, KNIGHT_COST + 25); }
+
+Knight::~Knight() {}

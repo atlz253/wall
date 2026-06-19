@@ -281,7 +281,7 @@ Unit *Base::keyCheck(void)
   {
     _speed = 100;
     _money -= 100;
-    return new Knight(getBack(), _flip);
+    return new Knight(getFront(), _flip);
   }
   else
   {

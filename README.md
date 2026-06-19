@@ -17,7 +17,7 @@ docker build -t wall-win-builder .
 Build the Windows x64 portable package from this repository:
 
 ```sh
-docker run --rm -v "%cd%:/src" wall-win-builder
+docker run --rm -v "${PWD}:/src" wall-win-builder
 ```
 
 The output is written to `dist/wall-windows-x64/` and `dist/wall-windows-x64.zip`.
@@ -34,10 +34,10 @@ docker build -f Dockerfile.web -t wall-web-builder .
 Build the static web package from this repository:
 
 ```sh
-docker run --rm -v "%cd%:/src" wall-web-builder
+docker run --rm -v "${PWD}:/src" wall-web-builder
 ```
 
-On Linux/macOS shells, use `-v "$PWD:/src"` instead of `-v "%cd%:/src"`.
+On Linux/macOS shells, use `-v "$PWD:/src"` instead of `-v "${PWD}:/src"`.
 
 The output is written to `dist/wall-web/` and `dist/wall-web.zip`.
 Serve `dist/wall-web/` with a local HTTP server or static hosting provider; opening `index.html` directly from the filesystem is not enough for the WASM and data files.
@@ -53,10 +53,10 @@ docker build -f Dockerfile.portmaster -t wall-portmaster-builder .
 Build the PortMaster package from this repository:
 
 ```sh
-docker run --rm -v "%cd%:/src" wall-portmaster-builder
+docker run --rm -v "${PWD}:/src" wall-portmaster-builder
 ```
 
-On Linux/macOS shells, use `-v "$PWD:/src"` instead of `-v "%cd%:/src"`.
+On Linux/macOS shells, use `-v "$PWD:/src"` instead of `-v "${PWD}:/src"`.
 
 The output is written to `dist/wall-portmaster/` and `dist/wall-portmaster.zip`.
 The package contains `Wall.sh`, PortMaster metadata, `wall/wall.aarch64`, `wall/libengine.so`, required ARM shared libraries in `wall/libs.aarch64/`, and `wall/res/`.

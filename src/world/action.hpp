@@ -31,6 +31,8 @@ public:
 
   void stop(void);
 
+  bool isActive(void) const;
+
   void renderer(void) override;
 
   void clear(void) override;

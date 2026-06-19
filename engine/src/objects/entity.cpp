@@ -294,5 +294,6 @@ Entity::~Entity()
 {
     std::cout << "Entity: удаление геометрии сущности" << std::endl;
     delete _center;
+    delete _tile;
     delete _geometry;
 }

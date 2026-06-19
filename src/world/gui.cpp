@@ -79,9 +79,6 @@ void Gui::addButton(Button *button)
 
 void Gui::processInput(void)
 {
-  if (!_buttonsCount)
-    return;
-
   keys state = keyboard::state(nullptr);
   SDL_GameController *pad = getController();
   bool up = state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_W];
@@ -96,6 +93,16 @@ void Gui::processInput(void)
     accept = accept || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_START);
     back = back || SDL_GameControllerGetButton(pad, SDL_CONTROLLER_BUTTON_B);
   }
+
+  if (pressed(back, prevBack) && action->isActive())
+  {
+    action->clear();
+    menu();
+    return;
+  }
+
+  if (!_buttonsCount)
+    return;
 
   if (pressed(up, prevUp))
     _selectedButton = (_selectedButton + _buttonsCount - 1) % _buttonsCount;

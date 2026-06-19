@@ -115,7 +115,7 @@ public:
     */
     virtual void render(void);
 
-    ~Entity();
+    virtual ~Entity();
 };
 
 #endif

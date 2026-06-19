@@ -5,23 +5,33 @@
 class Knight final : public Unit
 {
 private:
-  uint8_t _frame;          // Текущий кадр
-  uint8_t _frameCount;     // Счетчик обновления текстуры
-  uint8_t _animationSpeed; // Скорость анимации
-  bool _isRuning;          // Перемещается ли персонаж?
+  enum Animation
+  {
+    RUN,
+    IDLE,
+    ATTACK,
+    DEATH
+  };
+
+  int _frame;
+  int _frameCount;
+  int _animationSpeed;
+  int _lastLoggedAnimation;
+  uint32_t _lastLoggedTargetId;
+  Animation _animation;
+
+  void setAnimation(Animation animation);
+  bool advanceAnimation(int frameTotal, const int frames[]);
+  const char *animationName(Animation animation) const;
+  void logState(Animation animation, Unit *target);
+
 public:
   Knight(int x = 0, Flip flip = FLIP_NONE);
 
   void process(Unit *next);
 
-  /*
-      Получение точки затылка юнита
-  */
   int getBack(void) override;
 
-  /*
-      Получение лицевой точки юнита
-  */
   int getFront(void) override;
 
   uint16_t getReward(void) override;

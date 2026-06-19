@@ -28,7 +28,7 @@ public:
 
     virtual void clear(void);
 
-    ~Layer();
+    virtual ~Layer();
 };
 
 #endif

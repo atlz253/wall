@@ -60,7 +60,7 @@ namespace engine
 
         int windowW = w;
         int windowH = h;
-#ifndef __EMSCRIPTEN__
+#if !defined(__EMSCRIPTEN__) && !defined(_WIN32)
         SDL_DisplayMode displayMode;
         if (SDL_GetCurrentDisplayMode(0, &displayMode) == 0 && displayMode.w > 0 && displayMode.h > 0)
         {
@@ -72,9 +72,9 @@ namespace engine
 
         std::cout << "Creating window" << std::endl;
         Uint32 windowFlags = SDL_WINDOW_SHOWN;
-#ifdef __EMSCRIPTEN__
+#if defined(__EMSCRIPTEN__)
         windowFlags |= SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI;
-#else
+#elif !defined(_WIN32)
         windowFlags |= SDL_WINDOW_FULLSCREEN;
 #endif
         global::window = SDL_CreateWindow("engine", SDL_WINDOWPOS_CENTERED_MASK, SDL_WINDOWPOS_CENTERED_MASK, windowW,
@@ -107,7 +107,7 @@ namespace engine
         SDL_SetHint(SDL_HINT_RENDER_LOGICAL_SIZE_MODE, "letterbox");
         if (SDL_RenderSetLogicalSize(global::renderer, w, h))
             std::cout << "Failed to set logical size:" << SDL_GetError() << std::endl;
-#ifdef __EMSCRIPTEN__
+#if defined(__EMSCRIPTEN__) || defined(_WIN32)
         SDL_ShowCursor(SDL_ENABLE);
 #else
         SDL_ShowCursor(SDL_DISABLE);
