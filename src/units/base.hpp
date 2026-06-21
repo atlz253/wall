@@ -19,7 +19,9 @@ private:
 public:
   Base(int x = 0, Flip flip = FLIP_NONE);
 
-  Unit *keyCheck(void);
+  Unit *keyCheck(bool pointerSpawn = false);
+
+  bool contains(Point point) const;
 
   /*
       Получение точки затылка юнита

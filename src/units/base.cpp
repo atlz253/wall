@@ -263,7 +263,7 @@ Base::Base(int x, Flip flip) : Unit::Unit()
   gui->addEntity(new MoneyBar(this, fontt));
 }
 
-Unit *Base::keyCheck(void)
+Unit *Base::keyCheck(bool pointerSpawn)
 {
   keys state = keyboard::state(nullptr);
   SDL_GameController *pad = getController();
@@ -277,7 +277,7 @@ Unit *Base::keyCheck(void)
   }
 
   if (!_speed && _money >= KNIGHT_COST &&
-      ((_flip && rightSpawn) || (!_flip && leftSpawn)))
+      ((_flip && rightSpawn) || (!_flip && leftSpawn) || pointerSpawn))
   {
     _speed = 100;
     _money -= 100;
@@ -289,6 +289,12 @@ Unit *Base::keyCheck(void)
       _speed--;
     return nullptr;
   }
+}
+
+bool Base::contains(Point point) const
+{
+  return point.x >= _geometry->x && point.x <= _geometry->x + _geometry->w &&
+         point.y >= _geometry->y && point.y <= _geometry->y + _geometry->h;
 }
 
 int Base::getBack(void) { return _center->x; }

@@ -6,6 +6,12 @@
 #include "base.hpp"
 #include "globals.hpp"
 #include "knight.hpp"
+#include "mouse.hpp"
+
+namespace
+{
+bool previousPointerDown = false;
+}
 
 Action::Action()
 {
@@ -172,11 +178,15 @@ void Action::_unitsRenderer(void)
 void Action::_baseRenderer(void)
 {
   Unit *tmp = nullptr;
+  Point pointerPosition = mouse::Position();
+  bool pointerDown = mouse::LeftClick();
+  bool pointerPressed = pointerDown && !previousPointerDown;
+  previousPointerDown = pointerDown;
 
   if (action)
   {
     _leftBase->process();
-    tmp = _leftBase->keyCheck();
+    tmp = _leftBase->keyCheck(pointerPressed && _leftBase->contains(pointerPosition));
     if (tmp)
       _leftTeam->push(tmp);
   }
@@ -185,7 +195,7 @@ void Action::_baseRenderer(void)
   if (action)
   {
     _rightBase->process();
-    tmp = _rightBase->keyCheck();
+    tmp = _rightBase->keyCheck(pointerPressed && _rightBase->contains(pointerPosition));
     if (tmp)
       _rightTeam->push(tmp);
   }

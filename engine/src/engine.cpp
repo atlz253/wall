@@ -28,6 +28,7 @@ namespace engine
     bool init(INT32 w, INT32 h)
     {
         std::cout << "SdlSubSystem: SDL2 initialization" << std::endl;
+        SDL_SetHint(SDL_HINT_TOUCH_MOUSE_EVENTS, "1");
         if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK))
         {
             std::cout << "SDL2 initialization error:" << SDL_GetError() << std::endl;
